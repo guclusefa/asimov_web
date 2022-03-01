@@ -1,0 +1,31 @@
+{
+  "name": "nodejs-template",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/guclusefa/nodeJS-template.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/guclusefa/nodeJS-template/issues"
+  },
+  "homepage": "https://github.com/guclusefa/nodeJS-template#readme",
+  "dependencies": {
+    "bootstrap": "^5.1.3",
+    "bootstrap-icons": "^1.7.2",
+    "cookie-parser": "^1.4.6",
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "express-session": "^1.17.2",
+    "i18n": "^0.13.3",
+    "i18n-express": "^1.1.3",
+    "jquery": "^3.6.0",
+    "mysql": "^2.18.1"
+  }
+}
