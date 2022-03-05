@@ -1,15 +1,40 @@
+/* font */
 * {
-  font-family: Helvetica, sans-serif;
+  font-family: 'Antonio';
 }
 
-.header {
-  border: none !important;
+/* header */
+
+.monheader {
+  border-bottom: 1px solid #bababa;
 }
 
 .header-toggler {
-  padding-left: 0.25rem !important ;
+  padding-left: 0rem !important ;
 }
 
-.sidebar-nav .nav-title {
-  margin-top: 0.25rem;
+/* footer */
+
+footer {
+  background: #212529;
 }
+
+.logo-footer{
+  filter: invert(48%) sepia(10%) saturate(429%) hue-rotate(167deg) brightness(90%) contrast(84%);  height: 50px;
+  padding-right: 50px;
+  border-right: 1px solid #6c757d;
+}
+
+.logo-footer2{
+  height: 50px;
+  padding-left: 50px;
+}
+
+/* genereal */
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
