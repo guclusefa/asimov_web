@@ -7,6 +7,14 @@ module.exports = {
     },
     afficher_ajouter: function (req, res) {
         titre = "Ajouter un élève";
-        res.render('./eleves/ajouter', { titre })
+        action = "/ajouter"
+        res.render('./eleves/form', { titre, action })
+    },
+    afficher_modifier: function (req, res) {
+        titre = "Modifier un élève";
+        action = "/modifier/id"
+        modifier = 1
+        test = "1" 
+        res.render('./eleves/form', { titre, action, modifier, test })
     },
 }

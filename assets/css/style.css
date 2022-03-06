@@ -31,12 +31,15 @@ footer {
   background: #212529;
 }
 
+.espacement-footer {
+  height: 200px;
+}
+
 .logo-footer {
-  filter: invert(48%) sepia(10%) saturate(429%) hue-rotate(167deg)
-    brightness(90%) contrast(84%);
+  filter: brightness(0) invert(1);
   height: 50px;
   padding-right: 50px;
-  border-right: 1px solid #6c757d;
+  border-right: 1px solid white;
 }
 
 .logo-footer2 {
@@ -47,11 +50,56 @@ footer {
 /* accueil */
 .bg-accueil {
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' version='1.1' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:svgjs='http://svgjs.com/svgjs' width='1440' height='400' preserveAspectRatio='none' viewBox='0 0 1440 400'%3e%3cg mask='url(%26quot%3b%23SvgjsMask1376%26quot%3b)' fill='none'%3e%3cpath d='M 0%2c137 C 14.4%2c173 43.2%2c315.4 72%2c317 C 100.8%2c318.6 115.2%2c158 144%2c145 C 172.8%2c132 187.2%2c261.2 216%2c252 C 244.8%2c242.8 259.2%2c88 288%2c99 C 316.8%2c110 331.2%2c289.4 360%2c307 C 388.8%2c324.6 403.2%2c201.2 432%2c187 C 460.8%2c172.8 475.2%2c255.4 504%2c236 C 532.8%2c216.6 547.2%2c91.4 576%2c90 C 604.8%2c88.6 619.2%2c242.6 648%2c229 C 676.8%2c215.4 691.2%2c14 720%2c22 C 748.8%2c30 763.2%2c272.6 792%2c269 C 820.8%2c265.4 835.2%2c-6.4 864%2c4 C 892.8%2c14.4 907.2%2c305 936%2c321 C 964.8%2c337 979.2%2c107.4 1008%2c84 C 1036.8%2c60.6 1051.2%2c190.8 1080%2c204 C 1108.8%2c217.2 1123.2%2c119 1152%2c150 C 1180.8%2c181 1195.2%2c361.2 1224%2c359 C 1252.8%2c356.8 1267.2%2c141.8 1296%2c139 C 1324.8%2c136.2 1339.2%2c335.4 1368%2c345 C 1396.8%2c354.6 1425.6%2c218.6 1440%2c187L1440 400L0 400z' fill='rgba(157%2c 165%2c 177%2c 1)'%3e%3c/path%3e%3c/g%3e%3cdefs%3e%3cmask id='SvgjsMask1376'%3e%3crect width='1440' height='400' fill='white'%3e%3c/rect%3e%3c/mask%3e%3c/defs%3e%3c/svg%3e");
-
-
 }
 
 .bg-accueil2 {
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' version='1.1' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:svgjs='http://svgjs.com/svgjs' width='1440' height='400' preserveAspectRatio='none' viewBox='0 0 1440 400'%3e%3cg mask='url(%26quot%3b%23SvgjsMask1376%26quot%3b)' fill='none'%3e%3cpath d='M 0%2c137 C 14.4%2c173 43.2%2c315.4 72%2c317 C 100.8%2c318.6 115.2%2c158 144%2c145 C 172.8%2c132 187.2%2c261.2 216%2c252 C 244.8%2c242.8 259.2%2c88 288%2c99 C 316.8%2c110 331.2%2c289.4 360%2c307 C 388.8%2c324.6 403.2%2c201.2 432%2c187 C 460.8%2c172.8 475.2%2c255.4 504%2c236 C 532.8%2c216.6 547.2%2c91.4 576%2c90 C 604.8%2c88.6 619.2%2c242.6 648%2c229 C 676.8%2c215.4 691.2%2c14 720%2c22 C 748.8%2c30 763.2%2c272.6 792%2c269 C 820.8%2c265.4 835.2%2c-6.4 864%2c4 C 892.8%2c14.4 907.2%2c305 936%2c321 C 964.8%2c337 979.2%2c107.4 1008%2c84 C 1036.8%2c60.6 1051.2%2c190.8 1080%2c204 C 1108.8%2c217.2 1123.2%2c119 1152%2c150 C 1180.8%2c181 1195.2%2c361.2 1224%2c359 C 1252.8%2c356.8 1267.2%2c141.8 1296%2c139 C 1324.8%2c136.2 1339.2%2c335.4 1368%2c345 C 1396.8%2c354.6 1425.6%2c218.6 1440%2c187L1440 400L0 400z' fill='rgba(157%2c 165%2c 177%2c 1)'%3e%3c/path%3e%3c/g%3e%3cdefs%3e%3cmask id='SvgjsMask1376'%3e%3crect width='1440' height='400' fill='white'%3e%3c/rect%3e%3c/mask%3e%3c/defs%3e%3c/svg%3e");
   transform: scaleY(-1);
 }
+
+
+/* select2 */
+.select2 {
+  width: 100% !important;
+}
+.select2-container--bootstrap-5 .select2-selection {
+  height: 58px !important;
+}
+
+.select2-container--bootstrap-5 .select2-selection--single .select2-selection__rendered {
+  padding: 1rem 0rem;
+}
+
+.select2-container--bootstrap-5 .select2-dropdown {
+  z-index: 499;
+}
+
+.select2-container--bootstrap-5.select2-container--focus .select2-selection, .select2-container--bootstrap-5.select2-container--open .select2-selection,
+.select2-container--bootstrap-5 .select2-dropdown .select2-search .select2-search__field:focus
+{
+  color: #212529;
+  background-color: #fff;
+  border-color: #9ea5b2;
+  outline: 0;
+  -webkit-box-shadow: 0 0 0 0.25rem rgb(60 75 100 / 25%);
+  box-shadow: 0 0 0 0.25rem rgb(60 75 100 / 25%);
+}
+
+.select2-container--bootstrap-5 .select2-dropdown .select2-results__options .select2-results__option.select2-results__option--selected, .select2-container--bootstrap-5 .select2-dropdown .select2-results__options .select2-results__option[aria-selected=true] {
+  color: #fff;
+  background-color: #3c4b64;
+}
+
+/* datepicker */
+.datepicker-cell.selected, .datepicker-cell.selected:hover {
+  background-color: #3c4b64;
+  color: #fff;
+  font-weight: 600;
+}
+
+/* forms */
+.required:after {
+  content:" *";
+  color: red;
+}
+

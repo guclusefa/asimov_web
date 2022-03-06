@@ -9,16 +9,21 @@
   <title>ASIMOV - <%= titre %>
   </title>
 
-  <!-- Theme -->
+  <!-- Font + Theme -->
   <link href='https://fonts.googleapis.com/css?family=Antonio' rel='stylesheet'>
   <link rel="stylesheet" href="/css/theme.css">
 
   <!-- Bootstrap + FontAwesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/bootstrap.css">
 
   <!-- Datepicker -->
   <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.1.4/dist/css/datepicker.min.css'>
+
+  <!-- select2 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" />
+  <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.2.0/dist/select2-bootstrap-5-theme.min.css" />
 
   <!-- Custom -->
   <link rel="stylesheet" href="/css/style.css">
@@ -57,7 +62,7 @@
                   </ul>
                 </li>
 
-                
+
                 <li class="nav-title">Les élèves</li>
                 <li class="nav-group">
                   <a class="nav-link nav-group-toggle" href="https://coreui.io/demo/4.0/free/#">
@@ -121,35 +126,34 @@
                   </a>
                   <ul class="nav-group-items">
                     <li class="nav-item">
-                      <li class="nav-item">
-                        <a class="nav-link" href="/matieres/ajouter">
-                          Ajouter une matière
-                        </a>
-                      </li>
-                      <a class="nav-link" href="/matieres/liste">
-                        Liste des matières
+                    <li class="nav-item">
+                      <a class="nav-link" href="/matieres/ajouter">
+                        Ajouter une matière
                       </a>
                     </li>
+                    <a class="nav-link" href="/matieres/liste">
+                      Liste des matières
+                    </a>
+
                   </ul>
                 </li>
               </div>
             </div>
           </div>
         </div>
-        <div class="simplebar-placeholder" style="width: 256px; height: 841px;"></div>
-      </div>
-      <div class="simplebar-track simplebar-horizontal" style="visibility: hidden;">
-        <div class="simplebar-scrollbar" style="width: 0px; display: none;"></div>
-      </div>
-      <div class="simplebar-track simplebar-vertical" style="visibility: visible;">
-        <div class="simplebar-scrollbar" style="height: 465px; transform: translate3d(0px, 0px, 0px); display: block;">
+
+        <div class="simplebar-track simplebar-horizontal" style="visibility: hidden;">
+          <div class="simplebar-scrollbar" style="width: 0px; display: none;"></div>
         </div>
-      </div>
+        <div class="simplebar-track simplebar-vertical" style="visibility: visible;">
+          <div class="simplebar-scrollbar"
+            style="height: 465px; transform: translate3d(0px, 0px, 0px); display: block;">
+          </div>
+        </div>
     </ul>
   </div>
 
   <div class="wrapper d-flex flex-column min-vh-100 bg-light">
-
     <nav class="monheader container-fluid bg-light content-header">
       <div class="container text-light py-3">
         <div class="row">
@@ -190,3 +194,5 @@
         </div>
       </div>
     </nav>
+
+    <%- include('alert') %>
