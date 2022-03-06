@@ -6,7 +6,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="/images/favicon.ico" />
-  <title>ASIMOV - <%= titre %></title>
+  <title>ASIMOV - <%= titre %>
+  </title>
 
   <!-- Theme -->
   <link href='https://fonts.googleapis.com/css?family=Antonio' rel='stylesheet'>
@@ -34,18 +35,101 @@
           <div class="simplebar-offset" style="right: 0px; bottom: 0px;">
             <div class="simplebar-content-wrapper" style="height: 100%; overflow: hidden scroll;">
               <div class="simplebar-content" style="padding: 0px;">
-                <li class="nav-title">Theme</li>
-                <li class="nav-item"><a class="nav-link" href="https://coreui.io/demo/4.0/free/colors.html">
-                    <i class="fa-solid fa-bell fa-xl iclass"></i> Colors</a></li>
-                <li class="nav-item"><a class="nav-link" href="https://coreui.io/demo/4.0/free/typography.html">
-                    <i class="fa-solid fa-bell fa-xl iclass"></i> Typography</a></li>
-                <li class="nav-title">Components</li>
-                <li class="nav-group"><a class="nav-link nav-group-toggle" href="https://coreui.io/demo/4.0/free/#">
-                    <i class="fa-solid fa-bell fa-xl iclass"></i> Base</a>
+                <!-- header left  -->
+
+                <li class="nav-title">Les Notes</li>
+                <li class="nav-group">
+                  <a class="nav-link nav-group-toggle" href="https://coreui.io/demo/4.0/free/#">
+                    <i class="fa-solid fa-award fa-xl iclass"></i>
+                    Les notes
+                  </a>
                   <ul class="nav-group-items">
-                    <li class="nav-item"><a class="nav-link"
-                        href="https://coreui.io/demo/4.0/free/base/accordion.html"><span class="nav-icon"></span>
-                        Accordion</a></li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="/notes/ajouter">
+                        Ajouter une note
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="/notes/liste">
+                        Liste des notes
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+
+                
+                <li class="nav-title">Les élèves</li>
+                <li class="nav-group">
+                  <a class="nav-link nav-group-toggle" href="https://coreui.io/demo/4.0/free/#">
+                    <i class="fa-solid fa-user fa-xl iclass"></i>
+                    Les élèves
+                  </a>
+                  <ul class="nav-group-items">
+                    <li class="nav-item">
+                      <a class="nav-link" href="/eleves/ajouter">
+                        Ajouter un(e) élève
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="/eleves/liste">
+                        Liste des élèves
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+
+                <li class="nav-title">Les professeurs</li>
+                <li class="nav-group">
+                  <a class="nav-link nav-group-toggle" href="https://coreui.io/demo/4.0/free/#">
+                    <i class="fa-solid fa-user-graduate fa-xl iclass"></i>
+                    Les proffeseurs
+                  </a>
+                  <ul class="nav-group-items">
+                    <li class="nav-item">
+                      <a class="nav-link" href="/profs/ajouter">
+                        Ajouter un(e) professeur(e)
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="/profs/liste">
+                        Liste des professeur(e)s
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+
+                <li class="nav-title">Les classes</li>
+                <li class="nav-group">
+                  <a class="nav-link nav-group-toggle" href="https://coreui.io/demo/4.0/free/#">
+                    <i class="fa-solid fa-school fa-xl iclass"></i>
+                    Les classes
+                  </a>
+                  <ul class="nav-group-items">
+                    <li class="nav-item">
+                      <a class="nav-link" href="/classes/list">
+                        Liste des classes
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+
+                <li class="nav-title">Les matières</li>
+                <li class="nav-group">
+                  <a class="nav-link nav-group-toggle" href="https://coreui.io/demo/4.0/free/#">
+                    <i class="fa-solid fa-book fa-xl iclass"></i>
+                    Les matières
+                  </a>
+                  <ul class="nav-group-items">
+                    <li class="nav-item">
+                      <li class="nav-item">
+                        <a class="nav-link" href="/matieres/ajouter">
+                          Ajouter une matière
+                        </a>
+                      </li>
+                      <a class="nav-link" href="/matieres/liste">
+                        Liste des matières
+                      </a>
+                    </li>
                   </ul>
                 </li>
               </div>
@@ -70,30 +154,35 @@
       <div class="container text-light py-3">
         <div class="row">
           <div class="col-4">
-            <div class="header-toggler" onclick="coreui.Sidebar.getInstance(document.querySelector('#sidebar')).toggle()">
+            <div class="header-toggler"
+              onclick="coreui.Sidebar.getInstance(document.querySelector('#sidebar')).toggle()">
               <i class="fas fa-bars"></i>
             </div>
           </div>
-          <div class="col-4 text-center"> 
+          <div class="col-4 text-center">
             <div class="d-none d-md-block d-print-block">
-              <img src="/images/logo_title.png" style="height:50px; width: auto; margin-top: -5px;" />
+              <a href="/"><img src="/images/logo_title.png" style="height:50px; width: auto; margin-top: -5px;" /></a>
             </div>
 
             <div class="d-block d-md-none">
-              <img src="/images/logo.svg" style="height:50px; width: auto; margin-top: -5px;" />
+              <a href="/"><img src="/images/logo.svg" style="height:50px; width: auto; margin-top: -5px;" /></a>
             </div>
           </div>
           <div class="col-4 text-end header-toggler">
             <div class="btn-group">
-              <div class="dropdown-toggle d-none d-md-block d-print-block" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <div class="dropdown-toggle d-none d-md-block d-print-block" type="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
                 GUCLU Sefa
               </div>
-              <div class="dropdown-toggle d-block d-md-none" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <div class="dropdown-toggle d-block d-md-none" type="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
                 GS
               </div>
               <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="#">Mon compte</a></li>
-                <li><hr class="dropdown-divider"></li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
                 <li><a class="dropdown-item" href="#">Déconnexion</a></li>
               </ul>
             </div>
