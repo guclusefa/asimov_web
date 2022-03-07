@@ -17,62 +17,120 @@
                     <div class="row">
                         <div class="col-md-6 col-sm-12 col-12 mt-3">
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" placeholder="Password" id="test1" name="test1" required>
-                                <label class="required">Password</label>
+                                <input type="text" class="form-control" placeholder="NOM" id="nom" name="nom" required>
+                                <label class="required">NOM</label>
                                 <div class="invalid-feedback">
-                                    Please choose a username.
+                                    Choisir un nom valide !
                                 </div>
                                 <div class="valid-feedback">
-                                    Looks good!
+                                    Nom valide
                                 </div>
                             </div>
                         </div>
+
                         <div class="col-md-6 col-sm-12 col-12 mt-3">
                             <div class="form-floating mb-3">
-                                <select class="form-control select2" name="test" id="test" required>
-                                    <option value="" disabled selected>Choisir un</option>
-                                    <option value="1">One</option>
-                                    <option value="1">One</option>
-                                    <option value="1">One</option>
-                                    <option value="1">One</option>
+                                <input type="text" class="form-control" placeholder="Prénom" id="prenom" name="prenom" required>
+                                <label class="required">Prénom</label>
+                                <div class="invalid-feedback">
+                                    Choisir un prénom valide !
+                                </div>
+                                <div class="valid-feedback">
+                                    Prénom valide
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 col-sm-12 col-12 mt-3">
+                            <div class="form-floating mb-3">
+                                <select class="form-control" id="sexe" name="sexe" required>
+                                    <option value="" disabled selected>Choisir un sexe</option>
+                                    <option value="M">Masculin</option>
+                                    <option value="F">Féminin</option>
                                 </select>
-                                <label class="required">Passwo fsfdsfsd rd</label>
+                                <label class="required">Sexe</label>
                                 <div class="invalid-feedback">
-                                    Please choose a username.
+                                    Choisir un sexe valide !
                                 </div>
                                 <div class="valid-feedback">
-                                    Looks good!
+                                    Sexe valide
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-sm-12 col-12 mt-3">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="datepicker_input form-control" placeholder="Date de naissance" id="date" name="date" required>
+                                <label class="required">Date de naissance</label>
+                                <div class="invalid-feedback">
+                                    Choisir une date de naissance valide !
+                                </div>
+                                <div class="valid-feedback">
+                                    Date de naissance valide
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                    <div class="row">
+                        <div class="col-md-6 col-sm-12 col-12 mt-3">
+                            <div class="form-floating mb-3">
+                                <input type="email" class="form-control" placeholder="Email" id="email" name="email" required>
+                                <label class="required">Email</label>
+                                <div class="invalid-feedback">
+                                    Choisir un email valide !
+                                </div>
+                                <div class="valid-feedback">
+                                    Email valide
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-sm-12 col-12 mt-3">
+                            <div class="form-floating mb-3">
+                                <input type="tel" class="form-control" placeholder="Numéro de téléphone" id="tel" name="tel" required>
+                                <label class="required">Numéro de téléphone</label>
+                                <div class="invalid-feedback">
+                                    Choisir un numéro de téléphone valide !
+                                </div>
+                                <div class="valid-feedback">
+                                    Numéro de téléphone valide !
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <div class="row">
-                        <div class="col-12 mt-3">
+                        <div class="col-md-6 col-sm-12 col-12 mt-3">
                             <div class="form-floating mb-3">
-                                <input type="email" class="form-control" placeholder="Password" required>
-                                <label class="required">Password</label>
+                                <select class="form-control" id="classe" name="classe" required>
+                                    <option value="" disabled selected>Choisir une classe</option>
+                                    <% lesClasses.forEach(function(uneClasse){ %>
+                                        <option value="<%= uneClasse.classe_id %>"><%= uneClasse.classe_libelle %></option>
+                                    <% })%>
+                                </select>
+                                <label class="required">Classe</label>
                                 <div class="invalid-feedback">
-                                    Please choose a username.
+                                    Choisir un classe valide !
                                 </div>
                                 <div class="valid-feedback">
-                                    Looks good!
+                                    Classe valide
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="row">
-                        <div class="col-12 mt-3">
+                        <div class="col-md-6 col-sm-12 col-12 mt-3">
                             <div class="form-floating mb-3">
-                                <input type="text" class="datepicker_input_year form-control" id="datepicker"
-                                    placeholder="JJ/MM/AAAA" autocomplete="off" required>
-                                <label class="required" for="datepicker">Date</label>
+                                <input type="text" class="datepicker_input_year form-control" placeholder="Choisir une année scolaire" id="annee" name="annee" required>
+                                <label class="required">Choisir une année scolaire</label>
                                 <div class="invalid-feedback">
-                                    Please choose a username.
+                                    Choisir une année scolaire valide !
                                 </div>
                                 <div class="valid-feedback">
-                                    Looks good!
+                                    Année scolaire valide
                                 </div>
                             </div>
                         </div>
@@ -89,8 +147,6 @@
             </div>
         </div>
     </div>
-
-
     
     <% if (modifier) { %>
     <script>

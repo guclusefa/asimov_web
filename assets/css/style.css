@@ -222,13 +222,20 @@ div.dataTables_wrapper div.dataTables_filter input {
   width: auto;
 }
 
+div.dtsp-panesContainer div.dataTables_wrapper div.dataTables_scrollBody td.dtsp-nameColumn {
+  width: 100% !important;
+  color: white;
+  background-color: #3c4b64;
+}
+
 /* table */
 table {
   background-color: white;
 }
 
 th {
-  color: white !important;
+  color: var(--cui-sidebar-nav-link-color,rgba(255,255,255,0.6)) !important;
+  font-weight: unset !important;
 }
 
 td {
