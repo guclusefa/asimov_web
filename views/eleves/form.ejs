@@ -12,7 +12,7 @@
                 </p>
                 <hr>
 
-                <form action="<%= action %>" enctype="multipart/form-data" method="POST" class="needs-validation"
+                <form action="<%= action %>" method="POST" class="needs-validation"
                     novalidate>
                     <div class="row">
                         <div class="col-md-6 col-sm-12 col-12 mt-3">
@@ -62,7 +62,7 @@
 
                         <div class="col-md-6 col-sm-12 col-12 mt-3">
                             <div class="form-floating mb-3">
-                                <input type="text" class="datepicker_input form-control" placeholder="Date de naissance" id="date" name="date" required>
+                                <input type="text" class="datepicker_input form-control" autocomplete="off" placeholder="Date de naissance" id="date" name="date" required>
                                 <label class="required">Date de naissance</label>
                                 <div class="invalid-feedback">
                                     Choisir une date de naissance valide !
@@ -124,7 +124,7 @@
 
                         <div class="col-md-6 col-sm-12 col-12 mt-3">
                             <div class="form-floating mb-3">
-                                <input type="text" class="datepicker_input_year form-control" placeholder="Choisir une année scolaire" id="annee" name="annee" required>
+                                <input type="text" class="datepicker_input_year form-control" autocomplete="off" placeholder="Choisir une année scolaire" id="annee" name="annee" required>
                                 <label class="required">Choisir une année scolaire</label>
                                 <div class="invalid-feedback">
                                     Choisir une année scolaire valide !

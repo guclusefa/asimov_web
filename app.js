@@ -7,14 +7,22 @@ const flash = require('connect-flash');
 // activer les dépendances
 let app = express();
 app.set("view engine", "ejs");
+
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
+
 app.use(session({
 	secret:'leCodeSecretFlash',
 	saveUninitialized: false,
 	resave: false
 }));
+
 app.use(flash())
+app.use(function(req, res, next){
+	valid= req.flash('valid'),
+	erreur= req.flash('erreur')
+    next();
+});
 
 //chemins static
 app.use(express.static("views"));

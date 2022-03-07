@@ -27,12 +27,11 @@ module.exports = {
     },
 
     ajouter: function (req, res) {
-        console.log(req.body)
         let params = [
             nom = req.body.nom,
             prenom = req.body.prenom,
-            mdp = "test123",
-            date = req.body.date,
+            mdp = req.body.date,
+            date = req.body.date.split("/").reverse().join("/"),
             sexe = req.body.sexe,
             tel = req.body.tel,
             email = req.body.email
@@ -40,7 +39,7 @@ module.exports = {
 
         model_eleves.ajouter(params, function (data) {
             req.flash('valid', 'Élève ajouter avec succès');
-            res.redirect('./accueil')
+            res.redirect('./liste')
         })
     },
 }
