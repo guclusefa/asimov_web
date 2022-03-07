@@ -5,6 +5,7 @@ user_nom
 user_prenom
 user_mdp
 user_dateNaissance
+user_sexe
 user_tel
 user_mail
 user_isProf

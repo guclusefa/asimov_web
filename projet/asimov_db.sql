@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql-asimov.alwaysdata.net
--- Generation Time: Mar 04, 2022 at 04:05 PM
+-- Generation Time: Mar 07, 2022 at 03:35 PM
 -- Server version: 10.6.5-MariaDB
 -- PHP Version: 7.4.19
 
@@ -124,6 +124,7 @@ CREATE TABLE `Users` (
   `user_prenom` varchar(200) NOT NULL,
   `user_mdp` varchar(200) NOT NULL,
   `user_dateNaissance` date NOT NULL,
+  `usert_sexe` char(1) NOT NULL,
   `user_tel` varchar(200) NOT NULL,
   `user_mail` varchar(200) NOT NULL,
   `user_isProf` tinyint(1) NOT NULL,
