@@ -15,12 +15,17 @@ routeur.get('/connexion', control_connexion.afficher)
 
 // eleves
 routeur.get('/eleves/liste', control_eleves.afficher_liste)
-    /* AJOUTER */
-    routeur.get('/eleves/ajouter', control_eleves.afficher_ajouter)
-    routeur.get('/eleves/ajouter', control_eleves.afficher_ajouter)
-    routeur.post('/eleves/ajouter', control_eleves.ajouter)
 
-    routeur.get('/eleves/modifier/:id', control_eleves.afficher_modifier)
+routeur.get('/eleves/ajouter', control_eleves.afficher_ajouter)
+routeur.post('/eleves/ajouter', control_eleves.ajouter)
+
+routeur.get('/eleves/modifier/:id', control_eleves.afficher_modifier)
+routeur.post('/eleves/modifier/:id', control_eleves.modifier)
+
+routeur.get('/eleves/fiche/:id', control_eleves.afficher_fiche)
+
+routeur.get('/eleves/supprimer/:id', control_eleves.supprimer)
+
 
 // routeur
 module.exports = routeur;

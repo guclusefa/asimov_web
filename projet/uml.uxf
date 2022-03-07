@@ -27,7 +27,7 @@ user_isAdministration
 --
 cursus_id
 cursus_anneeScolaire
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>758</x><y>300</y><w>130</w><h>70</h></coordinates><panel_attributes>Classes
+cursus_libelle</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>758</x><y>300</y><w>130</w><h>70</h></coordinates><panel_attributes>Classes
 --
 clase_id
 classe_libelle</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>138</x><y>280</y><w>50</w><h>160</h></coordinates><panel_attributes>lt=-

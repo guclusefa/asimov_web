@@ -37,7 +37,7 @@ $(function() {
         const datepicker = new Datepicker(elem, {
             language: "fr",
             title: getDatePickerTitle(elem),
-            autohide: true
+            autohide: true,
         });
     };
 
@@ -103,7 +103,7 @@ $(function() {
             },
             "count": "{total}",
             "countFiltered": "{shown} ({total})",
-            "emptyPanes": "Aucun filtre",
+            "emptyPanes": "",
             "loadMessage": "Chargement filtre",
             "title": "Filres actifs - %d",
             "showMessage": "Tout montrer",
@@ -120,7 +120,7 @@ $(function() {
                 show: true,
                 initCollapsed: true
             },
-            targets: [0, 1, 2, 3, 4, 5]
+            /* targets: [0, 1, 2, 3, 4, 5] */
         }]
     });
     table.searchPanes.container().prependTo(table.table().container());
@@ -154,7 +154,7 @@ const showModalDetail = (title, description, lien) => {
           </div>
           <div class="modal-footer bg-light">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-            <button type="button" class="btn btn-primary modal-success-btn" data-bs-dismiss="modal" onclick="location.href = '${lien}';">Modifier</button>
+            <button type="button" class="btn btn-primary modal-success-btn" data-bs-dismiss="modal" onclick="location.href = '${lien}';">Fiche</button>
           </div>
         </div>
       </div>
