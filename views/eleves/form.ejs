@@ -90,7 +90,9 @@
         </div>
     </div>
 
-    <% if (typeof modifier !='undefined') { %>
+
+    
+    <% if (modifier) { %>
     <script>
         window.addEventListener("load", function () {
             $("#test1").val('<%= test %>');

@@ -8,7 +8,8 @@ module.exports = {
     afficher_ajouter: function (req, res) {
         titre = "Ajouter un élève";
         action = "/ajouter"
-        res.render('./eleves/form', { titre, action })
+        modifier = 0
+        res.render('./eleves/form', { titre, action , modifier})
     },
     afficher_modifier: function (req, res) {
         titre = "Modifier un élève";

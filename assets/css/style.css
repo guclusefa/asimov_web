@@ -26,6 +26,10 @@ a {
   margin-top: 0.25rem;
 }
 
+.nav-link:hover, .nav-link:focus {
+  color: var(--cui-sidebar-nav-title-color,rgba(255,255,255,0.6));
+}
+
 /* footer */
 footer {
   background: #212529;
