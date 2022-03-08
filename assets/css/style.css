@@ -193,48 +193,6 @@ div.dtsp-topRow.dtsp-bordered:hover {
     cursor: pointer !important;
 }
 
-::-webkit-scrollbar {
-    width: 5px;
-    height: 7px;
-}
-
-::-webkit-scrollbar-button {
-    width: 0px;
-    height: 0px;
-}
-
-::-webkit-scrollbar-thumb {
-    background: #525965;
-    border: 0px none #ffffff;
-    border-radius: 0px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: #525965;
-}
-
-::-webkit-scrollbar-thumb:active {
-    background: #525965;
-}
-
-::-webkit-scrollbar-track {
-    background: transparent;
-    border: 0px none #ffffff;
-    border-radius: 50px;
-}
-
-::-webkit-scrollbar-track:hover {
-    background: transparent;
-}
-
-::-webkit-scrollbar-track:active {
-    background: transparent;
-}
-
-::-webkit-scrollbar-corner {
-    background: transparent;
-}
-
 div.dataTables_wrapper div.dataTables_filter input {
     margin-left: 0;
     display: inline-block;
@@ -247,11 +205,18 @@ div.dtsp-panesContainer div.dataTables_wrapper div.dataTables_scrollBody td.dtsp
     background-color: #3c4b64;
 }
 
+@media screen and (max-width: 767px) {
+div.dataTables_wrapper div.dataTables_length label, div.dataTables_wrapper div.dataTables_filter label{
+    float: left;
+    }
+}
+
 
 /* table */
 
 table {
     background-color: white;
+    
 }
 
 th {
@@ -261,6 +226,15 @@ th {
 
 td {
     vertical-align: middle;
+    color: black !important;
+}
+
+th:hover{
+    color: white !important;
+}
+
+tbody tr:hover {
+    background-color: #e3e5e9;
 }
 
 .action_table {
