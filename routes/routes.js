@@ -8,6 +8,7 @@ var control_connexion = require('../controllers/control_connexion')
 var control_eleves = require('../controllers/control_eleves')
 var control_profs = require('../controllers/control_profs')
 var control_matieres = require('../controllers/control_matieres')
+var control_classes = require('../controllers/control_classes')
 
 // routage accueil
 routeur.get('/', control_accueil.afficher)
@@ -53,6 +54,19 @@ routeur.post('/matieres/modifier/:id', control_matieres.modifier)
 routeur.get('/matieres/fiche/:id', control_matieres.afficher_fiche)
 
 routeur.get('/matieres/supprimer/:id', control_matieres.supprimer)
+
+// classes
+routeur.get('/classes/liste', control_classes.afficher_liste)
+
+routeur.get('/classes/ajouter', control_classes.afficher_ajouter)
+routeur.post('/classes/ajouter', control_classes.ajouter)
+
+routeur.get('/classes/modifier/:id', control_classes.afficher_modifier)
+routeur.post('/classes/modifier/:id', control_classes.modifier)
+
+routeur.get('/classes/fiche/:id', control_classes.afficher_fiche)
+
+routeur.get('/classes/supprimer/:id', control_classes.supprimer)
 
 
 // routeur
