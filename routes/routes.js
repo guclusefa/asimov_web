@@ -6,6 +6,7 @@ const routeur = express.Router();
 var control_accueil = require('../controllers/control_accueil')
 var control_connexion = require('../controllers/control_connexion')
 var control_eleves = require('../controllers/control_eleves')
+var control_profs = require('../controllers/control_profs')
 
 // routage accueil
 routeur.get('/', control_accueil.afficher)
@@ -25,6 +26,19 @@ routeur.post('/eleves/modifier/:id', control_eleves.modifier)
 routeur.get('/eleves/fiche/:id', control_eleves.afficher_fiche)
 
 routeur.get('/eleves/supprimer/:id', control_eleves.supprimer)
+
+// profs
+routeur.get('/profs/liste', control_profs.afficher_liste)
+
+routeur.get('/profs/ajouter', control_profs.afficher_ajouter)
+routeur.post('/profs/ajouter', control_profs.ajouter)
+
+routeur.get('/profs/modifier/:id', control_profs.afficher_modifier)
+routeur.post('/profs/modifier/:id', control_profs.modifier)
+
+routeur.get('/profs/fiche/:id', control_profs.afficher_fiche)
+
+routeur.get('/profs/supprimer/:id', control_profs.supprimer)
 
 
 // routeur

@@ -5,11 +5,11 @@ module.exports = {
         var sql = `SELECT *,
         TIMESTAMPDIFF(YEAR, user_dateNaissance, CURDATE()) AS user_age,
         DATE_FORMAT(user_dateNaissance, '%d/%m/%Y') as user_dateNaissance
-        FROM Users 
-        WHERE user_isProf = 0 
-        AND user_isProfPrincipal = 0 
+        FROM Users, Matieres
+        WHERE user_isProf = 1
         AND user_isProviseur = 0 
-        AND user_isAdministration = 0`;
+        AND user_isAdministration = 0
+        AND user_idMatiere = matiere_id`;
         db.query(sql, function(err, data) {
             if (err) throw err;
             return callback(data);
@@ -17,7 +17,9 @@ module.exports = {
     },
 
     ajouter: function(params, callback) {
-        var sql = `INSERT INTO Users (user_nom, user_prenom, user_mdp, user_dateNaissance, user_sexe, user_tel, user_mail) VALUES (?,?,?,?,?,?,?)`;
+        var sql = `INSERT INTO Users 
+        (user_nom, user_prenom, user_mdp, user_dateNaissance, user_sexe, user_tel, user_mail, user_isProf, user_isProfPrincipal, user_idMatiere)
+        VALUES (?,?,?,?,?,?,?, 1,?,?)`;
         db.query(sql, params, function(err, data) {
             if (err) throw err;
             return callback(data);
@@ -31,8 +33,10 @@ module.exports = {
         user_dateNaissance = ?, 
         user_sexe = ?, 
         user_tel = ?, 
-        user_mail = ?
-        WHERE user_id = ? `;
+        user_mail = ?,
+        user_isProfPrincipal = ?,
+        user_idMatiere = ?
+        WHERE user_id = ?`;
         db.query(sql, params, function(err, data) {
             if (err) throw err;
             return callback(data);
@@ -51,8 +55,9 @@ module.exports = {
         var sql = `SELECT *,
         TIMESTAMPDIFF(YEAR, user_dateNaissance, CURDATE()) AS user_age,
         DATE_FORMAT(user_dateNaissance, '%d/%m/%Y') as user_dateNaissance
-        FROM Users 
-        WHERE user_id = ?`;
+        FROM Users, Matieres
+        WHERE user_id = ?
+        AND user_idMatiere = matiere_id`;
         db.query(sql, params, function(err, data) {
             if (err) throw err;
             return callback(data);

@@ -1,0 +1,79 @@
+<%- include('../layout/header') %>
+
+    <div class="container-fluid bg-secondary py-5">
+        <div class="container">
+            <div>
+                <h1 class="display-5 fw-bold text-primary">
+                    <%= titre %>
+                </h1>
+                <p class="col-md-12 fs-4 text-justify">Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero
+                    doloribus, facere sint distinctio reprehenderit, similique fuga molestiae adipisci optio deserunt
+                    expedita ab veniam aperiam repellendus quia culpa possimus! Dolores, aperiam.
+                </p>
+                <hr>
+
+                <div class="row">
+                    <div class="col-md-6  col-sm-12 col-12">
+                        <div class="card mt-3">
+                            <div class="card-body">
+                                <h5 class="card-title">Informations</h5>
+                                <hr>
+                                <h5 class="card-text my-4"><b>Nom : </b>
+                                    <%= unProf.user_nom %>
+                                </h5>
+                                <h5 class="card-text my-4"><b>Prénom : </b>
+                                    <%= unProf.user_prenom %>
+                                </h5>
+                                <h5 class="card-text my-4"><b>Date de naissance : </b>
+                                    <%= unProf.user_dateNaissance %>
+                                        (<%= unProf.user_age %>ans)
+                                </h5>
+                                <h5 class="card-text my-4"><b>Sexe : </b>
+                                    <% if(unProf.user_sexe=='F' ) { %>
+                                        Féminin
+                                        <% } else { %>Masculin<% } %>
+                                </h5>
+                                <h5 class="card-text my-4"><b>Tél : </b>
+                                    <%= unProf.user_tel%>
+                                </h5>
+                                <h5 class="card-text my-4"><b>Email : </b>
+                                    <%= unProf.user_mail %>
+                                </h5>
+                                <h5 class="card-text my-4"><b>Matière : </b>
+                                    <%= unProf.matiere_libelle %>
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-6 col-sm-12 col-12">
+                        <div class="card my-3">
+                            <div class="card-body">
+                                <h5 class="card-title">Année 2022</h5>
+                                <hr>
+                                <p class="card-text"><b>Classe : </b></p>
+                                <a href="#" class="btn btn-primary">Voir les notes</a>
+                            </div>
+                        </div>
+
+                        <div class="card my-3">
+                            <div class="card-body">
+                                <h5 class="card-title">Année 2021</h5>
+                                <hr>
+                                <p class="card-text"><b>Classe : </b></p>
+                                <a href="#" class="btn btn-primary">Voir les notes</a>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+
+    <%- include('../layout/footer') %>
