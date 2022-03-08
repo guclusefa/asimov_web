@@ -20,6 +20,7 @@
                             <th>Tél</th>
                             <th>Email</th>
                             <th>Matière</th>
+                            <th>Professeur principal</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -42,8 +43,16 @@
                                     <%= unProf.matiere_libelle %>
                                 </td>
                                 <td>
+                                    <% if (unProf.user_isProfPrincipal) { 
+                                        principal = "Oui"
+                                    } else { 
+                                        principal = "Non" 
+                                    } %> 
+                                    <%= principal %>
+                                </td>
+                                <td>
                                     <button type="button" class="btn btn-primary action_table"
-                                        onclick="showModalDetail('Détail élève <%= unProf.user_id %>', {'NOM': '<%= unProf.user_nom %>', 'Prénom': '<%= unProf.user_prenom %>','Date de naissance': '<%= unProf.user_dateNaissance + ` (` + unProf.user_age + `ans)` %>','Sexe': '<%= unProf.user_sexe %>','Tél': '<%= unProf.user_tel %>','Email': '<%= unProf.user_mail %>','Matière': '<%= unProf.matiere_libelle %>' }, 'fiche/<%= unProf.user_id %>')"><i
+                                        onclick="showModalDetail('Détail élève <%= unProf.user_id %>', {'NOM': '<%= unProf.user_nom %>', 'Prénom': '<%= unProf.user_prenom %>','Date de naissance': '<%= unProf.user_dateNaissance + ` (` + unProf.user_age + `ans)` %>','Sexe': '<%= unProf.user_sexe %>','Tél': '<%= unProf.user_tel %>','Email': '<%= unProf.user_mail %>','Matière': '<%= unProf.matiere_libelle %>','Professeur principal': '<%= principal %>'}, 'fiche/<%= unProf.user_id %>')"><i
                                             class="fas fa-eye"></i></button>
                                     <button type="button" class="btn btn-success action_table"
                                         onclick="location.href = 'modifier/<%= unProf.user_id %>';"><i
