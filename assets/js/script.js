@@ -38,6 +38,7 @@ $(function() {
             language: "fr",
             title: getDatePickerTitle(elem),
             autohide: true,
+            
         });
     };
 
@@ -49,7 +50,8 @@ $(function() {
             autohide: true,
             format: 'yyyy',
             startView: 2,
-            pickLevel: 2
+            pickLevel: 2,
+            orientation: 'bottom'
         });
     };
 });

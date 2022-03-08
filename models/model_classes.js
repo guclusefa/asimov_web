@@ -1,6 +1,14 @@
 var db = require("../config/database");
 module.exports = {
     // lister les classes
+    lister_classes: function(callback) {
+        var sql = `SELECT * FROM Classes`;
+        db.query(sql, function(err, data) {
+            if (err) throw err;
+            return callback(data);
+        });
+    },
+
     lister: function(callback) {
         var sql = `SELECT * FROM Cursus, Classes, Users
         WHERE cursus_idClasse = classe_id
