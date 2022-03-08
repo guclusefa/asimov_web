@@ -1,0 +1,51 @@
+<%- include('../layout/header') %>
+
+    <div class="container-fluid bg-secondary py-5">
+        <div class="container">
+            <div>
+                <h1 class="display-5 fw-bold text-primary">
+                    <%= titre %>
+                </h1>
+                <p class="col-md-12 fs-4 text-justify">Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero
+                    doloribus, facere sint distinctio reprehenderit, similique fuga molestiae adipisci optio deserunt
+                    expedita ab veniam aperiam repellendus quia culpa possimus! Dolores, aperiam.
+                </p>
+                <hr>
+
+                <table id="dataTable" class="table" style="width:100%">
+                    <thead class="bg-primary" >
+                        <tr>
+                            <th>#</th>
+                            <th>Libellé</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% lesMatieres.forEach(function(uneMatiere){ %>
+                            <tr>
+                                <td>
+                                    <%= uneMatiere.matiere_id %>
+                                </td>
+                                <td>
+                                    <%= uneMatiere.matiere_libelle %>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-primary action_table"
+                                        onclick="showModalDetail('Détail matière <%= uneMatiere.matiere_id %>', {'ID': '<%= uneMatiere.matiere_id %>', 'Libellé': '<%= uneMatiere.matiere_libelle %>'}, 'fiche/<%= uneMatiere.matiere_id %>')"><i
+                                            class="fas fa-eye"></i></button>
+                                    <button type="button" class="btn btn-success action_table"
+                                        onclick="location.href = 'modifier/<%= uneMatiere.matiere_id %>';"><i
+                                            class="fas fa-edit"></i></button>
+                                    <button type="button" class="btn btn-danger action_table"
+                                        onclick="showModalSupprimer('Détail matière <%= uneMatiere.matiere_id %>', 'Matière <%= uneMatiere.matiere_id %>', 'supprimer/<%= uneMatiere.matiere_id %>')"><i
+                                            class="fas fa-trash-alt"></i></button>
+                                </td>
+                            </tr>
+                            <% })%>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <%- include('../layout/footer') %>
