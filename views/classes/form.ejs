@@ -1,8 +1,8 @@
 <%- include('../layout/header') %>
 
 
-<div class="container-fluid bg-secondary py-5">
-    <div class="container">
+    <div class="container-fluid bg-secondary py-5">
+        <div class="container">
             <div>
                 <h1 class="display-5 fw-bold text-primary">
                     <%= titre %>
@@ -20,8 +20,10 @@
                                 <select class="form-control" id="classe" name="classe" required>
                                     <option value="" disabled selected>Choisir une classe</option>
                                     <% lesClasses.forEach(function(uneClasse){ %>
-                                    <option value="<%= uneClasse.classe_id %>"><%= uneClasse.classe_libelle %></option>
-                                    <% })%>
+                                        <option value="<%= uneClasse.classe_id %>">
+                                            <%= uneClasse.classe_libelle %>
+                                        </option>
+                                        <% })%>
                                 </select>
                                 <label class="required">Classe</label>
                                 <div class="invalid-feedback">
@@ -52,7 +54,7 @@
                     <div class="row">
                         <div class="col-md-6 col-sm-12 col-12 mt-3">
                             <div class="form-floating mb-3">
-                                <input type="email" class="form-control" placeholder="Email" id="libelle" name="libelle"
+                                <input type="text" class="form-control" placeholder="Email" id="libelle" name="libelle"
                                     required>
                                 <label class="required">Libellé</label>
                                 <div class="invalid-feedback">
@@ -65,11 +67,13 @@
                         </div>
                         <div class="col-md-6 col-sm-12 col-12 mt-3">
                             <div class="form-floating mb-3">
-                                <select class="form-control" id="principal" name="principal" required>
+                                <select class="form-control select2" id="principal" name="principal" required>
                                     <option value="" disabled selected>Choisir un professeur principal</option>
                                     <% lesPrincipales.forEach(function(unePrincipale){ %>
-                                    <option value="<%= unePrincipale.user_id %>"><%= unePrincipale.user_nom %></option>
-                                    <% })%>
+                                        <option value="<%= unePrincipale.user_id %>">
+                                            <%= unePrincipale.user_nom + ' ' + unePrincipale.user_prenom %>
+                                        </option>
+                                        <% })%>
                                 </select>
                                 <label class="required">Professeur principal</label>
                                 <div class="invalid-feedback">
@@ -81,6 +85,77 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="row">
+                        <div class="col-md-6 col-sm-12 col-12">
+                            <fieldset class="border rounded-3 p-3 mb-3" style="background-color: white;">
+                                <legend class="float-none text-primary">Les professeurs</legend>
+                                <div class="row">
+                                    <% lesProfsParMatiere.forEach(function(uneMatiere){ %>
+                                        <div class="col-12 mt-3">
+                                            <div class="form-floating mb-3">
+                                                <select class="form-control select2"
+                                                    id="prof_<%= uneMatiere[0].matiere_id %>"
+                                                    name="prof_<%= uneMatiere[0].matiere_id %>" required>
+                                                    <option value="" disabled selected>Choisir un professeur de <%=
+                                                            uneMatiere[0].matiere_libelle %>
+                                                    </option>
+                                                    <% uneMatiere[1].forEach(function(unProf){ %>
+                                                        <option value="<%= unProf.user_id %>">
+                                                            <%= unProf.user_nom + ' ' + unProf.user_prenom %>
+                                                        </option>
+                                                        <% })%>
+                                                </select>
+                                                <label class="required">Professeur de <%= uneMatiere[0].matiere_libelle
+                                                        %></label>
+                                                <div class="invalid-feedback">
+                                                    Choisir un professeur de <%= uneMatiere[0].matiere_libelle %> valide
+                                                        !
+                                                </div>
+                                                <div class="valid-feedback">
+                                                    Professeur de <%= uneMatiere[0].matiere_libelle %>valide
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <% })%>
+                                </div>
+                            </fieldset>
+                        </div>
+
+                        <div class="col-md-6 col-sm-12 col-12">
+                            <fieldset class="border rounded-3 p-3 mb-3" style="background-color: white;">
+                                <legend class="float-none text-primary">Les élèves</legend>
+                                <div class="row" id="listeEleves">
+                                    <div class="col-12 mt-3">
+                                        <div class="form-floating mb-3">
+                                            <select class="form-control select2" id="eleve_1" name="eleves[]" required>
+                                                <option value="" disabled selected>Choisir un élève</option>
+                                                <% lesPrincipales.forEach(function(unProf){ %>
+                                                    <option value="<%= unProf.user_id %>">
+                                                        <%= unProf.user_nom + ' ' + unProf.user_prenom %>
+                                                    </option>
+                                                    <% })%>
+                                            </select>
+                                            <label class="required">Élève 1 %></label>
+                                            <div class="invalid-feedback">
+                                                Choisir un élève valide !
+                                            </div>
+                                            <div class="valid-feedback">
+                                                Élève valide
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 mt-3">
+                                        <a onclick="ajouter()" class="btn btn-success">Ajouter</a>
+                                        <a onclick="supprimer()" class="btn btn-danger">Supprimer</a>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+
 
                     <div class="row">
                         <div class="col-12 mt-3">
@@ -95,16 +170,49 @@
     </div>
 
     <script>
+        id = 1
+        function ajouter() {
+            id++
+            newDiv = `<div class="col-12 mt-3" id="div_eleve_${id}">
+                        <div class="form-floating mb-3">
+                                <select class="form-control"
+                                    id="eleve_${id}"
+                                    name="eleves[]" required>
+                                    <option value="" disabled selected>Choisir un élève</option>
+                                        <% lesPrincipales.forEach(function(unProf){ %>
+                                            <option value="<%= unProf.user_id %>">
+                                                <%= unProf.user_nom + ' ' + unProf.user_prenom %>
+                                            </option>
+                                        <% })%>
+                                </select>
+                                <label class="required">Élève ${id} %></label>
+                                <div class="invalid-feedback">
+                                    Choisir un élève valide !
+                                </div>
+                                <div class="valid-feedback">
+                                    Élève valide
+                                </div>
+                        </div>
+                    </div>`
+            $("#listeEleves").append(newDiv);
+            /* select2 */
+            $(`#eleve_${id}`).select2({
+                theme: 'bootstrap-5'
+            });
+        }
+
+        function supprimer() {
+            document.getElementById(`div_eleve_${id}`).remove();
+            id--
+        }
     </script>
 
     <% if (modifier) { %>
         <script>
             window.addEventListener("load", function () {
-                $("#nom").val('<%= unEleve.user_nom %>');
-                $("#prenom").val('<%= unEleve.user_prenom %>');
-                $("#sexe").val('<%= unEleve.user_sexe %>').change();
-                $("#email").val('<%= unEleve.user_mail %>');
-                $("#tel").val('<%= unEleve.user_tel %>');
+                $("#classe").val('<%= uneClasse.classe_id %>').change();
+                $("#libelle").val('<%= uneClasse.cursus_libelle %>');
+                $("#principal").val('<%= uneClasse.user_id %>');
             });
         </script>
         <% } %>

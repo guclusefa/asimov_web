@@ -21,7 +21,7 @@ module.exports = {
 
     ajouter: function(params, callback) {
         var sql = `INSERT INTO Cursus 
-        (cursus_anneeScolaire, cursus_libelle, cursus_idClasse, cursus_idProfPrincipal)
+        (cursus_anneeScolaire, cursus_libelle, cursus_idClasse, cursus_idProfPrincipale)
         VALUES (?, ?, ?, ?)`;
         db.query(sql, params, function(err, data) {
             if (err) throw err;
@@ -34,7 +34,7 @@ module.exports = {
         SET cursus_anneeScolaire = ?,
         cursus_libelle = ?,
         cursus_idClasse = ?,
-        cursus_idProfPrincipal = ?,
+        cursus_idProfPrincipale = ?
         WHERE cursus_id = ?`;
         db.query(sql, params, function(err, data) {
             if (err) throw err;
@@ -51,7 +51,10 @@ module.exports = {
     },
 
     ficher: function(params, callback) {
-        var sql = `SELECT * FROM Cursus WHERE cursus_id = ?`;
+        var sql = `SELECT * FROM Cursus, Classes, Users
+        WHERE cursus_idClasse = classe_id
+        AND cursus_idProfPrincipale = user_id
+        AND cursus_id = ?`;
         db.query(sql, params, function(err, data) {
             if (err) throw err;
             return callback(data);

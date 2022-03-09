@@ -1,5 +1,6 @@
 var model_classes = require('../models/model_classes');
 var model_profs = require('../models/model_profs');
+var model_matieres = require('../models/model_matieres');
 module.exports = {
     // affichage
     afficher_liste: function (req, res) {
@@ -14,7 +15,23 @@ module.exports = {
         modifier = 0
         model_classes.lister_classes(function (lesClasses) {
             model_profs.lister_profPrincipal(function (lesPrincipales) {
-                res.render('./classes/form', { titre, action, modifier, lesClasses, lesPrincipales })
+                model_matieres.lister_matieresPrises(function (lesMatieres) {
+                    model_matieres.lister_profsParMatieres(function (lesProfsParMatiere) {
+                        merge_prof_matiere = []
+                        for (mat in lesMatieres) {
+                            listeProf = []
+                            for (prof in lesProfsParMatiere) {
+                                if (lesMatieres[mat].matiere_id == lesProfsParMatiere[prof].user_idMatiere) {
+                                    listeProf.push(lesProfsParMatiere[prof])
+                                }
+                            }
+                            merge_prof_matiere.push([lesMatieres[mat],  listeProf]) 
+                        }
+
+                        lesProfsParMatiere = merge_prof_matiere
+                        res.render('./classes/form', { titre, action, modifier, lesClasses, lesPrincipales, lesProfsParMatiere })
+                    })
+                })
             })
         })
     },
@@ -27,6 +44,7 @@ module.exports = {
         model_classes.ficher(id, function (uneClasse) {
             model_classes.lister_classes(function (lesClasses) {
                 model_profs.lister_profPrincipal(function (lesPrincipales) {
+                    uneClasse = uneClasse[0]
                     res.render('./classes/form', { titre, action, modifier, uneClasse, lesClasses, lesPrincipales })
                 })
             })
@@ -44,7 +62,10 @@ module.exports = {
 
     ajouter: function (req, res) {
         let params = [
+            annee = req.body.annee,
             libelle = req.body.libelle,
+            classe = req.body.classe,
+            principal = req.body.principal
         ]
 
         model_classes.ajouter(params, function (data) {
@@ -55,7 +76,10 @@ module.exports = {
 
     modifier: function (req, res) {
         let params = [
+            annee = req.body.annee,
             libelle = req.body.libelle,
+            classe = req.body.classe,
+            principal = req.body.principal,
             id = req.params.id
         ]
 
