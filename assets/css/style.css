@@ -199,7 +199,7 @@ div.dataTables_wrapper div.dataTables_filter input {
     width: auto;
 }
 
-div.dtsp-panesContainer div.dataTables_wrapper div.dataTables_scrollBody td.dtsp-nameColumn {
+div.dtsp-panesContainer div.dataTables_wrapper div.dataTables_scrollBody {
     width: 100% !important;
     color: white;
     background-color: #3c4b64;
@@ -211,6 +211,15 @@ div.dataTables_wrapper div.dataTables_length label, div.dataTables_wrapper div.d
     }
 }
 
+.dtsp-nameColumn:hover{
+    background-color: #bababa !important;
+}
+
+ 
+div.dtsp-nameCont span.badge {
+    background-color: #3c4b64 !important;
+    color: #9ea5b2;
+}
 
 /* table */
 
