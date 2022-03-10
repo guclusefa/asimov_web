@@ -114,6 +114,24 @@ footer {
     background-color: #3c4b64;
 }
 
+.select2-container--bootstrap-5.select2-container--focus .select2-selection, .select2-container--bootstrap-5.select2-container--open .select2-selection {
+    border-color: #3c4b64;
+    box-shadow: 0 0 0 0rem rgb(13 110 253 / 25%);
+}
+
+.select2-container--bootstrap-5 .select2-dropdown.select2-dropdown--below {
+    border-top: none !important;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-color: #3c4b64;
+}
+
+.select2-container--bootstrap-5 .select2-dropdown {
+    z-index: 1056;
+    border-color: #3c4b64;
+    border-radius: 0.25rem;
+ }
+
 
 /* datepicker */
 
