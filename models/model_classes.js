@@ -23,6 +23,35 @@ module.exports = {
         var sql = `INSERT INTO Cursus 
         (cursus_anneeScolaire, cursus_libelle, cursus_idClasse, cursus_idProfPrincipale)
         VALUES (?, ?, ?, ?)`;
+        var sql2 = `SELECT cursus_id FROM Cursus ORDER BY cursus_id DESC LIMIT 1` 
+        db.query(sql, params, function(err, data) {
+            if (err) throw err;
+            return callback(data);
+        });
+    },
+
+    dernierCursus: function(callback) {
+        var sql = `SELECT cursus_id FROM Cursus ORDER BY cursus_id DESC LIMIT 1` 
+        db.query(sql, function(err, data) {
+            if (err) throw err;
+            return callback(data);
+        });
+    },
+
+    ajouterEleves: function(params, callback) {
+        var sql = `INSERT INTO Cursus_Eleves 
+        (cursus_eleve_idCursus, cursus_eleve_idEleve)
+        VALUES (?, ?)`;
+        db.query(sql, params, function(err, data) {
+            if (err) throw err;
+            return callback(data);
+        });
+    },
+
+    ajouterProfs: function(params, callback) {
+        var sql = `INSERT INTO Cursus_Profs 
+        (cursus_prof_idCursus, cursus_prof_idProf, cursus_prof_idMatiere)
+        VALUES (?, ?, ?)`;
         db.query(sql, params, function(err, data) {
             if (err) throw err;
             return callback(data);

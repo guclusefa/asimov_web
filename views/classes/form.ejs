@@ -86,6 +86,8 @@
                         </div>
                     </div>
 
+                    <!-- ajouter profs et eleves -->
+                    <% if (!modifier) { %>
                     <div class="row">
                         <div class="col-md-6 col-sm-12 col-12">
                             <fieldset class="border rounded-3 p-3 mb-3" style="background-color: white;">
@@ -96,12 +98,12 @@
                                             <div class="form-floating mb-3">
                                                 <select class="form-control select2"
                                                     id="prof_<%= uneMatiere[0].matiere_id %>"
-                                                    name="profs[<%= uneMatiere[0].matiere_id %>]" required>
+                                                    name="profs[]" required>
                                                     <option value="" disabled selected>Choisir un professeur de <%=
                                                             uneMatiere[0].matiere_libelle %>
                                                     </option>
                                                     <% uneMatiere[1].forEach(function(unProf){ %>
-                                                        <option value="<%= unProf.user_id %>">
+                                                        <option value="<%= unProf.user_id %>, <%= uneMatiere[0].matiere_id %>">
                                                             <%= unProf.user_nom + ' ' + unProf.user_prenom %>
                                                         </option>
                                                         <% })%>
@@ -155,7 +157,7 @@
                             </fieldset>
                         </div>
                     </div>
-
+                    <% } %>
 
                     <div class="row">
                         <div class="col-12 mt-3">
@@ -212,7 +214,7 @@
             window.addEventListener("load", function () {
                 $("#classe").val('<%= uneClasse.classe_id %>').change();
                 $("#libelle").val('<%= uneClasse.cursus_libelle %>');
-                $("#principal").val('<%= uneClasse.user_id %>');
+                $("#principal").val('<%= uneClasse.user_id %>').change();
             });
         </script>
         <% } %>

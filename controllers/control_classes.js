@@ -27,7 +27,7 @@ module.exports = {
                                     listeProf.push(lesProfsParMatiere[prof])
                                 }
                             }
-                            merge_prof_matiere.push([lesMatieres[mat],  listeProf]) 
+                            merge_prof_matiere.push([lesMatieres[mat], listeProf])
                         }
 
                         lesProfsParMatiere = merge_prof_matiere
@@ -37,6 +37,7 @@ module.exports = {
             })
         })
     },
+
     afficher_modifier: function (req, res) {
         id = req.params.id
         titre = "Modifier une classe";
@@ -52,6 +53,7 @@ module.exports = {
             })
         })
     },
+    
     afficher_fiche: function (req, res) {
         id = req.params.id
         titre = "Fiche de classe";
@@ -70,11 +72,34 @@ module.exports = {
             principal = req.body.principal
         ]
 
-
-        console.log(req.body.eleves)
-        console.log(req.body.profs)
         model_classes.ajouter(params, function (data) {
-            req.flash('valid', 'classe ajouté avec succès');
+            model_classes.dernierCursus(function (cursus) {
+                cursusId = cursus[0].cursus_id
+
+                // ajouter eleves
+                // pour chaque eleve ajouter
+                req.body.eleves.forEach(element => {
+                    let params = [cursusId, element]
+                    model_classes.ajouterEleves(params, function (data) { })
+                });
+
+                // ajouter profs
+                // les idprofs et idmatiere des profs 
+                // tout ca car faut traduire la string en array car 2 valeurs dans le value
+                // j'ai pas trouvé de meilleur solution sinon faire requete sql mais flemme #ripbozo
+
+                for (i in req.body.profs) {
+                    infoProfs = req.body.profs[i]
+                    infoProfs = infoProfs.split(",")
+                    idProf = infoProfs[0]
+                    idMatiere = infoProfs[1]
+
+                    let params = [cursusId, idProf, idMatiere]
+                    model_classes.ajouterProfs(params, function (data) { })
+                }
+
+            })
+            req.flash('valid', 'Classe ajouté avec succès');
             res.redirect('./liste')
         })
     },
@@ -89,7 +114,7 @@ module.exports = {
         ]
 
         model_classes.modifier(params, function (data) {
-            req.flash('valid', 'classe modifié avec succès');
+            req.flash('valid', 'Classe modifié avec succès');
             res.redirect('../liste')
         })
     },
@@ -98,7 +123,7 @@ module.exports = {
         id = req.params.id
 
         model_classes.supprimer(id, function (data) {
-            req.flash('valid', 'classe supprimé avec succès');
+            req.flash('valid', 'Classe supprimé avec succès');
             res.redirect('../liste')
         })
     },
