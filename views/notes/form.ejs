@@ -1,0 +1,113 @@
+<%- include('../layout/header') %>
+
+
+<div class="container-fluid bg-secondary py-5">
+    <div class="container">
+            <div>
+                <h1 class="display-5 fw-bold text-primary">
+                    <%= titre %>
+                </h1>
+                <p class="col-md-12 fs-4 text-justify">Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero
+                    doloribus, facere sint distinctio reprehenderit, similique fuga molestiae adipisci optio deserunt
+                    expedita ab veniam aperiam repellendus quia culpa possimus! Dolores, aperiam.
+                </p>
+                <hr>
+
+                <form action="<%= action %>" method="POST" class="needs-validation" novalidate>
+                    <div class="row">
+                        <div class="col-md-6 col-sm-12 col-12 mt-3">
+                            <div class="form-floating mb-3">
+                                <select class="form-control select2" id="cursus" name="cursus" required>
+                                    <option value="" disabled selected>Choisir une classe</option>
+                                    <% lesCursus.forEach(function(unCursus){ %>
+                                        <option value="<%= unCursus.cursus_id %>"><%= unCursus.classe_libelle %> <%= unCursus.cursus_libelle %> (<%= unCursus.cursus_anneeScolaire %>)</option>
+                                    <% })%>
+                                </select>
+                                <label class="required">Classe</label>
+                                <div class="invalid-feedback">
+                                    Choisir une classe valide !
+                                </div>
+                                <div class="valid-feedback">
+                                    Classe valide
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-sm-12 col-12 mt-3">
+                            <div class="form-floating mb-3">
+                                <select class="form-control select2" id="matiere" name="matiere" required>
+                                    <option value="" disabled selected>Choisir une matière</option>
+                                    <% lesMatieres.forEach(function(uneMatiere){ %>
+                                        <option value="<%= uneMatiere.matiere_id %>"><%= uneMatiere.matiere_libelle %></option>
+                                    <% })%>
+                                </select>
+                                <label class="required">Matière</label>
+                                <div class="invalid-feedback">
+                                    Choisir une matière valide !
+                                </div>
+                                <div class="valid-feedback">
+                                    Matière valide
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 col-sm-12 col-12 mt-3">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" placeholder="desc" id="desc" name="desc"
+                                    required>
+                                <label class="required">Déscription</label>
+                                <div class="invalid-feedback">
+                                    Choisir une déscription valide !
+                                </div>
+                                <div class="valid-feedback">
+                                    Déscription valide
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-sm-12 col-12 mt-3">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="datepicker_input form-control" autocomplete="off"
+                                    placeholder="Date de naissance" id="date" name="date"
+                                    value="<% if (modifier) {%><%=unEleve.user_dateNaissance%><%} %>" required>
+                                <label class="required">Date</label>
+                                <div class="invalid-feedback">
+                                    Choisir une date valide !
+                                </div>
+                                <div class="valid-feedback">
+                                    Date valide
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12 mt-3">
+                            <button class="btn btn-primary w-100" type="submit">
+                                <%= titre %>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    </script>
+
+    <% if (modifier) { %>
+        <script>
+            window.addEventListener("load", function () {
+                $("#nom").val('<%= unEleve.user_nom %>');
+                $("#prenom").val('<%= unEleve.user_prenom %>');
+                $("#sexe").val('<%= unEleve.user_sexe %>').change();
+                $("#email").val('<%= unEleve.user_mail %>');
+                $("#tel").val('<%= unEleve.user_tel %>');
+            });
+        </script>
+        <% } %>
+
+            <%- include('../layout/footer') %>

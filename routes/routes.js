@@ -9,6 +9,7 @@ var control_eleves = require('../controllers/control_eleves')
 var control_profs = require('../controllers/control_profs')
 var control_matieres = require('../controllers/control_matieres')
 var control_classes = require('../controllers/control_classes')
+var control_notes = require('../controllers/control_notes')
 
 // routage accueil
 routeur.get('/', control_accueil.afficher)
@@ -67,6 +68,19 @@ routeur.post('/classes/modifier/:id', control_classes.modifier)
 routeur.get('/classes/fiche/:id', control_classes.afficher_fiche)
 
 routeur.get('/classes/supprimer/:id', control_classes.supprimer)
+
+// notes
+routeur.get('/notes/liste', control_notes.afficher_liste)
+
+routeur.get('/notes/ajouter', control_notes.afficher_ajouter)
+routeur.post('/notes/ajouter', control_notes.ajouter)
+
+routeur.get('/notes/modifier/:id', control_notes.afficher_modifier)
+routeur.post('/notes/modifier/:id', control_notes.modifier)
+
+routeur.get('/notes/fiche/:id', control_notes.afficher_fiche)
+
+routeur.get('/notes/supprimer/:id', control_notes.supprimer)
 
 
 // routeur
