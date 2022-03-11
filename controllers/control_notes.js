@@ -44,13 +44,11 @@ module.exports = {
 
     ajouter: function (req, res) {
         let params = [
-            nom = req.body.nom,
-            prenom = req.body.prenom,
-            mdp = req.body.date,
-            date = req.body.date.split("/").reverse().join("/"),
-            sexe = req.body.sexe,
-            tel = req.body.tel,
-            email = req.body.email
+            desc = req.body.desc,
+            date = req.body.date,
+            cursus = req.body.cursus,
+            prof = req.body.prof,
+            matiere = req.body.matiere 
         ]
 
         model_notes.ajouter(params, function (data) {

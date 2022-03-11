@@ -1,8 +1,8 @@
 <%- include('../layout/header') %>
 
 
-<div class="container-fluid bg-secondary py-5">
-    <div class="container">
+    <div class="container-fluid bg-secondary py-5">
+        <div class="container">
             <div>
                 <h1 class="display-5 fw-bold text-primary">
                     <%= titre %>
@@ -15,13 +15,16 @@
 
                 <form action="<%= action %>" method="POST" class="needs-validation" novalidate>
                     <div class="row">
-                        <div class="col-md-6 col-sm-12 col-12 mt-3">
+                        <div class="col-12 mt-3">
                             <div class="form-floating mb-3">
                                 <select class="form-control select2" id="cursus" name="cursus" required>
                                     <option value="" disabled selected>Choisir une classe</option>
                                     <% lesCursus.forEach(function(unCursus){ %>
-                                        <option value="<%= unCursus.cursus_id %>"><%= unCursus.classe_libelle %> <%= unCursus.cursus_libelle %> (<%= unCursus.cursus_anneeScolaire %>)</option>
-                                    <% })%>
+                                        <option value="<%= unCursus.cursus_id %>">
+                                            <%= unCursus.classe_libelle %>
+                                                <%= unCursus.cursus_libelle %> (<%= unCursus.cursus_anneeScolaire %>)
+                                        </option>
+                                        <% })%>
                                 </select>
                                 <label class="required">Classe</label>
                                 <div class="invalid-feedback">
@@ -32,14 +35,39 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 col-sm-12 col-12 mt-3">
+                            <div class="form-floating mb-3">
+                                <select class="form-control select2" id="prof" name="prof" required>
+                                    <option value="" disabled selected>Choisir un professeur</option>
+                                    <% lesCursus.forEach(function(unCursus){ %>
+                                        <option value="<%= unCursus.cursus_id %>">
+                                            <%= unCursus.classe_libelle %>
+                                                <%= unCursus.cursus_libelle %> (<%= unCursus.cursus_anneeScolaire %>)
+                                        </option>
+                                        <% })%>
+                                </select>
+                                <label class="required">Professeur</label>
+                                <div class="invalid-feedback">
+                                    Choisir un professeur valide !
+                                </div>
+                                <div class="valid-feedback">
+                                    Professeur valide
+                                </div>
+                            </div>
+                        </div>
 
                         <div class="col-md-6 col-sm-12 col-12 mt-3">
                             <div class="form-floating mb-3">
                                 <select class="form-control select2" id="matiere" name="matiere" required>
                                     <option value="" disabled selected>Choisir une matière</option>
                                     <% lesMatieres.forEach(function(uneMatiere){ %>
-                                        <option value="<%= uneMatiere.matiere_id %>"><%= uneMatiere.matiere_libelle %></option>
-                                    <% })%>
+                                        <option value="<%= uneMatiere.matiere_id %>">
+                                            <%= uneMatiere.matiere_libelle %>
+                                        </option>
+                                        <% })%>
                                 </select>
                                 <label class="required">Matière</label>
                                 <div class="invalid-feedback">

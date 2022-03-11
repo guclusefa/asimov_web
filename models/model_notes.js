@@ -17,7 +17,7 @@ module.exports = {
     },
 
     ajouter: function(params, callback) {
-        var sql = `INSERT INTO Users (user_nom, user_prenom, user_mdp, user_dateNaissance, user_sexe, user_tel, user_mail) VALUES (?,?,?,?,?,?,?)`;
+        var sql = `INSERT INTO Evaluations (eval_desc, eval_date, eval_idCursus, eval_idProf, eval_idMatiere) VALUES (?,?,?,?,?)`;
         db.query(sql, params, function(err, data) {
             if (err) throw err;
             return callback(data);
