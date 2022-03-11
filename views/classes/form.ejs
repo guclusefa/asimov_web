@@ -86,8 +86,6 @@
                         </div>
                     </div>
 
-                    <!-- ajouter profs et eleves -->
-                    <% if (!modifier) { %>
                     <div class="row">
                         <div class="col-md-6 col-sm-12 col-12">
                             <fieldset class="border rounded-3 p-3 mb-3" style="background-color: white;">
@@ -97,13 +95,13 @@
                                         <div class="col-12 mt-3">
                                             <div class="form-floating mb-3">
                                                 <select class="form-control select2"
-                                                    id="prof_<%= uneMatiere[0].matiere_id %>"
-                                                    name="profs[]" required>
+                                                    id="prof_<%= uneMatiere[0].matiere_id %>" name="profs[]" required>
                                                     <option value="" disabled selected>Choisir un professeur de <%=
                                                             uneMatiere[0].matiere_libelle %>
                                                     </option>
                                                     <% uneMatiere[1].forEach(function(unProf){ %>
-                                                        <option value="<%= unProf.user_id %>, <%= uneMatiere[0].matiere_id %>">
+                                                        <option
+                                                            value="<%= unProf.user_id %>, <%= uneMatiere[0].matiere_id %>" >
                                                             <%= unProf.user_nom + ' ' + unProf.user_prenom %>
                                                         </option>
                                                         <% })%>
@@ -111,7 +109,8 @@
                                                 <label class="required">Professeur de <%= uneMatiere[0].matiere_libelle
                                                         %></label>
                                                 <div class="invalid-feedback">
-                                                    Choisir un professeur de <%= uneMatiere[0].matiere_libelle %> valide
+                                                    Choisir un professeur de <%= uneMatiere[0].matiere_libelle %>
+                                                        valide
                                                         !
                                                 </div>
                                                 <div class="valid-feedback">
@@ -132,9 +131,9 @@
                                         <div class="form-floating mb-3">
                                             <select class="form-control select2" id="eleve_1" name="eleves[]" required>
                                                 <option value="" disabled selected>Choisir un élève</option>
-                                                <% lesPrincipales.forEach(function(unProf){ %>
-                                                    <option value="<%= unProf.user_id %>">
-                                                        <%= unProf.user_nom + ' ' + unProf.user_prenom %>
+                                                <% lesEleves.forEach(function(unEleve){ %>
+                                                    <option value="<%= unEleve.user_id %>">
+                                                        <%= unEleve.user_nom + ' ' + unEleve.user_prenom %>
                                                     </option>
                                                     <% })%>
                                             </select>
@@ -157,7 +156,6 @@
                             </fieldset>
                         </div>
                     </div>
-                    <% } %>
 
                     <div class="row">
                         <div class="col-12 mt-3">
@@ -181,9 +179,9 @@
                                     id="eleve_${id}"
                                     name="eleves[]" required>
                                     <option value="" disabled selected>Choisir un élève</option>
-                                        <% lesPrincipales.forEach(function(unProf){ %>
-                                            <option value="<%= unProf.user_id %>">
-                                                <%= unProf.user_nom + ' ' + unProf.user_prenom %>
+                                        <% lesEleves.forEach(function(unEleve){ %>
+                                            <option value="<%= unEleve.user_id %>">
+                                                <%= unEleve.user_nom + ' ' + unEleve.user_prenom %>
                                             </option>
                                         <% })%>
                                 </select>
@@ -215,8 +213,30 @@
                 $("#classe").val('<%= uneClasse.classe_id %>').change();
                 $("#libelle").val('<%= uneClasse.cursus_libelle %>');
                 $("#principal").val('<%= uneClasse.user_id %>').change();
+                $("#eleve_1").val('<%= lesEleves[0].user_id %>').change();
             });
         </script>
-        <% } %>
+                
+        <!-- on skiop le premier avec i car il est deja affiché -->
+        <% lesElevesClasse.forEach(function(unEleveClasse, i){ if(i) {%>
+            <script>
+                window.addEventListener("load", function () {
+                    ajouter();
+                    $("#eleve_<%= i+1 %>").val('<%= lesEleves[0].user_id %>').change();
+                });
+            </script>
+        <% }})%>
+
+        <!-- select tout les profs -->
+        <% lesProfsClasse.forEach(function(unProfClasse){ %>
+            <script>
+                window.addEventListener("load", function () {
+                    $("#prof_<%= unProfClasse.matiere_id %>").val('<%= unProfClasse.user_id %>, <%= unProfClasse.cursus_prof_idMatiere %>').change();
+                });
+            </script>
+        <% })%>
+        
+        
+    <% } %>
 
             <%- include('../layout/footer') %>

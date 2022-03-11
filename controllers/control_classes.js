@@ -1,6 +1,8 @@
 var model_classes = require('../models/model_classes');
 var model_profs = require('../models/model_profs');
 var model_matieres = require('../models/model_matieres');
+var model_eleves = require('../models/model_eleves');
+
 module.exports = {
     // affichage
     afficher_liste: function (req, res) {
@@ -14,24 +16,26 @@ module.exports = {
         action = "/classes/ajouter"
         modifier = 0
         model_classes.lister_classes(function (lesClasses) {
-            model_profs.lister_profPrincipal(function (lesPrincipales) {
-                model_matieres.lister_matieresPrises(function (lesMatieres) {
-                    model_matieres.lister_profsParMatieres(function (lesProfsParMatiere) {
+            model_eleves.lister(function (lesEleves) {
+                model_profs.lister_profPrincipal(function (lesPrincipales) {
+                    model_matieres.lister_matieresPrises(function (lesMatieres) {
+                        model_matieres.lister_profsParMatieres(function (lesProfsParMatiere) {
 
-                        // les profs par matieres
-                        merge_prof_matiere = []
-                        for (mat in lesMatieres) {
-                            listeProf = []
-                            for (prof in lesProfsParMatiere) {
-                                if (lesMatieres[mat].matiere_id == lesProfsParMatiere[prof].user_idMatiere) {
-                                    listeProf.push(lesProfsParMatiere[prof])
+                            // les profs par matieres
+                            merge_prof_matiere = []
+                            for (mat in lesMatieres) {
+                                listeProf = []
+                                for (prof in lesProfsParMatiere) {
+                                    if (lesMatieres[mat].matiere_id == lesProfsParMatiere[prof].user_idMatiere) {
+                                        listeProf.push(lesProfsParMatiere[prof])
+                                    }
                                 }
+                                merge_prof_matiere.push([lesMatieres[mat], listeProf])
                             }
-                            merge_prof_matiere.push([lesMatieres[mat], listeProf])
-                        }
 
-                        lesProfsParMatiere = merge_prof_matiere
-                        res.render('./classes/form', { titre, action, modifier, lesClasses, lesPrincipales, lesProfsParMatiere })
+                            lesProfsParMatiere = merge_prof_matiere
+                            res.render('./classes/form', { titre, action, modifier, lesClasses, lesEleves, lesPrincipales, lesProfsParMatiere })
+                        })
                     })
                 })
             })
@@ -46,14 +50,41 @@ module.exports = {
 
         model_classes.ficher(id, function (uneClasse) {
             model_classes.lister_classes(function (lesClasses) {
-                model_profs.lister_profPrincipal(function (lesPrincipales) {
-                    uneClasse = uneClasse[0]
-                    res.render('./classes/form', { titre, action, modifier, uneClasse, lesClasses, lesPrincipales })
+                model_eleves.lister(function (lesEleves) {
+                    model_profs.lister_profPrincipal(function (lesPrincipales) {
+                        model_classes.listerEleves(id, function (lesElevesClasse) {
+                            model_classes.listerProfs(id, function (lesProfsClasse) {
+                                model_matieres.lister_matieresPrises(function (lesMatieres) {
+
+                                    model_matieres.lister_profsParMatieres(function (lesProfsParMatiere) {
+
+                                        // les profs par matieres
+                                        merge_prof_matiere = []
+                                        for (mat in lesMatieres) {
+                                            listeProf = []
+                                            for (prof in lesProfsParMatiere) {
+                                                if (lesMatieres[mat].matiere_id == lesProfsParMatiere[prof].user_idMatiere) {
+                                                    listeProf.push(lesProfsParMatiere[prof])
+                                                }
+                                            }
+                                            merge_prof_matiere.push([lesMatieres[mat], listeProf])
+                                        }
+
+                                        lesProfsParMatiere = merge_prof_matiere
+
+                                        console.log(lesElevesClasse)
+                                        uneClasse = uneClasse[0]
+                                        res.render('./classes/form', { titre, action, modifier, uneClasse, lesClasses, lesPrincipales, lesEleves, lesElevesClasse, lesProfsClasse, lesProfsParMatiere })
+                                    })
+                                })
+                            })
+                        })
+                    })
                 })
             })
         })
     },
-    
+
     afficher_fiche: function (req, res) {
         id = req.params.id
         titre = "Fiche de classe";

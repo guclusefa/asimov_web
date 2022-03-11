@@ -19,6 +19,22 @@ module.exports = {
         });
     },
 
+    listerEleves: function(params, callback) {
+        var sql = `SELECT * FROM Cursus_Eleves, Users WHERE cursus_eleve_idEleve = user_id AND cursus_eleve_idCursus = ?`;
+        db.query(sql, params, function(err, data) {
+            if (err) throw err;
+            return callback(data);
+        });
+    },
+
+    listerProfs: function(params, callback) {
+        var sql = `SELECT * FROM Cursus_Profs, Users, Matieres WHERE cursus_prof_idProf = user_id AND cursus_prof_idMatiere = matiere_id AND cursus_prof_idCursus = ?`;
+        db.query(sql, params, function(err, data) {
+            if (err) throw err;
+            return callback(data);
+        });
+    },
+
     ajouter: function(params, callback) {
         var sql = `INSERT INTO Cursus 
         (cursus_anneeScolaire, cursus_libelle, cursus_idClasse, cursus_idProfPrincipale)
