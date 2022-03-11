@@ -17,6 +17,8 @@ module.exports = {
             model_profs.lister_profPrincipal(function (lesPrincipales) {
                 model_matieres.lister_matieresPrises(function (lesMatieres) {
                     model_matieres.lister_profsParMatieres(function (lesProfsParMatiere) {
+
+                        // les profs par matieres
                         merge_prof_matiere = []
                         for (mat in lesMatieres) {
                             listeProf = []
@@ -68,6 +70,9 @@ module.exports = {
             principal = req.body.principal
         ]
 
+
+        console.log(req.body.eleves)
+        console.log(req.body.profs)
         model_classes.ajouter(params, function (data) {
             req.flash('valid', 'classe ajouté avec succès');
             res.redirect('./liste')
