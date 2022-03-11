@@ -13,7 +13,7 @@
                 <hr>
 
                 <div class="row">
-                    <div class="col-md-6  col-sm-12 col-12">
+                    <div class="col-lg-4 col-md-6  col-sm-12 col-12">
                         <div class="card mt-3">
                             <div class="card-body">
                                 <h5 class="card-title">Informations</h5>
@@ -22,7 +22,7 @@
                                     <%= uneClasse.cursus_anneeScolaire %>
                                 </h5>
                                 <h5 class="card-text my-4"><b>Classe : </b>
-                                    <%= uneClasse.classe_libelle  %>
+                                    <%= uneClasse.classe_libelle %>
                                 </h5>
                                 <h5 class="card-text my-4"><b>Libellé : </b>
                                     <%= uneClasse.cursus_libelle %>
@@ -34,27 +34,40 @@
                         </div>
                     </div>
 
-
-                    <div class="col-md-6 col-sm-12 col-12">
-                        <div class="card my-3">
+                    <div class="col-lg-4 col-md-6  col-sm-12 col-12">
+                        <div class="card mt-3">
                             <div class="card-body">
-                                <h5 class="card-title">Année 2022</h5>
+                                <h5 class="card-title">Les éleves <span class="badge bg-primary float-end">
+                                        <%= Object.keys(lesElevesClasse).length %>
+                                    </span></h5>
                                 <hr>
-                                <p class="card-text"><b>Classe : </b></p>
-                                <a href="#" class="btn btn-primary">Voir les notes</a>
+                                <% lesElevesClasse.forEach(function(unEleve, i){ %>
+                                    <h5 class="card-text my-4"><b>Élève <%= i+1 %> : </b>
+                                        <%= unEleve.user_nom + ' ' + unEleve.user_prenom %>
+                                    </h5>
+                                    <% })%>
                             </div>
                         </div>
-
-                        <div class="card my-3">
-                            <div class="card-body">
-                                <h5 class="card-title">Année 2021</h5>
-                                <hr>
-                                <p class="card-text"><b>Classe : </b></p>
-                                <a href="#" class="btn btn-primary">Voir les notes</a>
-                            </div>
-                        </div>
-                        
                     </div>
+
+                    <div class="col-lg-4 col-md-12  col-sm-12 col-12">
+                        <div class="card mt-3">
+                            <div class="card-body">
+                                <h5 class="card-title">Les professeurs <span class="badge bg-primary float-end">
+                                    <%= Object.keys(lesProfsClasse).length %>
+                                </span></h5>
+                                <hr>
+                                <% lesProfsClasse.forEach(function(unProf){ %>
+                                    <h5 class="card-text my-4"><b>
+                                            <%= unProf.matiere_libelle %> :
+                                        </b>
+                                        <%= unProf.user_nom + ' ' + unProf.user_prenom %>
+                                    </h5>
+                                    <% })%>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>

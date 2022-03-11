@@ -59,8 +59,13 @@ module.exports = {
         titre = "Fiche de classe";
 
         model_classes.ficher(id, function (uneClasse) {
-            uneClasse = uneClasse[0]
-            res.render('./classes/fiche', { titre, uneClasse })
+            model_classes.listerEleves(id, function (lesElevesClasse) {
+                model_classes.listerProfs(id, function (lesProfsClasse) {
+
+                    uneClasse = uneClasse[0]
+                    res.render('./classes/fiche', { titre, uneClasse, lesElevesClasse, lesProfsClasse })
+                })
+            })
         })
     },
 
