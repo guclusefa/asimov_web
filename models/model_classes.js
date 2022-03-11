@@ -87,6 +87,23 @@ module.exports = {
         });
     },
 
+    supprimerClasseEleves: function(params, callback) {
+        var sql = `DELETE FROM Cursus_Eleves WHERE cursus_eleve_idCursus = ?`;
+        db.query(sql, params, function(err, data) {
+            if (err) throw err;
+            return callback(data);
+        });
+    },
+
+
+    supprimerClasseProfs: function(params, callback) {
+        var sql = `DELETE FROM Cursus_Profs WHERE cursus_prof_idCursus = ?`;
+        db.query(sql, params, function(err, data) {
+            if (err) throw err;
+            return callback(data);
+        });
+    },
+
     supprimer: function(params, callback) {
         var sql = `DELETE FROM Cursus WHERE cursus_id = ?`;
         db.query(sql, params, function(err, data) {

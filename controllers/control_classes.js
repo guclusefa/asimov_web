@@ -55,7 +55,6 @@ module.exports = {
                         model_classes.listerEleves(id, function (lesElevesClasse) {
                             model_classes.listerProfs(id, function (lesProfsClasse) {
                                 model_matieres.lister_matieresPrises(function (lesMatieres) {
-
                                     model_matieres.lister_profsParMatieres(function (lesProfsParMatiere) {
 
                                         // les profs par matieres
@@ -72,7 +71,6 @@ module.exports = {
 
                                         lesProfsParMatiere = merge_prof_matiere
 
-                                        console.log(lesElevesClasse)
                                         uneClasse = uneClasse[0]
                                         res.render('./classes/form', { titre, action, modifier, uneClasse, lesClasses, lesPrincipales, lesEleves, lesElevesClasse, lesProfsClasse, lesProfsParMatiere })
                                     })
@@ -136,6 +134,7 @@ module.exports = {
     },
 
     modifier: function (req, res) {
+        id = req.params.id
         let params = [
             annee = req.body.annee,
             libelle = req.body.libelle,
@@ -145,8 +144,28 @@ module.exports = {
         ]
 
         model_classes.modifier(params, function (data) {
-            req.flash('valid', 'Classe modifié avec succès');
-            res.redirect('../liste')
+            model_classes.supprimerClasseEleves(id, function (data) {
+                //on supprime eleves pour les rajouter
+                req.body.eleves.forEach(element => {
+                    let params = [id, element]
+                    model_classes.ajouterEleves(params, function (data) { })
+                });
+                model_classes.supprimerClasseProfs(id, function (data) {
+                    // on supprimer profs pour rajouter
+                    for (i in req.body.profs) {
+                        infoProfs = req.body.profs[i]
+                        infoProfs = infoProfs.split(",")
+                        idProf = infoProfs[0]
+                        idMatiere = infoProfs[1]
+    
+                        let params = [id, idProf, idMatiere]
+                        model_classes.ajouterProfs(params, function (data) { })
+                    }
+                    
+                    req.flash('valid', 'Classe modifié avec succès');
+                    res.redirect('../liste')
+                })
+            })
         })
     },
 
