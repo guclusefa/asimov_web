@@ -1,28 +1,6 @@
 var db = require("../config/database");
 module.exports = {
     // lister les classes
-    lister_profsParMatieres: function(callback) {
-        var sql = `SELECT * FROM Users
-        WHERE user_idMatiere IS NOT NULL 
-        AND user_idMatiere IN (SELECT matiere_id FROM Matieres) 
-        ORDER BY user_idMatiere`;
-        db.query(sql, function(err, data) {
-            if (err) throw err;
-            return callback(data);
-        });
-    },
-
-    lister_matieresPrises: function(callback) {
-        var sql = `SELECT * FROM Matieres 
-        WHERE matiere_id IN (SELECT user_idMatiere FROM Users)
-        ORDER BY matiere_id`;
-        db.query(sql, function(err, data) {
-            if (err) throw err;
-            return callback(data);
-        });
-    },
-
-
     lister: function(callback) {
         var sql = `SELECT * FROM Matieres ORDER BY matiere_id`;
         db.query(sql, function(err, data) {
