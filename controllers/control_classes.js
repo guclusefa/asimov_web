@@ -18,23 +18,9 @@ module.exports = {
         model_classes.lister_classes(function (lesClasses) {
             model_eleves.lister(function (lesEleves) {
                 model_profs.lister_profPrincipal(function (lesPrincipales) {
-                    model_matieres.lister_matieresPrises(function (lesMatieres) {
-                        model_matieres.lister_profsParMatieres(function (lesProfsParMatiere) {
-
-                            // les profs par matieres
-                            merge_prof_matiere = []
-                            for (mat in lesMatieres) {
-                                listeProf = []
-                                for (prof in lesProfsParMatiere) {
-                                    if (lesMatieres[mat].matiere_id == lesProfsParMatiere[prof].user_idMatiere) {
-                                        listeProf.push(lesProfsParMatiere[prof])
-                                    }
-                                }
-                                merge_prof_matiere.push([lesMatieres[mat], listeProf])
-                            }
-
-                            lesProfsParMatiere = merge_prof_matiere
-                            res.render('./classes/form', { titre, action, modifier, lesClasses, lesEleves, lesPrincipales, lesProfsParMatiere })
+                    model_matieres.lister(function (lesMatieres) {
+                        model_profs.lister(function (lesProfs) {
+                            res.render('./classes/form', { titre, action, modifier, lesClasses, lesEleves, lesPrincipales, lesMatieres, lesProfs })
                         })
                     })
                 })
@@ -49,30 +35,15 @@ module.exports = {
         modifier = 1
 
         model_classes.ficher(id, function (uneClasse) {
-            model_classes.lister_classes(function (lesClasses) {
-                model_eleves.lister(function (lesEleves) {
-                    model_profs.lister_profPrincipal(function (lesPrincipales) {
-                        model_classes.listerEleves(id, function (lesElevesClasse) {
-                            model_classes.listerProfs(id, function (lesProfsClasse) {
-                                model_matieres.lister_matieresPrises(function (lesMatieres) {
-                                    model_matieres.lister_profsParMatieres(function (lesProfsParMatiere) {
-
-                                        // les profs par matieres
-                                        merge_prof_matiere = []
-                                        for (mat in lesMatieres) {
-                                            listeProf = []
-                                            for (prof in lesProfsParMatiere) {
-                                                if (lesMatieres[mat].matiere_id == lesProfsParMatiere[prof].user_idMatiere) {
-                                                    listeProf.push(lesProfsParMatiere[prof])
-                                                }
-                                            }
-                                            merge_prof_matiere.push([lesMatieres[mat], listeProf])
-                                        }
-
-                                        lesProfsParMatiere = merge_prof_matiere
-
+            model_classes.listerEleves(id, function (lesElevesClasse) {
+                model_classes.listerProfs(id, function (lesProfsClasse) {
+                    model_classes.lister_classes(function (lesClasses) {
+                        model_eleves.lister(function (lesEleves) {
+                            model_profs.lister_profPrincipal(function (lesPrincipales) {
+                                model_matieres.lister(function (lesMatieres) {
+                                    model_profs.lister(function (lesProfs) {
                                         uneClasse = uneClasse[0]
-                                        res.render('./classes/form', { titre, action, modifier, uneClasse, lesClasses, lesPrincipales, lesEleves, lesElevesClasse, lesProfsClasse, lesProfsParMatiere })
+                                        res.render('./classes/form', { titre, action, modifier, uneClasse, lesElevesClasse, lesProfsClasse, lesClasses, lesEleves, lesPrincipales, lesMatieres, lesProfs })
                                     })
                                 })
                             })
@@ -157,11 +128,11 @@ module.exports = {
                         infoProfs = infoProfs.split(",")
                         idProf = infoProfs[0]
                         idMatiere = infoProfs[1]
-    
+
                         let params = [id, idProf, idMatiere]
                         model_classes.ajouterProfs(params, function (data) { })
                     }
-                    
+
                     req.flash('valid', 'Classe modifié avec succès');
                     res.redirect('../liste')
                 })

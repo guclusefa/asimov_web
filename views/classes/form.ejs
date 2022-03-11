@@ -87,32 +87,34 @@
                     </div>
 
                     <div class="row">
+                        <!-- les profs -->
                         <div class="col-md-6 col-sm-12 col-12">
                             <fieldset class="border rounded-3 p-3 mb-3" style="background-color: white;">
                                 <legend class="float-none text-primary">Les professeurs</legend>
                                 <div class="row">
-                                    <% lesProfsParMatiere.forEach(function(uneMatiere){ %>
+                                    <% lesMatieres.forEach(function(uneMatiere){ %>
                                         <div class="col-12 mt-3">
                                             <div class="form-floating mb-3">
                                                 <select class="form-control select2"
-                                                    id="prof_<%= uneMatiere[0].matiere_id %>" name="profs[]" required>
+                                                    id="prof_<%= uneMatiere.matiere_id %>" name="profs[]">
                                                     <option value="" disabled selected>Choisir un professeur de <%=
-                                                            uneMatiere[0].matiere_libelle %>
+                                                            uneMatiere.matiere_libelle %>
                                                     </option>
-                                                    <% uneMatiere[1].forEach(function(unProf){ %>
+                                                    <% lesProfs.forEach(function(unProf){ %>
                                                         <option
-                                                            value="<%= unProf.user_id %>, <%= uneMatiere[0].matiere_id %>" >
+                                                            value="<%= unProf.user_id %>, <%=
+                                                            uneMatiere.matiere_id %>" >
                                                             <%= unProf.user_nom + ' ' + unProf.user_prenom %>
                                                         </option>
                                                         <% })%>
                                                 </select>
-                                                <label class="required">Professeur de <%= uneMatiere[0].matiere_libelle
+                                                <label>Professeur de <%= uneMatiere.matiere_libelle
                                                         %></label>
                                                 <div class="invalid-feedback">
-                                                    Choisir un professeur de <%= uneMatiere[0].matiere_libelle %> valide !
+                                                    Choisir un professeur de <%= uneMatiere.matiere_libelle %> valide !
                                                 </div>
                                                 <div class="valid-feedback">
-                                                    Professeur de <%= uneMatiere[0].matiere_libelle %> valide
+                                                    Professeur de <%= uneMatiere.matiere_libelle %> valide
                                                 </div>
                                             </div>
                                         </div>
@@ -121,6 +123,7 @@
                             </fieldset>
                         </div>
 
+                        <!-- les éleves -->
                         <div class="col-md-6 col-sm-12 col-12">
                             <fieldset class="border rounded-3 p-3 mb-3" style="background-color: white;">
                                 <legend class="float-none text-primary">Les élèves</legend>
