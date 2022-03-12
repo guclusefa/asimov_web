@@ -85,8 +85,7 @@ module.exports = {
         // supprime notes et on ajoute pour eviter de check pour chaque update si existe ou pas
         model_evaluations.supprimerNotes(id, function (data) {
             for (i in req.body.eleves) {
-                console.log(req.body.notes[i])
-                if (!req.body.notes[i]) req.body.notes[i] =  -1
+                if (!req.body.notes[i]) req.body.notes[i] =  null
                 model_evaluations.ajouterNotes([req.body.notes[i], id, req.body.eleves[i]], function (data) { })
             }
         })
