@@ -53,10 +53,12 @@ module.exports = {
                 prof = leProf[0].cursus_prof_idProf,
                 matiere = req.body.matiere
             ]
-    
+
             model_notes.ajouter(params, function (data) {
-                req.flash('valid', 'Note ajouté avec succès');
-                res.redirect('./liste')
+                model_notes.selectDernierEval(function (idEval) {
+                    req.flash('valid', 'Note ajouté avec succès');
+                    res.redirect('./modifier/'+idEval[0].eval_id)
+                })
             })
         })
     },

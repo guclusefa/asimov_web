@@ -1,6 +1,14 @@
 var db = require("../config/database");
 module.exports = {
     // page d'accueil
+    selectDernierEval: function(callback) {
+        var sql = `SELECT * FROM Evaluations ORDER BY eval_id DESC LIMIT 1;`;
+        db.query(sql, function(err, data) {
+            if (err) throw err;
+            return callback(data);
+        });
+    },
+
     selectProfMatiereCursus: function(params, callback) {
         var sql = `SELECT * FROM Cursus_Profs WHERE cursus_prof_idCursus = ? AND cursus_prof_idMatiere = ?`;
         db.query(sql, params, function(err, data) {
