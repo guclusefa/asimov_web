@@ -16,8 +16,8 @@ module.exports = {
         modifier = 0
 
         model_classes.lister(function (lesCursus) {
-            model_matieres.lister(function (lesMatieres) {
-                res.render('./notes/form', { titre, action, modifier, lesCursus, lesMatieres })
+            model_notes.listerMatiereCursus(function (lesMatieresParCursus) {
+                res.render('./notes/form', { titre, action, modifier, lesCursus, lesMatieresParCursus })
             })
         })
     },
@@ -43,17 +43,20 @@ module.exports = {
     },
 
     ajouter: function (req, res) {
-        let params = [
-            desc = req.body.desc,
-            date = req.body.date,
-            cursus = req.body.cursus,
-            prof = req.body.prof,
-            matiere = req.body.matiere 
-        ]
-
-        model_notes.ajouter(params, function (data) {
-            req.flash('valid', 'Note ajouté avec succès');
-            res.redirect('./liste')
+        model_notes.selectProfMatiereCursus([req.body.cursus, req.body.matiere], function (leProf) {
+            console.log(leProf)
+            let params = [
+                desc = req.body.desc,
+                date = req.body.date.split("/").reverse().join("/"),
+                cursus = req.body.cursus,
+                prof = leProf[0].cursus_prof_idProf,
+                matiere = req.body.matiere
+            ]
+    
+            model_notes.ajouter(params, function (data) {
+                req.flash('valid', 'Note ajouté avec succès');
+                res.redirect('./liste')
+            })
         })
     },
 

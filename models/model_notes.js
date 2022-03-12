@@ -1,6 +1,22 @@
 var db = require("../config/database");
 module.exports = {
     // page d'accueil
+    selectProfMatiereCursus: function(params, callback) {
+        var sql = `SELECT * FROM Cursus_Profs WHERE cursus_prof_idCursus = ? AND cursus_prof_idMatiere = ?`;
+        db.query(sql, params, function(err, data) {
+            if (err) throw err;
+            return callback(data);
+        });
+    },
+
+    listerMatiereCursus: function(callback) {
+        var sql = `SELECT * FROM Cursus_Profs, Cursus, Matieres, Users WHERE cursus_prof_idCursus = cursus_id AND cursus_prof_idMatiere = matiere_id AND cursus_prof_idProf = user_id;`;
+        db.query(sql, function(err, data) {
+            if (err) throw err;
+            return callback(data);
+        });
+    },
+
     lister: function(callback) {
         var sql = `SELECT *,
         TIMESTAMPDIFF(YEAR, user_dateNaissance, CURDATE()) AS user_age,

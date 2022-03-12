@@ -15,9 +15,9 @@
 
                 <form action="<%= action %>" method="POST" class="needs-validation" novalidate>
                     <div class="row">
-                        <div class="col-12 mt-3">
+                        <div class="col-md-6 col-sm-12 col-12 mt-3">
                             <div class="form-floating mb-3">
-                                <select class="form-control select2" id="cursus" name="cursus" required>
+                                <select class="form-control" id="cursus" name="cursus" required>
                                     <option value="" disabled selected>Choisir une classe</option>
                                     <% lesCursus.forEach(function(unCursus){ %>
                                         <option value="<%= unCursus.cursus_id %>">
@@ -35,37 +35,14 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6 col-sm-12 col-12 mt-3">
-                            <div class="form-floating mb-3">
-                                <select class="form-control select2" id="prof" name="prof" required>
-                                    <option value="" disabled selected>Choisir un professeur</option>
-                                    <% lesCursus.forEach(function(unCursus){ %>
-                                        <option value="<%= unCursus.cursus_id %>">
-                                            <%= unCursus.classe_libelle %>
-                                                <%= unCursus.cursus_libelle %> (<%= unCursus.cursus_anneeScolaire %>)
-                                        </option>
-                                        <% })%>
-                                </select>
-                                <label class="required">Professeur</label>
-                                <div class="invalid-feedback">
-                                    Choisir un professeur valide !
-                                </div>
-                                <div class="valid-feedback">
-                                    Professeur valide
-                                </div>
-                            </div>
-                        </div>
 
                         <div class="col-md-6 col-sm-12 col-12 mt-3">
                             <div class="form-floating mb-3">
-                                <select class="form-control select2" id="matiere" name="matiere" required>
+                                <select class="form-control" id="matiere" name="matiere" required>
                                     <option value="" disabled selected>Choisir une matière</option>
-                                    <% lesMatieres.forEach(function(uneMatiere){ %>
-                                        <option value="<%= uneMatiere.matiere_id %>">
-                                            <%= uneMatiere.matiere_libelle %>
+                                    <% lesMatieresParCursus.forEach(function(uneMatiere){ %>
+                                        <option value="<%= uneMatiere.matiere_id %>" class="<%= uneMatiere.cursus_prof_idCursus %>">
+                                            <%= uneMatiere.matiere_libelle %> Prof. <%= uneMatiere.user_prenom %> <%= uneMatiere.user_nom %>
                                         </option>
                                         <% })%>
                                 </select>
@@ -124,6 +101,34 @@
     </div>
 
     <script>
+        // on cache tout
+        let nodeList = document.getElementById("matiere").querySelectorAll("option");
+        nodeList.forEach(function (option, i) {
+            if (i !== 0) {
+                option.style.display = "none";
+            }
+        });
+
+        document.getElementById("cursus").onchange = function () {
+
+            let selector = document.getElementById('cursus');
+            let value = selector[selector.selectedIndex].value;
+
+
+            nodeList.forEach(function (option, i) {
+
+                if (option.classList.contains(value)) {
+                    option.style.display = "block";
+                } else {
+                    if (i !== 0) {
+                        option.style.display = "none";
+                    } else {
+                        option.selected = true
+                    }
+                }
+
+            });
+        }
     </script>
 
     <% if (modifier) { %>

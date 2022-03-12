@@ -198,3 +198,4 @@ const showModalSupprimer = (title, description, lien) => {
     var modal = new bootstrap.Modal(modalWrap.querySelector('.modal'));
     modal.show();
 }
+
