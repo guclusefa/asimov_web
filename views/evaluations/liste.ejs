@@ -25,35 +25,35 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <% lesNotes.forEach(function(uneNote){ %>
+                        <% lesEvaluations.forEach(function(uneEvaluation){ %>
                             <tr>
                                 <td>
-                                    <%= uneNote.cursus_anneeScolaire %>
+                                    <%= uneEvaluation.cursus_anneeScolaire %>
                                 </td>
                                 <td>
-                                    <%= uneNote.classe_libelle %> <%= uneNote.cursus_libelle %>
+                                    <%= uneEvaluation.classe_libelle %> <%= uneEvaluation.cursus_libelle %>
                                 </td>
                                 <td>
-                                    <%= uneNote.user_nom  %> <%= uneNote.user_prenom  %>
+                                    <%= uneEvaluation.user_nom  %> <%= uneEvaluation.user_prenom  %>
                                 </td>
                                 <td>
-                                    <%= uneNote.matiere_libelle %>
+                                    <%= uneEvaluation.matiere_libelle %>
                                 </td>
                                 <td>
-                                    <%= uneNote.eval_desc %>
+                                    <%= uneEvaluation.eval_desc %>
                                 </td>
                                 <td>
-                                    <%= uneNote.eval_date %>
+                                    <%= uneEvaluation.eval_date %>
                                 </td>
                                 <td>
                                     <button type="button" class="btn btn-primary action_table"
-                                        onclick="showModalDetail('Détail évaluation <%= uneNote.eval_id %>', {'Année Scolaire':'<%= uneNote.cursus_anneeScolaire %>','Cursus': '<%= uneNote.classe_libelle %> <%= uneNote.cursus_libelle %>', 'Professeur': '<%= uneNote.user_nom  %> <%= uneNote.user_prenom  %>','Matière': '<%= uneNote.matiere_libelle %>','Description': '<%= uneNote.eval_desc %>', 'Date': '<%= uneNote.eval_date %>'}, 'fiche/<%= uneNote.eval_id %>')"><i
+                                        onclick="showModalDetail('Détail évaluation <%= uneEvaluation.eval_id %>', {'Année Scolaire':'<%= uneEvaluation.cursus_anneeScolaire %>','Cursus': '<%= uneEvaluation.classe_libelle %> <%= uneEvaluation.cursus_libelle %>', 'Professeur': '<%= uneEvaluation.user_nom  %> <%= uneEvaluation.user_prenom  %>','Matière': '<%= uneEvaluation.matiere_libelle %>','Description': '<%= uneEvaluation.eval_desc %>', 'Date': '<%= uneEvaluation.eval_date %>'}, 'fiche/<%= uneEvaluation.eval_id %>')"><i
                                             class="fas fa-eye"></i></button>
                                     <button type="button" class="btn btn-success action_table"
-                                        onclick="location.href = 'modifier/<%= uneNote.eval_id %>';"><i
+                                        onclick="location.href = 'modifier/<%= uneEvaluation.eval_id %>';"><i
                                             class="fas fa-edit"></i></button>
                                     <button type="button" class="btn btn-danger action_table"
-                                        onclick="showModalSupprimer('Supprimer évaluation <%= uneNote.eval_id %>', 'Évaluation <%= uneNote.eval_id %>', 'supprimer/<%= uneNote.eval_id %>')"><i
+                                        onclick="showModalSupprimer('Supprimer évaluation <%= uneEvaluation.eval_id %>', 'Évaluation <%= uneEvaluation.eval_id %>', 'supprimer/<%= uneEvaluation.eval_id %>')"><i
                                             class="fas fa-trash-alt"></i></button>
                                 </td>
                             </tr>

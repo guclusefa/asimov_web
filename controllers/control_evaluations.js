@@ -1,50 +1,48 @@
-var model_notes = require('../models/model_notes');
-var model_matieres = require('../models/model_matieres');
+var model_evaluations = require('../models/model_evaluations');
 var model_classes = require('../models/model_classes');
 
 module.exports = {
     // affichage
     afficher_liste: function (req, res) {
-        titre = "Liste des notes";
-        model_notes.lister(function (lesNotes) {
-            console.log(lesNotes)
-            res.render('./notes/liste', { titre, lesNotes })
+        titre = "Liste des evaluations";
+        model_evaluations.lister(function (lesEvaluations) {
+             res.render('./evaluations/liste', { titre, lesEvaluations })
         })
     },
     afficher_ajouter: function (req, res) {
-        titre = "Ajouter une note";
-        action = "/notes/ajouter"
+        titre = "Ajouter une evaluation";
+        action = "/evaluations/ajouter"
         modifier = 0
 
         model_classes.lister(function (lesCursus) {
-            model_notes.listerMatiereCursus(function (lesMatieresParCursus) {
-                res.render('./notes/form', { titre, action, modifier, lesCursus, lesMatieresParCursus })
+            model_evaluations.listerMatiereCursus(function (lesMatieresParCursus) {
+                res.render('./evaluations/form', { titre, action, modifier, lesCursus, lesMatieresParCursus })
             })
         })
     },
     afficher_modifier: function (req, res) {
         id = req.params.id
-        titre = "Modifier une note";
-        action = "/notes/modifier/" + id
+        titre = "Modifier une evaluation";
+        action = "/evaluations/modifier/" + id
         modifier = 1
 
-        model_notes.ficher(id, function (unEleve) {
+        model_evaluations.ficher(id, function (unEleve) {
             unEleve = unEleve[0]
-            res.render('./notes/form', { titre, action, modifier, unEleve })
+            res.render('./evaluations/form', { titre, action, modifier, unEleve })
         })
     },
     afficher_fiche: function (req, res) {
         id = req.params.id
-        titre = "Fiche de note";
+        titre = "Fiche de evaluation";
 
-        model_notes.ficher(id, function (unEleve) {
+        model_evaluations.ficher(id, function (unEleve) {
             unEleve = unEleve[0]
-            res.render('./notes/fiche', { titre, unEleve })
+            res.render('./evaluations/fiche', { titre, unEleve })
         })
     },
 
     ajouter: function (req, res) {
-        model_notes.selectProfMatiereCursus([req.body.cursus, req.body.matiere], function (leProf) {
+        model_evaluations.selectProfMatiereCursus([req.body.cursus, req.body.matiere], function (leProf) {
             console.log(leProf)
             let params = [
                 desc = req.body.desc,
@@ -54,9 +52,9 @@ module.exports = {
                 matiere = req.body.matiere
             ]
 
-            model_notes.ajouter(params, function (data) {
-                model_notes.selectDernierEval(function (idEval) {
-                    req.flash('valid', 'Note ajouté avec succès');
+            model_evaluations.ajouter(params, function (data) {
+                model_evaluations.selectDernierEval(function (idEval) {
+                    req.flash('valid', 'evaluation ajouté avec succès');
                     res.redirect('./modifier/'+idEval[0].eval_id)
                 })
             })
@@ -74,8 +72,8 @@ module.exports = {
             id = req.params.id
         ]
 
-        model_notes.modifier(params, function (data) {
-            req.flash('valid', 'Note modifié avec succès');
+        model_evaluations.modifier(params, function (data) {
+            req.flash('valid', 'evaluation modifié avec succès');
             res.redirect('../liste')
         })
     },
@@ -83,8 +81,8 @@ module.exports = {
     supprimer: function (req, res) {
         id = req.params.id
 
-        model_notes.supprimer(id, function (data) {
-            req.flash('valid', 'Note supprimé avec succès');
+        model_evaluations.supprimer(id, function (data) {
+            req.flash('valid', 'evaluation supprimé avec succès');
             res.redirect('../liste')
         })
     },
