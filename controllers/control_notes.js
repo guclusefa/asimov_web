@@ -6,8 +6,9 @@ module.exports = {
     // affichage
     afficher_liste: function (req, res) {
         titre = "Liste des notes";
-        model_notes.lister(function (lesnotes) {
-            res.render('./notes/liste', { titre, lesnotes })
+        model_notes.lister(function (lesNotes) {
+            console.log(lesNotes)
+            res.render('./notes/liste', { titre, lesNotes })
         })
     },
     afficher_ajouter: function (req, res) {

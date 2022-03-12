@@ -19,13 +19,12 @@ module.exports = {
 
     lister: function(callback) {
         var sql = `SELECT *,
-        TIMESTAMPDIFF(YEAR, user_dateNaissance, CURDATE()) AS user_age,
-        DATE_FORMAT(user_dateNaissance, '%d/%m/%Y') as user_dateNaissance
-        FROM Users 
-        WHERE user_isProf = 0 
-        AND user_isProfPrincipal = 0 
-        AND user_isProviseur = 0 
-        AND user_isAdministration = 0`;
+        DATE_FORMAT(user_dateNaissance, '%d/%m/%Y') as eval_date
+        FROM Evaluations, Cursus, Users, Matieres, Classes
+        WHERE eval_idCursus = cursus_id
+        AND eval_idProf = user_id
+        AND eval_idMatiere = matiere_id
+        AND cursus_idClasse = classe_id`;
         db.query(sql, function(err, data) {
             if (err) throw err;
             return callback(data);

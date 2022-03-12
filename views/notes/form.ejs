@@ -42,7 +42,7 @@
                                     <option value="" disabled selected>Choisir une matière</option>
                                     <% lesMatieresParCursus.forEach(function(uneMatiere){ %>
                                         <option value="<%= uneMatiere.matiere_id %>" class="<%= uneMatiere.cursus_prof_idCursus %>">
-                                            <%= uneMatiere.matiere_libelle %> Prof. <%= uneMatiere.user_prenom %> <%= uneMatiere.user_nom %>
+                                            <%= uneMatiere.matiere_libelle %> (Prof. <%= uneMatiere.user_prenom %> <%= uneMatiere.user_nom %>)
                                         </option>
                                         <% })%>
                                 </select>
@@ -101,7 +101,7 @@
     </div>
 
     <script>
-        // on cache tout
+        // on cache tout dabord
         let nodeList = document.getElementById("matiere").querySelectorAll("option");
         nodeList.forEach(function (option, i) {
             if (i !== 0) {

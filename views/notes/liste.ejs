@@ -15,37 +15,45 @@
                 <table id="dataTable" class="table" style="width:100%">
                     <thead class="bg-primary" >
                         <tr>
-                            <th>Élève</th>
-                            <th>Sexe</th>
-                            <th>Tél</th>
-                            <th>Email</th>
+                            <th>Année Scolaire</th>
+                            <th>Cursus</th>
+                            <th>Professeur</th>
+                            <th>Matière</th>
+                            <th>Description</th>
+                            <th>Date</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <% lesEleves.forEach(function(unEleve){ %>
+                        <% lesNotes.forEach(function(uneNote){ %>
                             <tr>
                                 <td>
-                                    <%= unEleve.user_nom + ' ' + unEleve.user_prenom + ' (' +unEleve.user_age+' ans)' %>
+                                    <%= uneNote.cursus_anneeScolaire %>
                                 </td>
                                 <td>
-                                    <%= unEleve.user_sexe %>
+                                    <%= uneNote.classe_libelle %> <%= uneNote.cursus_libelle %>
                                 </td>
                                 <td>
-                                    <%= unEleve.user_tel %>
+                                    <%= uneNote.user_nom  %> <%= uneNote.user_prenom  %>
                                 </td>
                                 <td>
-                                    <%= unEleve.user_mail %>
+                                    <%= uneNote.matiere_libelle %>
+                                </td>
+                                <td>
+                                    <%= uneNote.eval_desc %>
+                                </td>
+                                <td>
+                                    <%= uneNote.eval_date %>
                                 </td>
                                 <td>
                                     <button type="button" class="btn btn-primary action_table"
-                                        onclick="showModalDetail('Détail élève <%= unEleve.user_id %>', {'NOM': '<%= unEleve.user_nom %>', 'Prénom': '<%= unEleve.user_prenom %>','Date de naissance': '<%= unEleve.user_dateNaissance + ` (` + unEleve.user_age + `ans)` %>','Sexe': '<%= unEleve.user_sexe %>','Tél': '<%= unEleve.user_tel %>','Email': '<%= unEleve.user_mail %>' }, 'fiche/<%= unEleve.user_id %>')"><i
+                                        onclick="showModalDetail('Détail évaluation <%= uneNote.eval_id %>', {'Année Scolaire':'<%= uneNote.cursus_anneeScolaire %>','Cursus': '<%= uneNote.classe_libelle %> <%= uneNote.cursus_libelle %>', 'Professeur': '<%= uneNote.user_nom  %> <%= uneNote.user_prenom  %>','Matière': '<%= uneNote.matiere_libelle %>','Description': '<%= uneNote.eval_desc %>', 'Date': '<%= uneNote.eval_date %>'}, 'fiche/<%= uneNote.eval_id %>')"><i
                                             class="fas fa-eye"></i></button>
                                     <button type="button" class="btn btn-success action_table"
-                                        onclick="location.href = 'modifier/<%= unEleve.user_id %>';"><i
+                                        onclick="location.href = 'modifier/<%= uneNote.eval_id %>';"><i
                                             class="fas fa-edit"></i></button>
                                     <button type="button" class="btn btn-danger action_table"
-                                        onclick="showModalSupprimer('Détail élève <%= unEleve.user_id %>', 'Élève <%= unEleve.user_id %>', 'supprimer/<%= unEleve.user_id %>')"><i
+                                        onclick="showModalSupprimer('Supprimer évaluation <%= uneNote.eval_id %>', 'Évaluation <%= uneNote.eval_id %>', 'supprimer/<%= uneNote.eval_id %>')"><i
                                             class="fas fa-trash-alt"></i></button>
                                 </td>
                             </tr>
