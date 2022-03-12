@@ -6,7 +6,7 @@ module.exports = {
     afficher_liste: function (req, res) {
         titre = "Liste des evaluations";
         model_evaluations.lister(function (lesEvaluations) {
-             res.render('./evaluations/liste', { titre, lesEvaluations })
+            res.render('./evaluations/liste', { titre, lesEvaluations })
         })
     },
     afficher_ajouter: function (req, res) {
@@ -26,18 +26,32 @@ module.exports = {
         action = "/evaluations/modifier/" + id
         modifier = 1
 
-        model_evaluations.ficher(id, function (unEleve) {
-            unEleve = unEleve[0]
-            res.render('./evaluations/form', { titre, action, modifier, unEleve })
+        model_evaluations.ficher(id, function (uneEval) {
+            uneEval = uneEval[0]
+            model_evaluations.ficherEleves(uneEval.eval_idCursus, function (lesEleves) {
+                model_evaluations.ficherNotesEleves(uneEval.eval_id, function (lesNotesEleves) {
+                    // ajouter notes (opssible avec 1 requete ? jsp mais comme ça c'est facile a se retrouver)
+                    // utiliser pour 1ere affiche pck apres ils ont forcement des notes si une modification a été faite donc pas besoin de check mais comme ca
+                    // evite de faire une requete bizar
+                    lesEleves.forEach(element => {
+                        lesNotesEleves.forEach(element2 => {
+                            if (element.user_id == element2.note_idEleve) {
+                                element.note_valeur = element2.note_valeur
+                            }
+                        });
+                    });
+                    res.render('./evaluations/form', { titre, action, modifier, uneEval, lesEleves })
+                })
+            })
         })
     },
     afficher_fiche: function (req, res) {
         id = req.params.id
         titre = "Fiche de evaluation";
 
-        model_evaluations.ficher(id, function (unEleve) {
-            unEleve = unEleve[0]
-            res.render('./evaluations/fiche', { titre, unEleve })
+        model_evaluations.ficher(id, function (uneEval) {
+            uneEval = uneEval[0]
+            res.render('./evaluations/fiche', { titre, uneEval })
         })
     },
 
@@ -55,7 +69,7 @@ module.exports = {
             model_evaluations.ajouter(params, function (data) {
                 model_evaluations.selectDernierEval(function (idEval) {
                     req.flash('valid', 'evaluation ajouté avec succès');
-                    res.redirect('./modifier/'+idEval[0].eval_id)
+                    res.redirect('./modifier/' + idEval[0].eval_id)
                 })
             })
         })
@@ -63,14 +77,19 @@ module.exports = {
 
     modifier: function (req, res) {
         let params = [
-            nom = req.body.nom,
-            prenom = req.body.prenom,
+            desc = req.body.desc,
             date = req.body.date.split("/").reverse().join("/"),
-            sexe = req.body.sexe,
-            tel = req.body.tel,
-            email = req.body.email,
             id = req.params.id
         ]
+
+        // supprime notes et on ajoute pour eviter de check pour chaque update si existe ou pas
+        model_evaluations.supprimerNotes(id, function (data) {
+            for (i in req.body.eleves) {
+                console.log(req.body.notes[i])
+                if (!req.body.notes[i]) req.body.notes[i] =  -1
+                model_evaluations.ajouterNotes([req.body.notes[i], id, req.body.eleves[i]], function (data) { })
+            }
+        })
 
         model_evaluations.modifier(params, function (data) {
             req.flash('valid', 'evaluation modifié avec succès');

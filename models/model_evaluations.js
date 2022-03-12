@@ -47,15 +47,29 @@ module.exports = {
         });
     },
 
+    ajouterNotes: function(params, callback) {
+        var sql = `INSERT INTO Notes (note_valeur, note_idEval, note_idEleve) VALUES (?,?,?)`;
+        db.query(sql, params, function(err, data) {
+            if (err) throw err;
+            return callback(data);
+        });
+    },
+
+
+    supprimerNotes: function(params, callback) {
+        var sql = `DELETE FROM Notes WHERE note_idEval = ?`;
+        db.query(sql, params, function(err, data) {
+            if (err) throw err;
+            return callback(data);
+        });
+    },
+
+    // ne peuvent pas modifier matiere, prof ou curusus pck flemme faut prendre en compte trop de trucs ils ont qu'a recrer une éval
     modifier: function(params, callback) {
-        var sql = `UPDATE Users 
-        SET user_nom = ?,
-        user_prenom = ?,
-        user_dateNaissance = ?, 
-        user_sexe = ?, 
-        user_tel = ?, 
-        user_mail = ?
-        WHERE user_id = ? `;
+        var sql = `UPDATE Evaluations 
+        SET eval_desc = ?,
+        eval_date = ?
+        WHERE eval_id = ? `;
         db.query(sql, params, function(err, data) {
             if (err) throw err;
             return callback(data);
@@ -63,7 +77,7 @@ module.exports = {
     },
 
     supprimer: function(params, callback) {
-        var sql = `DELETE FROM Users WHERE user_id = ?`;
+        var sql = `DELETE FROM Evaluations WHERE eval_id = ?`;
         db.query(sql, params, function(err, data) {
             if (err) throw err;
             return callback(data);
@@ -72,10 +86,34 @@ module.exports = {
 
     ficher: function(params, callback) {
         var sql = `SELECT *,
-        TIMESTAMPDIFF(YEAR, user_dateNaissance, CURDATE()) AS user_age,
-        DATE_FORMAT(user_dateNaissance, '%d/%m/%Y') as user_dateNaissance
-        FROM Users 
-        WHERE user_id = ?`;
+        DATE_FORMAT(user_dateNaissance, '%d/%m/%Y') as eval_date
+        FROM Evaluations, Cursus, Users, Matieres, Classes
+        WHERE eval_idCursus = cursus_id
+        AND eval_idProf = user_id
+        AND eval_idMatiere = matiere_id
+        AND cursus_idClasse = classe_id
+        AND eval_id = ?`;
+        db.query(sql, params, function(err, data) {
+            if (err) throw err;
+            return callback(data);
+        });
+    },
+
+    ficherEleves: function(params, callback) {
+        var sql = `SELECT *
+        FROM Cursus_Eleves, Users
+        WHERE cursus_eleve_idEleve = user_id
+        AND cursus_eleve_idCursus = ?`;
+        db.query(sql, params, function(err, data) {
+            if (err) throw err;
+            return callback(data);
+        });
+    },
+
+    ficherNotesEleves: function(params, callback) {
+        var sql = `SELECT *
+        FROM Notes
+        WHERE note_idEval = ?`;
         db.query(sql, params, function(err, data) {
             if (err) throw err;
             return callback(data);

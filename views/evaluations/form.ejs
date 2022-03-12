@@ -14,6 +14,7 @@
                 <hr>
 
                 <form action="<%= action %>" method="POST" class="needs-validation" novalidate>
+                    <% if(modifier == 0) { %>
                     <div class="row">
                         <div class="col-md-6 col-sm-12 col-12 mt-3">
                             <div class="form-floating mb-3">
@@ -56,6 +57,43 @@
                             </div>
                         </div>
                     </div>
+                    <% } else { %>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12 col-12 mt-3">
+                                <div class="form-floating mb-3">
+                                    <select class="form-control" id="cursus" name="cursus" disabled required>
+                                        <option value="<%= uneEval.cursus_id %>" disabled selected>
+                                            <%= uneEval.classe_libelle %> <%= uneEval.cursus_libelle %> (<%= uneEval.cursus_anneeScolaire %>)</option>
+                                    </select>
+                                    <label class="required">Classe</label>
+                                    <div class="invalid-feedback">
+                                        Choisir une classe valide !
+                                    </div>
+                                    <div class="valid-feedback">
+                                        Classe valide
+                                    </div>
+                                </div>
+                            </div>
+    
+                            <div class="col-md-6 col-sm-12 col-12 mt-3">
+                                <div class="form-floating mb-3">
+                                    <select class="form-control" id="matiere" name="matiere" disabled required>
+                                         <option value="<%= uneEval.matiere_id %>" class="<%= uneEval.cursus_prof_idCursus %>" disabled selected>
+                                            <%= uneEval.matiere_libelle %> (Prof. <%= uneEval.user_prenom %> <%= uneEval.user_nom %>)
+                                        </option>
+                                     </select>
+                                    <label class="required">Matière</label>
+                                    <div class="invalid-feedback">
+                                        Choisir une matière valide !
+                                    </div>
+                                    <div class="valid-feedback">
+                                        Matière valide
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <% } %>
+
 
                     <div class="row">
                         <div class="col-md-6 col-sm-12 col-12 mt-3">
@@ -76,7 +114,7 @@
                             <div class="form-floating mb-3">
                                 <input type="text" class="datepicker_input form-control" autocomplete="off"
                                     placeholder="Date de naissance" id="date" name="date"
-                                    value="<% if (modifier) {%><%=unEleve.user_dateNaissance%><%} %>" required>
+                                    value="<% if (modifier) {%><%= uneEval.eval_date %><%} %>" required>
                                 <label class="required">Date</label>
                                 <div class="invalid-feedback">
                                     Choisir une date valide !
@@ -87,6 +125,49 @@
                             </div>
                         </div>
                     </div>
+
+                    <% if(modifier) { %>
+                        <div class="row">
+                        <!-- les éleves -->
+                        <div class="col-12">
+                            <fieldset class="border rounded-3 p-3 mb-3" style="background-color: white;">
+                                <legend class="float-none text-primary">Les élèves</legend>
+                                <% lesEleves.forEach(function(unEleve, i){ %>
+                                <div class="row">
+                                    <div class="col mt-3">
+                                        <div class="form-floating mb-3">
+                                            <select class="form-control" id="eleve_<%= i+1 %>" name="eleves[]" required>
+                                                <option value="<%= unEleve.user_id %>" selected><%= unEleve.user_nom + ' ' + unEleve.user_prenom %></option>
+                                            </select>
+                                            <label class="required">Élève <%= i+1 %></label>
+                                            <div class="invalid-feedback">
+                                                Choisir un élève valide !
+                                            </div>
+                                            <div class="valid-feedback">
+                                                Élève valide
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col mt-3">
+                                        <div class="form-floating mb-3">
+                                            <input type="number" class="form-control" placeholder="desc" id="note_<%= i+1 %>" name="notes[]"
+                                            value="<%= unEleve.note_valeur %>">
+                                            <label class="required">Note <%= i+1 %></label>
+                                            <div class="invalid-feedback">
+                                                Choisir une note valide !
+                                            </div>
+                                            <div class="valid-feedback">
+                                                Note valide
+                                            </div>
+                                        </div>
+                                    </div>   
+                                </div>
+                                <% })%>
+                            </fieldset>
+                        </div>
+                        </div>
+                    <% } %>
 
                     <div class="row">
                         <div class="col-12 mt-3">
@@ -134,11 +215,7 @@
     <% if (modifier) { %>
         <script>
             window.addEventListener("load", function () {
-                $("#nom").val('<%= unEleve.user_nom %>');
-                $("#prenom").val('<%= unEleve.user_prenom %>');
-                $("#sexe").val('<%= unEleve.user_sexe %>').change();
-                $("#email").val('<%= unEleve.user_mail %>');
-                $("#tel").val('<%= unEleve.user_tel %>');
+                $("#desc").val('<%= uneEval.eval_desc %>');
             });
         </script>
         <% } %>
