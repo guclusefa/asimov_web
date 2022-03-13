@@ -19,6 +19,15 @@ module.exports = {
         });
     },
 
+
+    listerParProf: function(params, callback) {
+        var sql = `SELECT * FROM Cursus_Profs, Cursus, Classes WHERE cursus_prof_idCursus = cursus_id AND cursus_idClasse = classe_id AND cursus_prof_idProf = ? GROUP BY cursus_id;`;
+        db.query(sql, params, function(err, data) {
+            if (err) throw err;
+            return callback(data);
+        });
+    },
+
     listerEleves: function(params, callback) {
         var sql = `SELECT * FROM Cursus_Eleves, Users WHERE cursus_eleve_idEleve = user_id AND cursus_eleve_idCursus = ?`;
         db.query(sql, params, function(err, data) {

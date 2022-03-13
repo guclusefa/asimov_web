@@ -25,6 +25,14 @@ module.exports = {
         });
     },
 
+    listerMatiereCursusParProf: function(params, callback) {
+        var sql = `SELECT * FROM Cursus_Profs, Cursus, Matieres, Users WHERE cursus_prof_idCursus = cursus_id AND cursus_prof_idMatiere = matiere_id AND cursus_prof_idProf = user_id AND user_id = ?;`;
+        db.query(sql, params, function(err, data) {
+            if (err) throw err;
+            return callback(data);
+        });
+    },
+
     lister: function(callback) {
         var sql = `SELECT *,
         DATE_FORMAT(user_dateNaissance, '%d/%m/%Y') as eval_date
@@ -34,6 +42,36 @@ module.exports = {
         AND eval_idMatiere = matiere_id
         AND cursus_idClasse = classe_id`;
         db.query(sql, function(err, data) {
+            if (err) throw err;
+            return callback(data);
+        });
+    },
+
+    listerParClasse: function(params, callback) {
+        var sql = `SELECT *,
+        DATE_FORMAT(user_dateNaissance, '%d/%m/%Y') as eval_date
+        FROM Evaluations, Cursus, Users, Matieres, Classes
+        WHERE eval_idCursus = cursus_id
+        AND eval_idProf = user_id
+        AND eval_idMatiere = matiere_id
+        AND cursus_idClasse = classe_id
+        AND (cursus_idProfPrincipale = ? OR eval_idProf = ?)`;
+        db.query(sql, params, function(err, data) {
+            if (err) throw err;
+            return callback(data);
+        });
+    },
+
+    listerParProf: function(params, callback) {
+        var sql = `SELECT *,
+        DATE_FORMAT(user_dateNaissance, '%d/%m/%Y') as eval_date
+        FROM Evaluations, Cursus, Users, Matieres, Classes
+        WHERE eval_idCursus = cursus_id
+        AND eval_idProf = user_id
+        AND eval_idMatiere = matiere_id
+        AND cursus_idClasse = classe_id
+        AND eval_idProf = ?`;
+        db.query(sql, params, function(err, data) {
             if (err) throw err;
             return callback(data);
         });

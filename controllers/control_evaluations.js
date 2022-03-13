@@ -1,6 +1,7 @@
 var model_evaluations = require('../models/model_evaluations');
 var model_classes = require('../models/model_classes');
 
+// pour faire le bilan d'une eval : moyenne, min et max
 const average = arr => arr.reduce((a, b) => a + b, 0) / arr.length;
 function bilanArray(array) {
     min = array[0]
@@ -16,36 +17,53 @@ function bilanArray(array) {
 module.exports = {
     // affichage
     afficher_liste: function (req, res) {
-        if (req.session.user_info !== undefined) { // si connecte
-
+        if (req.session.user_info !== undefined && req.session.user_info.user_isProf == 1) { // si connecte et que c'est un
             titre = "Liste des evaluations";
-            model_evaluations.lister(function (lesEvaluations) {
-                res.render('./evaluations/liste', { titre, lesEvaluations })
-            })
+
+            if (req.session.user_info.user_isProviseur == 1) { // si provisuer, peut ajouter voir toutes les matieres
+                model_evaluations.lister(function (lesEvaluations) {
+                    res.render('./evaluations/liste', { titre, lesEvaluations })
+                })
+            } else if (req.session.user_info.user_isProfPrincipal == 1) { //si prof principal peut voir notes de ses classes : liste mes evals + les eval de la classe si je suis prof principal
+                model_evaluations.listerParClasse([req.session.user_info.user_id, req.session.user_info.user_id], function (lesEvaluations) {
+                    res.render('./evaluations/liste', { titre, lesEvaluations })
+                })
+            } else {
+                model_evaluations.listerParProf(req.session.user_info.user_id, function (lesEvaluations) { // si seuleuemtn prof peut voir que les notes de ses eleves
+                    res.render('./evaluations/liste', { titre, lesEvaluations })
+                })
+            }
         } else {
             req.flash('erreur', "Vous n'êtes pas autorisé");
             res.redirect('/')
         }
     },
     afficher_ajouter: function (req, res) {
-        if (req.session.user_info !== undefined) { // si connecte
-
+        if (req.session.user_info !== undefined && req.session.user_info.user_isProf == 1) { // si connecte
             titre = "Ajouter une evaluation";
             action = "/evaluations/ajouter"
             modifier = 0
 
-            model_classes.lister(function (lesCursus) {
-                model_evaluations.listerMatiereCursus(function (lesMatieresParCursus) {
-                    res.render('./evaluations/form', { titre, action, modifier, lesCursus, lesMatieresParCursus })
+            if (req.session.user_info.user_isProviseur == 1) { // si provisuer, peut ajouter matieres dans tout les cursus
+                model_classes.lister(function (lesCursus) {
+                    model_evaluations.listerMatiereCursus(function (lesMatieresParCursus) {
+                        res.render('./evaluations/form', { titre, action, modifier, lesCursus, lesMatieresParCursus })
+                    })
                 })
-            })
+            } else { // sinon que prof peut ajouter que dans ses cursus a lui
+                model_classes.listerParProf(req.session.user_info.user_id, function (lesCursus) {
+                    model_evaluations.listerMatiereCursusParProf(req.session.user_info.user_id, function (lesMatieresParCursus) {
+                        res.render('./evaluations/form', { titre, action, modifier, lesCursus, lesMatieresParCursus })
+                    })
+                })
+            }
         } else {
             req.flash('erreur', "Vous n'êtes pas autorisé");
             res.redirect('/')
         }
     },
     afficher_modifier: function (req, res) {
-        if (req.session.user_info !== undefined) { // si connecte
+        if (req.session.user_info !== undefined && req.session.user_info.user_isProf == 1) { // si connecte
 
             id = req.params.id
             titre = "Modifier une evaluation";
@@ -54,21 +72,28 @@ module.exports = {
 
             model_evaluations.ficher(id, function (uneEval) {
                 uneEval = uneEval[0]
-                model_evaluations.ficherEleves(uneEval.eval_idCursus, function (lesEleves) {
-                    model_evaluations.ficherNotesEleves(uneEval.eval_id, function (lesNotesEleves) {
-                        // ajouter notes (opssible avec 1 requete ? jsp mais comme ça c'est facile a se retrouver)
-                        // utiliser pour 1ere affiche pck apres ils ont forcement des notes si une modification a été faite donc pas besoin de check mais comme ca
-                        // evite de faire une requete bizar
-                        lesEleves.forEach(element => {
-                            lesNotesEleves.forEach(element2 => {
-                                if (element.user_id == element2.note_idEleve) {
-                                    element.note_valeur = element2.note_valeur
-                                }
+                // si proviseur : peut tout modifier ; sinon peut modifier que si c'est l'eval du prof
+                // utilisé pour view des profs principals
+                if (req.session.user_info.user_isProviseur == 1 || uneEval.eval_idProf == req.session.user_info.user_id) { // si provisuer, peut ajouter matieres dans tout les cursus
+                    model_evaluations.ficherEleves(uneEval.eval_idCursus, function (lesEleves) {
+                        model_evaluations.ficherNotesEleves(uneEval.eval_id, function (lesNotesEleves) {
+                            // ajouter notes (opssible avec 1 requete ? jsp mais comme ça c'est facile a se retrouver)
+                            // utiliser pour 1ere affiche pck apres ils ont forcement des notes si une modification a été faite donc pas besoin de check mais comme ca
+                            // evite de faire une requete bizar
+                            lesEleves.forEach(element => {
+                                lesNotesEleves.forEach(element2 => {
+                                    if (element.user_id == element2.note_idEleve) {
+                                        element.note_valeur = element2.note_valeur
+                                    }
+                                });
                             });
-                        });
-                        res.render('./evaluations/form', { titre, action, modifier, uneEval, lesEleves })
+                            res.render('./evaluations/form', { titre, action, modifier, uneEval, lesEleves })
+                        })
                     })
-                })
+                } else {
+                    req.flash('erreur', "Vous n'êtes pas autorisé");
+                    res.redirect('/evaluations/liste')
+                }
             })
         } else {
             req.flash('erreur', "Vous n'êtes pas autorisé");
@@ -76,40 +101,49 @@ module.exports = {
         }
     },
     afficher_fiche: function (req, res) {
-        if (req.session.user_info !== undefined) { // si connecte
+        if (req.session.user_info !== undefined && req.session.user_info.user_isProf == 1) { // si connecte
 
             id = req.params.id
             titre = "Fiche de evaluation";
 
             model_evaluations.ficher(id, function (uneEval) {
                 uneEval = uneEval[0]
-                model_evaluations.ficherEleves(uneEval.eval_idCursus, function (lesEleves) {
-                    model_evaluations.ficherNotesEleves(uneEval.eval_id, function (lesNotesEleves) {
-                        bilanNotes = []
+                // si proviseur : peut voir
+                // si prof : peut voir que si c'est sa note
+                // si prof principal : peut voir que si c'est eval de sa classe ou il est prof principals
+                if (req.session.user_info.user_isProviseur == 1 || uneEval.eval_idProf == req.session.user_info.user_id || (req.session.user_info.user_isProfPrincipal == 1 && uneEval.cursus_idProfPrincipale == req.session.user_info.user_id)) {
+                    model_evaluations.ficherEleves(uneEval.eval_idCursus, function (lesEleves) {
+                        model_evaluations.ficherNotesEleves(uneEval.eval_id, function (lesNotesEleves) {
+                            bilanNotes = []
 
-                        // ajouter notes (opssible avec 1 requete ? jsp mais comme ça c'est facile a se retrouver)
-                        // utiliser pour 1ere affiche pck apres ils ont forcement des notes si une modification a été faite donc pas besoin de check mais comme ca
-                        // evite de faire une requete bizar
-                        lesEleves.forEach(element => {
-                            lesNotesEleves.forEach(element2 => {
-                                if (element.user_id == element2.note_idEleve) {
-                                    element.note_valeur = element2.note_valeur
+                            // ajouter notes (opssible avec 1 requete ? jsp mais comme ça c'est facile a se retrouver)
+                            // utiliser pour 1ere affiche pck apres ils ont forcement des notes si une modification a été faite donc pas besoin de check mais comme ca
+                            // evite de faire une requete bizar
+                            lesEleves.forEach(element => {
+                                lesNotesEleves.forEach(element2 => {
+                                    if (element.user_id == element2.note_idEleve) {
+                                        element.note_valeur = element2.note_valeur
+                                    }
+                                });
+                                if (element.note_valeur !== null) {
+                                    bilanNotes.push(element.note_valeur)
                                 }
                             });
-                            if (element.note_valeur !== null) {
-                                bilanNotes.push(element.note_valeur)
-                            }
-                        });
 
-                        //  bilan de l'éval
-                        bilan = bilanArray(bilanNotes)
-                        min = bilan[0]
-                        max = bilan[1]
-                        moy = bilan[2]
-                        res.render('./evaluations/fiche', { titre, uneEval, lesEleves, min, max, moy })
+                            //  bilan de l'éval
+                            bilan = bilanArray(bilanNotes)
+                            min = bilan[0]
+                            max = bilan[1]
+                            moy = bilan[2]
+                            res.render('./evaluations/fiche', { titre, uneEval, lesEleves, min, max, moy })
+                        })
                     })
-                })
+                } else {
+                    req.flash('erreur', "Vous n'êtes pas autorisé");
+                    res.redirect('/evaluations/liste')
+                }
             })
+
         } else {
             req.flash('erreur', "Vous n'êtes pas autorisé");
             res.redirect('/')
@@ -117,7 +151,7 @@ module.exports = {
     },
 
     ajouter: function (req, res) {
-        if (req.session.user_info !== undefined) { // si connecte
+        if (req.session.user_info !== undefined && req.session.user_info.user_isProf == 1) { // si connecte
 
             model_evaluations.selectProfMatiereCursus([req.body.cursus, req.body.matiere], function (leProf) {
                 console.log(leProf)
@@ -143,7 +177,7 @@ module.exports = {
     },
 
     modifier: function (req, res) {
-        if (req.session.user_info !== undefined) { // si connecte
+        if (req.session.user_info !== undefined && req.session.user_info.user_isProf == 1) { // si connecte
 
             let params = [
                 desc = req.body.desc,
@@ -170,7 +204,7 @@ module.exports = {
     },
 
     supprimer: function (req, res) {
-        if (req.session.user_info !== undefined) { // si connecte
+        if (req.session.user_info !== undefined && req.session.user_info.user_isProf == 1) { // si connecte
 
             id = req.params.id
 
