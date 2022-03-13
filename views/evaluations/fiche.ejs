@@ -46,7 +46,14 @@
                             <div class="card-body">
                                 <h5 class="card-title">Les notes</h5>
                                 <hr>
-                                <p class="card-text"><b>Élève :</b> <b><span class="float-end">50/100</b> </span></p>
+                                <% lesEleves.forEach(function(unEleve){ %>
+                                <p class="card-text"><b>Élève :</b> <%= unEleve.user_nom %> <%= unEleve.user_prenom %>
+                                    <span class="float-end"><b><% if(unEleve.note_valeur) { %><%= unEleve.note_valeur %>%<% } else { %>Absent<% } %></b></span></p>
+                                <% })%>
+                                <hr>
+                                <p class="cardtext"><b>Moyenne : <% if(moy) { %><%= moy %>%<% } else { %> à definir <% } %></b></p>
+                                <p class="cardtext"><b>Meilleur note : <% if(max) { %><%= max %>%<% } else { %> à definir <% } %></b></p>
+                                <p class="cardtext"><b>Pire note : <% if(min) { %><%= min %>%<% } else { %> à definir <% } %></b></p>
                              </div>
                         </div>                        
                     </div>

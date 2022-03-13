@@ -16,6 +16,8 @@ routeur.get('/', control_accueil.afficher)
 
 // connexion
 routeur.get('/connexion', control_connexion.afficher)
+routeur.post('/connexion', control_connexion.connexion)
+routeur.get('/deconnexion', control_connexion.deconnexion)
 
 // eleves
 routeur.get('/eleves/liste', control_eleves.afficher_liste)

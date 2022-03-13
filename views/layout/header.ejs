@@ -184,25 +184,39 @@
               <a href="/"><img src="/images/logo.svg" style="height:50px; width: auto; margin-top: -5px;" /></a>
             </div>
           </div>
-          <div class="col-4 text-end header-toggler">
-            <div class="btn-group">
-              <div class="dropdown-toggle d-none d-md-block d-print-block" type="button" data-bs-toggle="dropdown"
-                aria-expanded="false">
-                GUCLU Sefa
+
+          <% if (typeof user_info !='undefined' && user_info !='' ) { %>
+            <div class="col-4 text-end header-toggler">
+              <div class="btn-group">
+                <div class="dropdown-toggle d-none d-md-block d-print-block" type="button" data-bs-toggle="dropdown"
+                  aria-expanded="false">
+                  <%= user_info.user_nom %> <%= user_info.user_prenom %>
+                </div>
+                <div class="dropdown-toggle d-block d-md-none" type="button" data-bs-toggle="dropdown"
+                  aria-expanded="false">
+                  <%= user_info.user_nom[0] %><%= user_info.user_prenom[0] %>
+                </div>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="/compte">Mon compte</a></li>
+                  <li>
+                    <hr class="dropdown-divider">
+                  </li>
+                  <li><a class="dropdown-item" href="/deconnexion">Déconnexion</a></li>
+                </ul>
               </div>
-              <div class="dropdown-toggle d-block d-md-none" type="button" data-bs-toggle="dropdown"
-                aria-expanded="false">
-                GS
-              </div>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Mon compte</a></li>
-                <li>
-                  <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="#">Déconnexion</a></li>
-              </ul>
             </div>
-          </div>
+            <% } else { %>
+              <div class="col-4 text-end header-toggler">
+                <div class="btn-group">
+                  <div class="  d-none d-md-block d-print-block">
+                    <a href="/connexion">Connexion</a>
+                  </div>
+                  <div class="d-block d-md-none">
+                    <a href="/connexion"><i class="fas fa-sign-in"></i></a>
+                  </div>
+                </div>
+              </div>
+              <% } %>
         </div>
       </div>
     </nav>

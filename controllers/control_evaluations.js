@@ -1,6 +1,18 @@
 var model_evaluations = require('../models/model_evaluations');
 var model_classes = require('../models/model_classes');
 
+const average = arr => arr.reduce((a,b) => a + b, 0) / arr.length;
+function bilanArray(array) {
+    min = array[0]
+    max = array[0]
+    array.forEach(element => {
+        if (element < min) min = element
+        if (element > max) max = element
+    });
+    moy = average(array)
+    return [min, max, moy]
+}
+
 module.exports = {
     // affichage
     afficher_liste: function (req, res) {
@@ -51,7 +63,32 @@ module.exports = {
 
         model_evaluations.ficher(id, function (uneEval) {
             uneEval = uneEval[0]
-            res.render('./evaluations/fiche', { titre, uneEval })
+            model_evaluations.ficherEleves(uneEval.eval_idCursus, function (lesEleves) {
+                model_evaluations.ficherNotesEleves(uneEval.eval_id, function (lesNotesEleves) {
+                    bilanNotes = []
+
+                    // ajouter notes (opssible avec 1 requete ? jsp mais comme ça c'est facile a se retrouver)
+                    // utiliser pour 1ere affiche pck apres ils ont forcement des notes si une modification a été faite donc pas besoin de check mais comme ca
+                    // evite de faire une requete bizar
+                    lesEleves.forEach(element => {
+                        lesNotesEleves.forEach(element2 => {
+                            if (element.user_id == element2.note_idEleve) {
+                                element.note_valeur = element2.note_valeur
+                            }
+                        });
+                        if (element.note_valeur !== null) {
+                            bilanNotes.push(element.note_valeur)
+                        }
+                    });
+
+                    //  bilan de l'éval
+                    bilan = bilanArray(bilanNotes)
+                    min = bilan[0]
+                    max = bilan[1]
+                    moy = bilan[2]
+                    res.render('./evaluations/fiche', { titre, uneEval, lesEleves, min, max, moy})
+                })
+            })
         })
     },
 
@@ -85,7 +122,7 @@ module.exports = {
         // supprime notes et on ajoute pour eviter de check pour chaque update si existe ou pas
         model_evaluations.supprimerNotes(id, function (data) {
             for (i in req.body.eleves) {
-                if (!req.body.notes[i]) req.body.notes[i] =  null
+                if (!req.body.notes[i]) req.body.notes[i] = null
                 model_evaluations.ajouterNotes([req.body.notes[i], id, req.body.eleves[i]], function (data) { })
             }
         })

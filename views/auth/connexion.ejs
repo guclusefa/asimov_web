@@ -1,2 +1,57 @@
 <%- include('../layout/header') %>
-<%- include('../layout/footer') %>
+    <div class="container-fluid bg-secondary py-5">
+        <div class="container">
+            <div>
+                <h1 class="display-5 fw-bold text-primary">
+                    <%= titre %>
+                </h1>
+                <p class="col-md-12 fs-4 text-justify">Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero
+                    doloribus, facere sint distinctio reprehenderit, similique fuga molestiae adipisci optio deserunt
+                    expedita ab veniam aperiam repellendus quia culpa possimus! Dolores, aperiam.
+                </p>
+                <hr>
+                <form action="<%= action %>" method="POST" class="needs-validation" novalidate>
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" placeholder="identification" id="identification"
+                                    name="identification" required>
+                                <label class="required">N° d'identification</label>
+                                <div class="invalid-feedback">
+                                    Entrer un n° d'identification valide !
+                                </div>
+                                <div class="valid-feedback">
+                                    N° d'identification valide
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col mt-3">
+                            <div class="form-floating mb-3">
+                                <input type="password" class="form-control" placeholder="motdepasse" id="motdepasse" name="motdepasse"
+                                    required>
+                                <label class="required">Mot de passe</label>
+                                <div class="invalid-feedback">
+                                    Entrer un mot de passe valide !
+                                </div>
+                                <div class="valid-feedback">
+                                    Mot de passe valide
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12 mt-3">
+                            <button class="btn btn-primary w-100" type="submit">
+                                <%= titre %>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <%- include('../layout/footer') %>

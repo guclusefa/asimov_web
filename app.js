@@ -17,10 +17,12 @@ app.use(session({
 	resave: false
 }));
 
+// les variables qu'on utilse de partout
 app.use(flash())
 app.use(function(req, res, next){
 	valid= req.flash('valid'),
-	erreur= req.flash('erreur')
+	erreur= req.flash('erreur'),
+	user_info = req.session.user_info
     next();
 });
 
