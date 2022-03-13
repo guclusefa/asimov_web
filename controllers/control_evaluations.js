@@ -1,7 +1,7 @@
 var model_evaluations = require('../models/model_evaluations');
 var model_classes = require('../models/model_classes');
 
-const average = arr => arr.reduce((a,b) => a + b, 0) / arr.length;
+const average = arr => arr.reduce((a, b) => a + b, 0) / arr.length;
 function bilanArray(array) {
     min = array[0]
     max = array[0]
@@ -16,129 +16,171 @@ function bilanArray(array) {
 module.exports = {
     // affichage
     afficher_liste: function (req, res) {
-        titre = "Liste des evaluations";
-        model_evaluations.lister(function (lesEvaluations) {
-            res.render('./evaluations/liste', { titre, lesEvaluations })
-        })
+        if (req.session.user_info !== undefined) { // si connecte
+
+            titre = "Liste des evaluations";
+            model_evaluations.lister(function (lesEvaluations) {
+                res.render('./evaluations/liste', { titre, lesEvaluations })
+            })
+        } else {
+            req.flash('erreur', "Vous n'êtes pas autorisé");
+            res.redirect('/')
+        }
     },
     afficher_ajouter: function (req, res) {
-        titre = "Ajouter une evaluation";
-        action = "/evaluations/ajouter"
-        modifier = 0
+        if (req.session.user_info !== undefined) { // si connecte
 
-        model_classes.lister(function (lesCursus) {
-            model_evaluations.listerMatiereCursus(function (lesMatieresParCursus) {
-                res.render('./evaluations/form', { titre, action, modifier, lesCursus, lesMatieresParCursus })
+            titre = "Ajouter une evaluation";
+            action = "/evaluations/ajouter"
+            modifier = 0
+
+            model_classes.lister(function (lesCursus) {
+                model_evaluations.listerMatiereCursus(function (lesMatieresParCursus) {
+                    res.render('./evaluations/form', { titre, action, modifier, lesCursus, lesMatieresParCursus })
+                })
             })
-        })
+        } else {
+            req.flash('erreur', "Vous n'êtes pas autorisé");
+            res.redirect('/')
+        }
     },
     afficher_modifier: function (req, res) {
-        id = req.params.id
-        titre = "Modifier une evaluation";
-        action = "/evaluations/modifier/" + id
-        modifier = 1
+        if (req.session.user_info !== undefined) { // si connecte
 
-        model_evaluations.ficher(id, function (uneEval) {
-            uneEval = uneEval[0]
-            model_evaluations.ficherEleves(uneEval.eval_idCursus, function (lesEleves) {
-                model_evaluations.ficherNotesEleves(uneEval.eval_id, function (lesNotesEleves) {
-                    // ajouter notes (opssible avec 1 requete ? jsp mais comme ça c'est facile a se retrouver)
-                    // utiliser pour 1ere affiche pck apres ils ont forcement des notes si une modification a été faite donc pas besoin de check mais comme ca
-                    // evite de faire une requete bizar
-                    lesEleves.forEach(element => {
-                        lesNotesEleves.forEach(element2 => {
-                            if (element.user_id == element2.note_idEleve) {
-                                element.note_valeur = element2.note_valeur
-                            }
+            id = req.params.id
+            titre = "Modifier une evaluation";
+            action = "/evaluations/modifier/" + id
+            modifier = 1
+
+            model_evaluations.ficher(id, function (uneEval) {
+                uneEval = uneEval[0]
+                model_evaluations.ficherEleves(uneEval.eval_idCursus, function (lesEleves) {
+                    model_evaluations.ficherNotesEleves(uneEval.eval_id, function (lesNotesEleves) {
+                        // ajouter notes (opssible avec 1 requete ? jsp mais comme ça c'est facile a se retrouver)
+                        // utiliser pour 1ere affiche pck apres ils ont forcement des notes si une modification a été faite donc pas besoin de check mais comme ca
+                        // evite de faire une requete bizar
+                        lesEleves.forEach(element => {
+                            lesNotesEleves.forEach(element2 => {
+                                if (element.user_id == element2.note_idEleve) {
+                                    element.note_valeur = element2.note_valeur
+                                }
+                            });
                         });
-                    });
-                    res.render('./evaluations/form', { titre, action, modifier, uneEval, lesEleves })
+                        res.render('./evaluations/form', { titre, action, modifier, uneEval, lesEleves })
+                    })
                 })
             })
-        })
+        } else {
+            req.flash('erreur', "Vous n'êtes pas autorisé");
+            res.redirect('/')
+        }
     },
     afficher_fiche: function (req, res) {
-        id = req.params.id
-        titre = "Fiche de evaluation";
+        if (req.session.user_info !== undefined) { // si connecte
 
-        model_evaluations.ficher(id, function (uneEval) {
-            uneEval = uneEval[0]
-            model_evaluations.ficherEleves(uneEval.eval_idCursus, function (lesEleves) {
-                model_evaluations.ficherNotesEleves(uneEval.eval_id, function (lesNotesEleves) {
-                    bilanNotes = []
+            id = req.params.id
+            titre = "Fiche de evaluation";
 
-                    // ajouter notes (opssible avec 1 requete ? jsp mais comme ça c'est facile a se retrouver)
-                    // utiliser pour 1ere affiche pck apres ils ont forcement des notes si une modification a été faite donc pas besoin de check mais comme ca
-                    // evite de faire une requete bizar
-                    lesEleves.forEach(element => {
-                        lesNotesEleves.forEach(element2 => {
-                            if (element.user_id == element2.note_idEleve) {
-                                element.note_valeur = element2.note_valeur
+            model_evaluations.ficher(id, function (uneEval) {
+                uneEval = uneEval[0]
+                model_evaluations.ficherEleves(uneEval.eval_idCursus, function (lesEleves) {
+                    model_evaluations.ficherNotesEleves(uneEval.eval_id, function (lesNotesEleves) {
+                        bilanNotes = []
+
+                        // ajouter notes (opssible avec 1 requete ? jsp mais comme ça c'est facile a se retrouver)
+                        // utiliser pour 1ere affiche pck apres ils ont forcement des notes si une modification a été faite donc pas besoin de check mais comme ca
+                        // evite de faire une requete bizar
+                        lesEleves.forEach(element => {
+                            lesNotesEleves.forEach(element2 => {
+                                if (element.user_id == element2.note_idEleve) {
+                                    element.note_valeur = element2.note_valeur
+                                }
+                            });
+                            if (element.note_valeur !== null) {
+                                bilanNotes.push(element.note_valeur)
                             }
                         });
-                        if (element.note_valeur !== null) {
-                            bilanNotes.push(element.note_valeur)
-                        }
-                    });
 
-                    //  bilan de l'éval
-                    bilan = bilanArray(bilanNotes)
-                    min = bilan[0]
-                    max = bilan[1]
-                    moy = bilan[2]
-                    res.render('./evaluations/fiche', { titre, uneEval, lesEleves, min, max, moy})
+                        //  bilan de l'éval
+                        bilan = bilanArray(bilanNotes)
+                        min = bilan[0]
+                        max = bilan[1]
+                        moy = bilan[2]
+                        res.render('./evaluations/fiche', { titre, uneEval, lesEleves, min, max, moy })
+                    })
                 })
             })
-        })
+        } else {
+            req.flash('erreur', "Vous n'êtes pas autorisé");
+            res.redirect('/')
+        }
     },
 
     ajouter: function (req, res) {
-        model_evaluations.selectProfMatiereCursus([req.body.cursus, req.body.matiere], function (leProf) {
-            console.log(leProf)
-            let params = [
-                desc = req.body.desc,
-                date = req.body.date.split("/").reverse().join("/"),
-                cursus = req.body.cursus,
-                prof = leProf[0].cursus_prof_idProf,
-                matiere = req.body.matiere
-            ]
+        if (req.session.user_info !== undefined) { // si connecte
 
-            model_evaluations.ajouter(params, function (data) {
-                model_evaluations.selectDernierEval(function (idEval) {
-                    req.flash('valid', 'evaluation ajouté avec succès');
-                    res.redirect('./modifier/' + idEval[0].eval_id)
+            model_evaluations.selectProfMatiereCursus([req.body.cursus, req.body.matiere], function (leProf) {
+                console.log(leProf)
+                let params = [
+                    desc = req.body.desc,
+                    date = req.body.date.split("/").reverse().join("/"),
+                    cursus = req.body.cursus,
+                    prof = leProf[0].cursus_prof_idProf,
+                    matiere = req.body.matiere
+                ]
+
+                model_evaluations.ajouter(params, function (data) {
+                    model_evaluations.selectDernierEval(function (idEval) {
+                        req.flash('valid', 'evaluation ajouté avec succès');
+                        res.redirect('./modifier/' + idEval[0].eval_id)
+                    })
                 })
             })
-        })
+        } else {
+            req.flash('erreur', "Vous n'êtes pas autorisé");
+            res.redirect('/')
+        }
     },
 
     modifier: function (req, res) {
-        let params = [
-            desc = req.body.desc,
-            date = req.body.date.split("/").reverse().join("/"),
-            id = req.params.id
-        ]
+        if (req.session.user_info !== undefined) { // si connecte
 
-        // supprime notes et on ajoute pour eviter de check pour chaque update si existe ou pas
-        model_evaluations.supprimerNotes(id, function (data) {
-            for (i in req.body.eleves) {
-                if (!req.body.notes[i]) req.body.notes[i] = null
-                model_evaluations.ajouterNotes([req.body.notes[i], id, req.body.eleves[i]], function (data) { })
-            }
-        })
+            let params = [
+                desc = req.body.desc,
+                date = req.body.date.split("/").reverse().join("/"),
+                id = req.params.id
+            ]
 
-        model_evaluations.modifier(params, function (data) {
-            req.flash('valid', 'evaluation modifié avec succès');
-            res.redirect('../liste')
-        })
+            // supprime notes et on ajoute pour eviter de check pour chaque update si existe ou pas
+            model_evaluations.supprimerNotes(id, function (data) {
+                for (i in req.body.eleves) {
+                    if (!req.body.notes[i]) req.body.notes[i] = null
+                    model_evaluations.ajouterNotes([req.body.notes[i], id, req.body.eleves[i]], function (data) { })
+                }
+            })
+
+            model_evaluations.modifier(params, function (data) {
+                req.flash('valid', 'evaluation modifié avec succès');
+                res.redirect('../liste')
+            })
+        } else {
+            req.flash('erreur', "Vous n'êtes pas autorisé");
+            res.redirect('/')
+        }
     },
 
     supprimer: function (req, res) {
-        id = req.params.id
+        if (req.session.user_info !== undefined) { // si connecte
 
-        model_evaluations.supprimer(id, function (data) {
-            req.flash('valid', 'evaluation supprimé avec succès');
-            res.redirect('../liste')
-        })
+            id = req.params.id
+
+            model_evaluations.supprimer(id, function (data) {
+                req.flash('valid', 'evaluation supprimé avec succès');
+                res.redirect('../liste')
+            })
+        } else {
+            req.flash('erreur', "Vous n'êtes pas autorisé");
+            res.redirect('/')
+        }
     },
 }
