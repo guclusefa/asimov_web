@@ -88,6 +88,9 @@ module.exports = {
         }
     },
 
+    //reste a faire les modif
+    // pas d'eleve dupliquer
+    // prof principal forfement un prof d'une matiere
     ajouter: function (req, res) {
         if (req.session.user_info !== undefined) { // si pas connecte
 

@@ -147,6 +147,9 @@ module.exports = {
         }
     },
 
+
+    // reste a faire les confitions de verif
+    // il faut verif si la matiere existe dans le cursus etc
     ajouter: function (req, res) {
         if (req.session.user_info !== undefined && req.session.user_info.user_isProf == 1) { // si connecte
 
