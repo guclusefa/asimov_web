@@ -37,6 +37,7 @@
 </head>
 
 <body>
+  <% if (typeof user_info !='undefined' && user_info !='' ) { %>
   <div class="sidebar sidebar-dark sidebar-fixed" id="sidebar">
     <ul class="sidebar-nav" data-coreui="navigation" data-simplebar="init">
       <div class="simplebar-wrapper" style="margin: 0px;">
@@ -51,7 +52,7 @@
 
                 <li class="nav-title">Les evaluations</li>
                 <li class="nav-group">
-                  <a class="nav-link nav-group-toggle" href="https://coreui.io/demo/4.0/free/#">
+                  <a class="nav-link nav-group-toggle" href="#">
                     <i class="fa-solid fa-bookmark fa-xl iclass"></i>
                     Les évaluations
                   </a>
@@ -72,7 +73,7 @@
 
                 <li class="nav-title">Les élèves</li>
                 <li class="nav-group">
-                  <a class="nav-link nav-group-toggle" href="https://coreui.io/demo/4.0/free/#">
+                  <a class="nav-link nav-group-toggle" href="#">
                     <i class="fa-solid fa-user fa-xl iclass"></i>
                     Les élèves
                   </a>
@@ -92,7 +93,7 @@
 
                 <li class="nav-title">Les professeurs</li>
                 <li class="nav-group">
-                  <a class="nav-link nav-group-toggle" href="https://coreui.io/demo/4.0/free/#">
+                  <a class="nav-link nav-group-toggle" href="#">
                     <i class="fa-solid fa-user-graduate fa-xl iclass"></i>
                     Les proffeseurs
                   </a>
@@ -112,7 +113,7 @@
 
                 <li class="nav-title">Les classes</li>
                 <li class="nav-group">
-                  <a class="nav-link nav-group-toggle" href="https://coreui.io/demo/4.0/free/#">
+                  <a class="nav-link nav-group-toggle" href="#">
                     <i class="fa-solid fa-school fa-xl iclass"></i>
                     Les classes
                   </a>
@@ -132,7 +133,7 @@
 
                 <li class="nav-title">Les matières</li>
                 <li class="nav-group">
-                  <a class="nav-link nav-group-toggle" href="https://coreui.io/demo/4.0/free/#">
+                  <a class="nav-link nav-group-toggle" href="#">
                     <i class="fa-solid fa-book fa-xl iclass"></i>
                     Les matières
                   </a>
@@ -164,16 +165,21 @@
         </div>
     </ul>
   </div>
+  <% } %>
 
   <div class="wrapper d-flex flex-column min-vh-100 bg-light">
     <nav class="monheader container-fluid bg-light content-header">
       <div class="container text-light py-3">
         <div class="row">
           <div class="col-4">
+            
+            <% if (typeof user_info !='undefined' && user_info !='' ) { %>
             <div class="header-toggler"
               onclick="coreui.Sidebar.getInstance(document.querySelector('#sidebar')).toggle()">
               <i class="fas fa-bars"></i>
             </div>
+            <% } %>
+
           </div>
           <div class="col-4 text-center">
             <div class="d-none d-md-block d-print-block">
