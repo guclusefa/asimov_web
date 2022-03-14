@@ -95,9 +95,17 @@ module.exports = {
                 id = req.params.id
             ]
 
-            model_matieres.modifier(params, function (data) {
-                req.flash('valid', 'Matière modifié avec succès');
-                res.redirect('../liste')
+            model_matieres.ficher(req.params.id, function (uneMatiere) {
+                if (uneMatiere.length > 0) {
+
+                    model_matieres.modifier(params, function (data) {
+                        req.flash('valid', 'Matière modifié avec succès');
+                        res.redirect('../liste')
+                    })
+                } else {
+                    req.flash('erreur', "Matière n'existe pas");
+                    res.redirect('/')
+                }
             })
         } else {
             req.flash('erreur', "Vous n'êtes pas autorisé");
@@ -109,10 +117,16 @@ module.exports = {
         if (req.session.user_info !== undefined && req.session.user_info.user_isAdministration == 1) { // si connecte
 
             id = req.params.id
-
-            model_matieres.supprimer(id, function (data) {
-                req.flash('valid', 'Matière supprimé avec succès');
-                res.redirect('../liste')
+            model_matieres.ficher(id, function (uneMatiere) {
+                if (uneMatiere.length > 0) {
+                    model_matieres.supprimer(id, function (data) {
+                        req.flash('valid', 'Matière supprimé avec succès');
+                        res.redirect('../liste')
+                    })
+                } else {
+                    req.flash('erreur', "Matière n'existe pas");
+                    res.redirect('/')
+                }
             })
         } else {
             req.flash('erreur', "Vous n'êtes pas autorisé");

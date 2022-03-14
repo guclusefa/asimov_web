@@ -179,30 +179,37 @@ module.exports = {
                 principal = req.body.principal,
                 id = req.params.id
             ]
+            model_classes.ficher(req.params.id, function (uneClasse) {
+                if (uneClasse.length > 0) {
 
-            model_classes.modifier(params, function (data) {
-                model_classes.supprimerClasseEleves(id, function (data) {
-                    //on supprime eleves pour les rajouter
-                    req.body.eleves.forEach(element => {
-                        let params = [id, element]
-                        model_classes.ajouterEleves(params, function (data) { })
-                    });
-                    model_classes.supprimerClasseProfs(id, function (data) {
-                        // on supprimer profs pour rajouter
-                        for (i in req.body.profs) {
-                            infoProfs = req.body.profs[i]
-                            infoProfs = infoProfs.split(",")
-                            idProf = infoProfs[0]
-                            idMatiere = infoProfs[1]
+                    model_classes.modifier(params, function (data) {
+                        model_classes.supprimerClasseEleves(id, function (data) {
+                            //on supprime eleves pour les rajouter
+                            req.body.eleves.forEach(element => {
+                                let params = [id, element]
+                                model_classes.ajouterEleves(params, function (data) { })
+                            });
+                            model_classes.supprimerClasseProfs(id, function (data) {
+                                // on supprimer profs pour rajouter
+                                for (i in req.body.profs) {
+                                    infoProfs = req.body.profs[i]
+                                    infoProfs = infoProfs.split(",")
+                                    idProf = infoProfs[0]
+                                    idMatiere = infoProfs[1]
 
-                            let params = [id, idProf, idMatiere]
-                            model_classes.ajouterProfs(params, function (data) { })
-                        }
+                                    let params = [id, idProf, idMatiere]
+                                    model_classes.ajouterProfs(params, function (data) { })
+                                }
 
-                        req.flash('valid', 'Classe modifié avec succès');
-                        res.redirect('../liste')
+                                req.flash('valid', 'Classe modifié avec succès');
+                                res.redirect('../liste')
+                            })
+                        })
                     })
-                })
+                } else {
+                    req.flash('erreur', "Classe n'existe pas");
+                    res.redirect('/')
+                }
             })
         } else {
             req.flash('erreur', "Vous n'êtes pas autorisé");
@@ -214,10 +221,16 @@ module.exports = {
         if (req.session.user_info !== undefined && req.session.user_info.user_isAdministration == 1) { // si pas connecte
 
             id = req.params.id
-
-            model_classes.supprimer(id, function (data) {
-                req.flash('valid', 'Classe supprimé avec succès');
-                res.redirect('../liste')
+            model_classes.ficher(id, function (uneClasse) {
+                if (uneClasse.length > 0) {
+                    model_classes.supprimer(id, function (data) {
+                        req.flash('valid', 'Classe supprimé avec succès');
+                        res.redirect('../liste')
+                    })
+                } else {
+                    req.flash('erreur', "Classe n'existe pas");
+                    res.redirect('/')
+                }
             })
         } else {
             req.flash('erreur', "Vous n'êtes pas autorisé");

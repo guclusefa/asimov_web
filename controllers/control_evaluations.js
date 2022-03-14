@@ -191,24 +191,40 @@ module.exports = {
 
     modifier: function (req, res) {
         if (req.session.user_info !== undefined && req.session.user_info.user_isProf == 1) { // si connecte
-
+            id = req.params.id
             let params = [
                 desc = req.body.desc,
                 date = req.body.date.split("/").reverse().join("/"),
                 id = req.params.id
             ]
 
-            // supprime notes et on ajoute pour eviter de check pour chaque update si existe ou pas
-            model_evaluations.supprimerNotes(id, function (data) {
-                for (i in req.body.eleves) {
-                    if (!req.body.notes[i]) req.body.notes[i] = null
-                    model_evaluations.ajouterNotes([req.body.notes[i], id, req.body.eleves[i]], function (data) { })
-                }
-            })
+            model_evaluations.ficher(id, function (uneEval) {
+                if (uneEval.length > 0) {
 
-            model_evaluations.modifier(params, function (data) {
-                req.flash('valid', 'evaluation modifié avec succès');
-                res.redirect('../liste')
+                    uneEval = uneEval[0]
+                    // si proviseur : peut tout modifier ; sinon peut modifier que si c'est l'eval du prof
+                    // utilisé pour view des profs principals
+                    if (req.session.user_info.user_isProviseur == 1 || uneEval.eval_idProf == req.session.user_info.user_id) {
+                        // supprime notes et on ajoute pour eviter de check pour chaque update si existe ou pas
+                        model_evaluations.supprimerNotes(id, function (data) {
+                            for (i in req.body.eleves) {
+                                if (!req.body.notes[i]) req.body.notes[i] = null
+                                model_evaluations.ajouterNotes([req.body.notes[i], id, req.body.eleves[i]], function (data) { })
+                            }
+                        })
+
+                        model_evaluations.modifier(params, function (data) {
+                            req.flash('valid', 'evaluation modifié avec succès');
+                            res.redirect('../liste')
+                        })
+                    } else {
+                        req.flash('erreur', "Vous n'êtes pas autorisé");
+                        res.redirect('/evaluations/liste')
+                    }
+                } else {
+                    req.flash('erreur', "Évaluation n'existe pas");
+                    res.redirect('/')
+                }
             })
         } else {
             req.flash('erreur', "Vous n'êtes pas autorisé");
@@ -220,11 +236,27 @@ module.exports = {
         if (req.session.user_info !== undefined && req.session.user_info.user_isProf == 1) { // si connecte
 
             id = req.params.id
+            model_evaluations.ficher(id, function (uneEval) {
+                if (uneEval.length > 0) {
 
-            model_evaluations.supprimer(id, function (data) {
-                req.flash('valid', 'evaluation supprimé avec succès');
-                res.redirect('../liste')
+                    uneEval = uneEval[0]
+                    // si proviseur : peut tout modifier ; sinon peut modifier que si c'est l'eval du prof
+                    // utilisé pour view des profs principals
+                    if (req.session.user_info.user_isProviseur == 1 || uneEval.eval_idProf == req.session.user_info.user_id) {
+                        model_evaluations.supprimer(id, function (data) {
+                            req.flash('valid', 'evaluation supprimé avec succès');
+                            res.redirect('../liste')
+                        })
+                    } else {
+                        req.flash('erreur', "Vous n'êtes pas autorisé");
+                        res.redirect('/evaluations/liste')
+                    }
+                } else {
+                    req.flash('erreur', "Évaluation n'existe pas");
+                    res.redirect('/')
+                }
             })
+
         } else {
             req.flash('erreur', "Vous n'êtes pas autorisé");
             res.redirect('/')

@@ -115,9 +115,16 @@ module.exports = {
                 id = req.params.id
             ]
 
-            model_profs.modifier(params, function (data) {
-                req.flash('valid', 'Professeur modifié avec succès');
-                res.redirect('../liste')
+            model_profs.ficher(req.params.id, function (unProf) {
+                if (unProf.length > 0) {
+                    model_profs.modifier(params, function (data) {
+                        req.flash('valid', 'Professeur modifié avec succès');
+                        res.redirect('../liste')
+                    })
+                } else {
+                    req.flash('erreur', "Prof n'existe pas");
+                    res.redirect('/')
+                }
             })
         } else {
             req.flash('erreur', "Vous n'êtes pas autorisé");
@@ -129,10 +136,17 @@ module.exports = {
         if (req.session.user_info !== undefined && req.session.user_info.user_isAdministration == 1) { // si connecte
 
             id = req.params.id
+            model_profs.ficher(id, function (unProf) {
+                if (unProf.length > 0) {
 
-            model_profs.supprimer(id, function (data) {
-                req.flash('valid', 'Professeur supprimé avec succès');
-                res.redirect('../liste')
+                    model_profs.supprimer(id, function (data) {
+                        req.flash('valid', 'Professeur supprimé avec succès');
+                        res.redirect('../liste')
+                    })
+                } else {
+                    req.flash('erreur', "Prof n'existe pas");
+                    res.redirect('/')
+                }
             })
         } else {
             req.flash('erreur', "Vous n'êtes pas autorisé");

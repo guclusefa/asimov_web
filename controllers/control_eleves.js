@@ -105,10 +105,17 @@ module.exports = {
                 email = req.body.email,
                 id = req.params.id
             ]
+            model_eleves.ficher(req.params.id, function (unEleve) {
+                if (unEleve.length > 0) {
 
-            model_eleves.modifier(params, function (data) {
-                req.flash('valid', 'Élève modifié avec succès');
-                res.redirect('../liste')
+                    model_eleves.modifier(params, function (data) {
+                        req.flash('valid', 'Élève modifié avec succès');
+                        res.redirect('../liste')
+                    })
+                } else {
+                    req.flash('erreur', "Élève n'existe pas");
+                    res.redirect('/')
+                }
             })
         } else {
             req.flash('erreur', "Vous n'êtes pas autorisé");
@@ -120,10 +127,17 @@ module.exports = {
         if (req.session.user_info !== undefined && req.session.user_info.user_isAdministration == 1) { // si connecte
 
             id = req.params.id
+            model_eleves.ficher(id, function (unEleve) {
+                if (unEleve.length > 0) {
 
-            model_eleves.supprimer(id, function (data) {
-                req.flash('valid', 'Élève supprimé avec succès');
-                res.redirect('../liste')
+                    model_eleves.supprimer(id, function (data) {
+                        req.flash('valid', 'Élève supprimé avec succès');
+                        res.redirect('../liste')
+                    })
+                } else {
+                    req.flash('erreur', "Élève n'existe pas");
+                    res.redirect('/')
+                }
             })
         } else {
             req.flash('erreur', "Vous n'êtes pas autorisé");
