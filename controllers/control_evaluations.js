@@ -10,7 +10,11 @@ function bilanArray(array) {
         if (element < min) min = element
         if (element > max) max = element
     });
-    moy = average(array)
+    if (typeof min !== "undefined") {
+        moy = average(array)
+    } else {
+        moy = undefined
+    }
     return [min, max, moy]
 }
 
