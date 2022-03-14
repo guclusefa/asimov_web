@@ -1,6 +1,6 @@
 var db = require("../config/database");
 module.exports = {
-    // page d'accueil
+    // lister les eleves
     lister: function(callback) {
         var sql = `SELECT *,
         TIMESTAMPDIFF(YEAR, user_dateNaissance, CURDATE()) AS user_age,
@@ -17,6 +17,7 @@ module.exports = {
         });
     },
 
+    // ajouter les eleve
     ajouter: function(params, callback) {
         var sql = `INSERT INTO Users (user_nom, user_prenom, user_mdp, user_dateNaissance, user_sexe, user_tel, user_mail) VALUES (?,?,?,?,?,?,?)`;
         db.query(sql, params, function(err, data) {
@@ -25,6 +26,7 @@ module.exports = {
         });
     },
 
+    // modifier les eleves
     modifier: function(params, callback) {
         var sql = `UPDATE Users 
         SET user_nom = ?,
@@ -40,6 +42,7 @@ module.exports = {
         });
     },
 
+    // supprier les elevesq
     supprimer: function(params, callback) {
         var sql = `DELETE FROM Users WHERE user_id = ?`;
         db.query(sql, params, function(err, data) {
@@ -48,6 +51,7 @@ module.exports = {
         });
     },
 
+    // ficher les eleves
     ficher: function(params, callback) {
         var sql = `SELECT *,
         TIMESTAMPDIFF(YEAR, user_dateNaissance, CURDATE()) AS user_age,

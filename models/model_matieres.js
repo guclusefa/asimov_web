@@ -1,6 +1,5 @@
 var db = require("../config/database");
 module.exports = {
-    // lister les classes
     lister: function(callback) {
         var sql = `SELECT * FROM Matieres ORDER BY matiere_id`;
         db.query(sql, function(err, data) {
