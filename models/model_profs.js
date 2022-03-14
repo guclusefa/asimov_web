@@ -10,7 +10,8 @@ module.exports = {
         WHERE user_isProf = 1
         AND user_isProviseur = 0 
         AND user_isAdministration = 0
-        AND user_idMatiere = matiere_id`;
+        AND user_idMatiere = matiere_id
+        ORDER BY user_nom, user_prenom`;
         db.query(sql, function(err, data) {
             if (err) throw err;
             return callback(data);

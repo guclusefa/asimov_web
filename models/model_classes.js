@@ -45,7 +45,7 @@ module.exports = {
 
     // lister eleves d'un cursus
     listerEleves: function(params, callback) {
-        var sql = `SELECT * FROM Cursus_Eleves, Users WHERE cursus_eleve_idEleve = user_id AND cursus_eleve_idCursus = ?`;
+        var sql = `SELECT * FROM Cursus_Eleves, Users WHERE cursus_eleve_idEleve = user_id AND cursus_eleve_idCursus = ? ORDER BY user_nom, user_prenom`;
         db.query(sql, params, function(err, data) {
             if (err) throw err;
             return callback(data);

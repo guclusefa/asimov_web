@@ -7,10 +7,18 @@ module.exports = {
     // affichage
     afficher_liste: function (req, res) {
         if (req.session.user_info !== undefined) { // si pas connecte
-            titre = "Liste des classes";
-            model_classes.lister(function (lesClasses) {
-                res.render('./classes/liste', { titre, lesClasses })
-            })
+            // si administration = affiche toutes les classes
+            if (req.session.user_info.user_isAdministration == 1) {
+                titre = "Liste des classes";
+                model_classes.lister(function (lesClasses) {
+                    res.render('./classes/liste', { titre, lesClasses })
+                })
+            } else { // sinon affiche que mes classes (ou je suis prof ou ou je suis prof principal)
+                titre = "Liste de mes classes";
+                model_classes.lister(function (lesClasses) {
+                    res.render('./classes/liste', { titre, lesClasses })
+                })
+            }
         } else {
             req.flash('erreur', "Vous n'êtes pas autorisé");
             res.redirect('/')
