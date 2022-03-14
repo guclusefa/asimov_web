@@ -6,7 +6,7 @@ var model_eleves = require('../models/model_eleves');
 module.exports = {
     // affichage
     afficher_liste: function (req, res) {
-        if (req.session.user_info !== undefined) { // si pas connecte
+        if (req.session.user_info !== undefined && (req.session.user_info.user_isAdministration == 1 || req.session.user_info.user_isProf == 1)) { // si pas connecte
             // si administration = affiche toutes les classes
             if (req.session.user_info.user_isAdministration == 1) {
                 titre = "Liste des classes";
@@ -15,7 +15,7 @@ module.exports = {
                 })
             } else { // sinon affiche que mes classes (ou je suis prof ou ou je suis prof principal)
                 titre = "Liste de mes classes";
-                model_classes.lister(function (lesClasses) {
+                model_classes.listerMesClasses([req.session.user_info.user_id, req.session.user_info.user_id], function (lesClasses) {
                     res.render('./classes/liste', { titre, lesClasses })
                 })
             }
@@ -25,7 +25,7 @@ module.exports = {
         }
     },
     afficher_ajouter: function (req, res) {
-        if (req.session.user_info !== undefined) { // si pas connecte
+        if (req.session.user_info !== undefined && req.session.user_info.user_isAdministration == 1) { // si pas connecte
 
             titre = "Ajouter une classe";
             action = "/classes/ajouter"
@@ -46,7 +46,7 @@ module.exports = {
     },
 
     afficher_modifier: function (req, res) {
-        if (req.session.user_info !== undefined) { // si pas connecte
+        if (req.session.user_info !== undefined && req.session.user_info.user_isAdministration == 1) { // si pas connecte
 
             id = req.params.id
             titre = "Modifier une classe";
@@ -76,17 +76,29 @@ module.exports = {
     },
 
     afficher_fiche: function (req, res) {
-        if (req.session.user_info !== undefined) { // si pas connecte
-
+        if (req.session.user_info !== undefined && (req.session.user_info.user_isAdministration == 1 || req.session.user_info.user_isProf == 1)) { // si pas connecte
             id = req.params.id
             titre = "Fiche de classe";
 
             model_classes.ficher(id, function (uneClasse) {
                 model_classes.listerEleves(id, function (lesElevesClasse) {
                     model_classes.listerProfs(id, function (lesProfsClasse) {
-
                         uneClasse = uneClasse[0]
-                        res.render('./classes/fiche', { titre, uneClasse, lesElevesClasse, lesProfsClasse })
+
+
+                        // si prof c'est un prof de la classe
+                        verification = 0
+                        lesProfsClasse.forEach(element => {
+                            if (element.cursus_prof_idProf == req.session.user_info.user_id) { verification = 1 }
+                        });
+
+                        // si admin ou prof principale ou un des prof de la classe
+                        if (req.session.user_info.user_isAdministration == 1 || (req.session.user_info.user_id == uneClasse.cursus_idProfPrincipale || verification == 1)) {
+                            res.render('./classes/fiche', { titre, uneClasse, lesElevesClasse, lesProfsClasse })
+                        } else {
+                            req.flash('erreur', "Vous n'êtes pas autorisé");
+                            res.redirect('/')
+                        }
                     })
                 })
             })
@@ -100,7 +112,7 @@ module.exports = {
     // pas d'eleve dupliquer
     // prof principal forfement un prof d'une matiere
     ajouter: function (req, res) {
-        if (req.session.user_info !== undefined) { // si pas connecte
+        if (req.session.user_info !== undefined && req.session.user_info.user_isAdministration == 1) { // si pas connecte
 
             let params = [
                 annee = req.body.annee,
@@ -146,7 +158,7 @@ module.exports = {
     },
 
     modifier: function (req, res) {
-        if (req.session.user_info !== undefined) { // si pas connecte
+        if (req.session.user_info !== undefined && req.session.user_info.user_isAdministration == 1) { // si pas connecte
 
             id = req.params.id
             let params = [
@@ -188,7 +200,7 @@ module.exports = {
     },
 
     supprimer: function (req, res) {
-        if (req.session.user_info !== undefined) { // si pas connecte
+        if (req.session.user_info !== undefined && req.session.user_info.user_isAdministration == 1) { // si pas connecte
 
             id = req.params.id
 

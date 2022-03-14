@@ -22,13 +22,9 @@ module.exports = {
 
     // lister les cursus ou le prof d'une matiere ou prof principale (utilisé pour lister les classes)
     //// in profgeesssssssssssss
-    lister_test: function(callback) {
-        var sql = `SELECT * FROM Cursus, Classes, Users
-        WHERE cursus_idClasse = classe_id
-        AND cursus_idProfPrincipale = user_id
-        AND user_id = ?
-        OR user_id IN (SELECT cursus_prof_idProf FROM Cursus_Profs, Cursus WHERE cursus_prof_idCursus = cursus_id AND cursus_id = ?, AND cursus_prof_idProf = ?)`;
-        db.query(sql, function(err, data) {
+    listerMesClasses: function(params, callback) {
+        var sql = `SELECT * FROM Cursus, Classes, Users WHERE cursus_idClasse = classe_id AND cursus_idProfPrincipale = user_id AND ( cursus_idProfPrincipale = ? OR ? IN (SELECT cursus_prof_idProf FROM Cursus_Profs WHERE cursus_prof_idCursus = cursus_id) );`;
+        db.query(sql, params, function(err, data) {
             if (err) throw err;
             return callback(data);
         });
