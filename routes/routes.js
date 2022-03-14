@@ -11,15 +11,15 @@ var control_matieres = require('../controllers/control_matieres')
 var control_classes = require('../controllers/control_classes')
 var control_evaluations = require('../controllers/control_evaluations')
 
-// routage accueil
+// accueil ----------------------------------------------------------------------------------------------
 routeur.get('/', control_accueil.afficher)
 
-// connexion
+// connexion ----------------------------------------------------------------------------------------------
 routeur.get('/connexion', control_connexion.afficher)
 routeur.post('/connexion', control_connexion.connexion)
 routeur.get('/deconnexion', control_connexion.deconnexion)
 
-// eleves
+// eleves ----------------------------------------------------------------------------------------------
 routeur.get('/eleves/liste', control_eleves.afficher_liste)
 
 routeur.get('/eleves/ajouter', control_eleves.afficher_ajouter)
@@ -32,7 +32,7 @@ routeur.get('/eleves/fiche/:id', control_eleves.afficher_fiche)
 
 routeur.get('/eleves/supprimer/:id', control_eleves.supprimer)
 
-// profs
+// profs ----------------------------------------------------------------------------------------------
 routeur.get('/profs/liste', control_profs.afficher_liste)
 
 routeur.get('/profs/ajouter', control_profs.afficher_ajouter)
@@ -45,7 +45,7 @@ routeur.get('/profs/fiche/:id', control_profs.afficher_fiche)
 
 routeur.get('/profs/supprimer/:id', control_profs.supprimer)
 
-// matieres
+// matieres ----------------------------------------------------------------------------------------------
 routeur.get('/matieres/liste', control_matieres.afficher_liste)
 
 routeur.get('/matieres/ajouter', control_matieres.afficher_ajouter)
@@ -58,7 +58,7 @@ routeur.get('/matieres/fiche/:id', control_matieres.afficher_fiche)
 
 routeur.get('/matieres/supprimer/:id', control_matieres.supprimer)
 
-// classes
+// classes ----------------------------------------------------------------------------------------------
 routeur.get('/classes/liste', control_classes.afficher_liste)
 
 routeur.get('/classes/ajouter', control_classes.afficher_ajouter)
@@ -71,7 +71,7 @@ routeur.get('/classes/fiche/:id', control_classes.afficher_fiche)
 
 routeur.get('/classes/supprimer/:id', control_classes.supprimer)
 
-// evaluations
+// evaluations ----------------------------------------------------------------------------------------------
 routeur.get('/evaluations/liste', control_evaluations.afficher_liste)
 
 routeur.get('/evaluations/ajouter', control_evaluations.afficher_ajouter)
