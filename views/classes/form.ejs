@@ -69,7 +69,7 @@
                             <div class="form-floating mb-3">
                                 <select class="form-control select2" id="principal" name="principal" required>
                                     <option value="" disabled selected>Choisir un professeur principal</option>
-                                    <% lesPrincipales.forEach(function(unePrincipale){ %>
+                                    <% lesProfs.forEach(function(unePrincipale){ %>
                                         <option value="<%= unePrincipale.user_id %>">
                                             <%= unePrincipale.user_nom + ' ' + unePrincipale.user_prenom %>
                                         </option>

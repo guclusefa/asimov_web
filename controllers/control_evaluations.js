@@ -24,12 +24,9 @@ module.exports = {
                 model_evaluations.lister(function (lesEvaluations) {
                     res.render('./evaluations/liste', { titre, lesEvaluations })
                 })
-            } else if (req.session.user_info.user_isProfPrincipal == 1) { //si prof principal peut voir notes de ses classes : liste mes evals + les eval de la classe si je suis prof principal
-                model_evaluations.listerParClasse([req.session.user_info.user_id, req.session.user_info.user_id], function (lesEvaluations) {
-                    res.render('./evaluations/liste', { titre, lesEvaluations })
-                })
-            } else {
-                model_evaluations.listerParProf(req.session.user_info.user_id, function (lesEvaluations) { // si seuleuemtn prof peut voir que les notes de ses eleves
+            }
+            else {
+                model_evaluations.listerParProf(req.session.user_info.user_id, function (lesEvaluations) { // sinon peut voir ses eleves et les eval de ses classe si il en est prof princ
                     res.render('./evaluations/liste', { titre, lesEvaluations })
                 })
             }
@@ -74,7 +71,7 @@ module.exports = {
                 uneEval = uneEval[0]
                 // si proviseur : peut tout modifier ; sinon peut modifier que si c'est l'eval du prof
                 // utilisé pour view des profs principals
-                if (req.session.user_info.user_isProviseur == 1 || uneEval.eval_idProf == req.session.user_info.user_id) { // si provisuer, peut ajouter matieres dans tout les cursus
+                if (req.session.user_info.user_isProviseur == 1 || uneEval.eval_idProf == req.session.user_info.user_id) { 
                     model_evaluations.ficherEleves(uneEval.eval_idCursus, function (lesEleves) {
                         model_evaluations.ficherNotesEleves(uneEval.eval_id, function (lesNotesEleves) {
                             // ajouter notes (opssible avec 1 requete ? jsp mais comme ça c'est facile a se retrouver)
@@ -111,7 +108,7 @@ module.exports = {
                 // si proviseur : peut voir
                 // si prof : peut voir que si c'est sa note
                 // si prof principal : peut voir que si c'est eval de sa classe ou il est prof principals
-                if (req.session.user_info.user_isProviseur == 1 || uneEval.eval_idProf == req.session.user_info.user_id || (req.session.user_info.user_isProfPrincipal == 1 && uneEval.cursus_idProfPrincipale == req.session.user_info.user_id)) {
+                if (req.session.user_info.user_isProviseur == 1 || uneEval.eval_idProf == req.session.user_info.user_id || uneEval.cursus_idProfPrincipale == req.session.user_info.user_id) {
                     model_evaluations.ficherEleves(uneEval.eval_idCursus, function (lesEleves) {
                         model_evaluations.ficherNotesEleves(uneEval.eval_id, function (lesNotesEleves) {
                             bilanNotes = []

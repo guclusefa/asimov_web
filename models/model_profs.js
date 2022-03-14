@@ -1,14 +1,6 @@
 var db = require("../config/database");
 module.exports = {
     // page d'accueil
-    lister_profPrincipal: function(callback) {
-        var sql = `SELECT * FROM Users WHERE user_isProfPrincipal = 1`;
-        db.query(sql, function(err, data) {
-            if (err) throw err;
-            return callback(data);
-        });
-    },
-
     lister: function(callback) {
         var sql = `SELECT *,
         TIMESTAMPDIFF(YEAR, user_dateNaissance, CURDATE()) AS user_age,

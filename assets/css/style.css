@@ -230,13 +230,18 @@ div.dataTables_wrapper div.dataTables_length label, div.dataTables_wrapper div.d
 }
 
 .dtsp-nameColumn:hover{
-    background-color: #bababa !important;
+    background-color: #a0a0a0 !important;
 }
 
  
 div.dtsp-nameCont span.badge {
     background-color: #3c4b64 !important;
     color: #9ea5b2;
+}
+
+table.dataTable tbody>tr.selected, table.dataTable tbody>tr>.selected {
+    background-color: #bababa !important;
+    color: white;
 }
 
 /* table */

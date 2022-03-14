@@ -24,11 +24,9 @@ module.exports = {
             modifier = 0
             model_classes.lister_classes(function (lesClasses) {
                 model_eleves.lister(function (lesEleves) {
-                    model_profs.lister_profPrincipal(function (lesPrincipales) {
-                        model_matieres.lister(function (lesMatieres) {
-                            model_profs.lister(function (lesProfs) {
-                                res.render('./classes/form', { titre, action, modifier, lesClasses, lesEleves, lesPrincipales, lesMatieres, lesProfs })
-                            })
+                    model_matieres.lister(function (lesMatieres) {
+                        model_profs.lister(function (lesProfs) {
+                            res.render('./classes/form', { titre, action, modifier, lesClasses, lesEleves, lesMatieres, lesProfs })
                         })
                     })
                 })
@@ -52,12 +50,10 @@ module.exports = {
                     model_classes.listerProfs(id, function (lesProfsClasse) {
                         model_classes.lister_classes(function (lesClasses) {
                             model_eleves.lister(function (lesEleves) {
-                                model_profs.lister_profPrincipal(function (lesPrincipales) {
-                                    model_matieres.lister(function (lesMatieres) {
-                                        model_profs.lister(function (lesProfs) {
-                                            uneClasse = uneClasse[0]
-                                            res.render('./classes/form', { titre, action, modifier, uneClasse, lesElevesClasse, lesProfsClasse, lesClasses, lesEleves, lesPrincipales, lesMatieres, lesProfs })
-                                        })
+                                model_matieres.lister(function (lesMatieres) {
+                                    model_profs.lister(function (lesProfs) {
+                                        uneClasse = uneClasse[0]
+                                        res.render('./classes/form', { titre, action, modifier, uneClasse, lesElevesClasse, lesProfsClasse, lesClasses, lesEleves, lesMatieres, lesProfs })
                                     })
                                 })
                             })
