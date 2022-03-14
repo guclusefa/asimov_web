@@ -47,13 +47,13 @@
                                 <h5 class="card-title">Les notes</h5>
                                 <hr>
                                 <% lesEleves.forEach(function(unEleve){ %>
-                                <p class="card-text"><%= unEleve.user_nom %> <%= unEleve.user_prenom %>
-                                    <span class="float-end"><b><% if(unEleve.note_valeur !== null) { %><%= unEleve.note_valeur %>%<% } else { %>Absent<% } %></b></span></p>
+                                <h5 class="card-text my-4"><%= unEleve.user_nom %> <%= unEleve.user_prenom %>
+                                    <span class="float-end"><b><% if(unEleve.note_valeur !== null && typeof unEleve.note_valeur !== "undefined") { %><%= unEleve.note_valeur %>%<% } else { %>Absent<% } %></b></span></h5>
                                 <% })%>
                                 <hr>
-                                <p class="cardtext"><b>Moyenne :</b> <% if(typeof moy !== "undefined") { %><%= moy %>%<% } else { %> à definir <% } %></p>
-                                <p class="cardtext"><b>Meilleur note :</b> <% if(typeof max !== "undefined") { %><%= max %>%<% } else { %> à definir <% } %></p>
-                                <p class="cardtext"><b>Pire note :</b> <% if(typeof min !== "undefined") { %><%= min %>%<% } else { %> à definir <% } %></p>
+                                <h5 class="card-text my-4"><b>Moyenne :</b> <% if(typeof moy !== "undefined") { %><%= moy %>%<% } else { %> à definir <% } %></h5>
+                                <h5 class="card-text my-4"><b>Meilleur note :</b> <% if(typeof max !== "undefined") { %><%= max %>%<% } else { %> à definir <% } %></h5>
+                                <h5 class="card-text my-4"><b>Pire note :</b> <% if(typeof min !== "undefined") { %><%= min %>%<% } else { %> à definir <% } %></h5>
                              </div>
                         </div>                        
                     </div>
