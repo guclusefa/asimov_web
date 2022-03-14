@@ -3,7 +3,7 @@ var model_matieres = require('../models/model_matieres');
 module.exports = {
     // affichage
     afficher_liste: function (req, res) {
-        if (req.session.user_info !== undefined) { // si connecte
+        if (req.session.user_info !== undefined && req.session.user_info.user_isAdministration == 1) { // si connecte
 
             titre = "Liste des professeurs";
             model_profs.lister(function (lesProfs) {
@@ -15,7 +15,7 @@ module.exports = {
         }
     },
     afficher_ajouter: function (req, res) {
-        if (req.session.user_info !== undefined) { // si connecte
+        if (req.session.user_info !== undefined && req.session.user_info.user_isAdministration == 1) { // si connecte
 
             titre = "Ajouter un professeur";
             action = "/profs/ajouter"
@@ -29,7 +29,7 @@ module.exports = {
         }
     },
     afficher_modifier: function (req, res) {
-        if (req.session.user_info !== undefined) { // si connecte
+        if (req.session.user_info !== undefined && req.session.user_info.user_isAdministration == 1) { // si connecte
 
             id = req.params.id
             titre = "Modifier un professeur";
@@ -37,10 +37,16 @@ module.exports = {
             modifier = 1
 
             model_profs.ficher(id, function (unProf) {
-                model_matieres.lister(function (lesMatieres) {
-                    unProf = unProf[0]
-                    res.render('./profs/form', { titre, action, modifier, lesMatieres, unProf })
-                })
+                if (unProf.length > 0) {
+
+                    model_matieres.lister(function (lesMatieres) {
+                        unProf = unProf[0]
+                        res.render('./profs/form', { titre, action, modifier, lesMatieres, unProf })
+                    })
+                } else {
+                    req.flash('erreur', "Prof n'existe pas");
+                    res.redirect('/')
+                }
             })
         } else {
             req.flash('erreur', "Vous n'êtes pas autorisé");
@@ -48,14 +54,20 @@ module.exports = {
         }
     },
     afficher_fiche: function (req, res) {
-        if (req.session.user_info !== undefined) { // si connecte
+        if (req.session.user_info !== undefined && req.session.user_info.user_isAdministration == 1) { // si connecte
 
             id = req.params.id
             titre = "Fiche de professeur";
 
             model_profs.ficher(id, function (unProf) {
-                unProf = unProf[0]
-                res.render('./profs/fiche', { titre, unProf })
+                if (unProf.length > 0) {
+
+                    unProf = unProf[0]
+                    res.render('./profs/fiche', { titre, unProf })
+                } else {
+                    req.flash('erreur', "Prof n'existe pas");
+                    res.redirect('/')
+                }
             })
         } else {
             req.flash('erreur', "Vous n'êtes pas autorisé");
@@ -64,7 +76,7 @@ module.exports = {
     },
 
     ajouter: function (req, res) {
-        if (req.session.user_info !== undefined) { // si connecte
+        if (req.session.user_info !== undefined && req.session.user_info.user_isAdministration == 1) { // si connecte
 
             let params = [
                 nom = req.body.nom,
@@ -89,7 +101,7 @@ module.exports = {
     },
 
     modifier: function (req, res) {
-        if (req.session.user_info !== undefined) { // si connecte
+        if (req.session.user_info !== undefined && req.session.user_info.user_isAdministration == 1) { // si connecte
 
             let params = [
                 nom = req.body.nom,
@@ -114,7 +126,7 @@ module.exports = {
     },
 
     supprimer: function (req, res) {
-        if (req.session.user_info !== undefined) { // si connecte
+        if (req.session.user_info !== undefined && req.session.user_info.user_isAdministration == 1) { // si connecte
 
             id = req.params.id
 

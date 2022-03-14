@@ -54,20 +54,25 @@ module.exports = {
             modifier = 1
 
             model_classes.ficher(id, function (uneClasse) {
-                model_classes.listerEleves(id, function (lesElevesClasse) {
-                    model_classes.listerProfs(id, function (lesProfsClasse) {
-                        model_classes.lister_classes(function (lesClasses) {
-                            model_eleves.lister(function (lesEleves) {
-                                model_matieres.lister(function (lesMatieres) {
-                                    model_profs.lister(function (lesProfs) {
-                                        uneClasse = uneClasse[0]
-                                        res.render('./classes/form', { titre, action, modifier, uneClasse, lesElevesClasse, lesProfsClasse, lesClasses, lesEleves, lesMatieres, lesProfs })
+                if (uneClasse.length > 0) {
+                    model_classes.listerEleves(id, function (lesElevesClasse) {
+                        model_classes.listerProfs(id, function (lesProfsClasse) {
+                            model_classes.lister_classes(function (lesClasses) {
+                                model_eleves.lister(function (lesEleves) {
+                                    model_matieres.lister(function (lesMatieres) {
+                                        model_profs.lister(function (lesProfs) {
+                                            uneClasse = uneClasse[0]
+                                            res.render('./classes/form', { titre, action, modifier, uneClasse, lesElevesClasse, lesProfsClasse, lesClasses, lesEleves, lesMatieres, lesProfs })
+                                        })
                                     })
                                 })
                             })
                         })
                     })
-                })
+                } else {
+                    req.flash('erreur', "Classe n'existe pas");
+                    res.redirect('/')
+                }
             })
         } else {
             req.flash('erreur', "Vous n'êtes pas autorisé");
@@ -81,26 +86,32 @@ module.exports = {
             titre = "Fiche de classe";
 
             model_classes.ficher(id, function (uneClasse) {
-                model_classes.listerEleves(id, function (lesElevesClasse) {
-                    model_classes.listerProfs(id, function (lesProfsClasse) {
-                        uneClasse = uneClasse[0]
+                if (uneClasse.length > 0) {
+
+                    model_classes.listerEleves(id, function (lesElevesClasse) {
+                        model_classes.listerProfs(id, function (lesProfsClasse) {
+                            uneClasse = uneClasse[0]
 
 
-                        // si prof c'est un prof de la classe
-                        verification = 0
-                        lesProfsClasse.forEach(element => {
-                            if (element.cursus_prof_idProf == req.session.user_info.user_id) { verification = 1 }
-                        });
+                            // si prof c'est un prof de la classe
+                            verification = 0
+                            lesProfsClasse.forEach(element => {
+                                if (element.cursus_prof_idProf == req.session.user_info.user_id) { verification = 1 }
+                            });
 
-                        // si admin ou prof principale ou un des prof de la classe
-                        if (req.session.user_info.user_isAdministration == 1 || (req.session.user_info.user_id == uneClasse.cursus_idProfPrincipale || verification == 1)) {
-                            res.render('./classes/fiche', { titre, uneClasse, lesElevesClasse, lesProfsClasse })
-                        } else {
-                            req.flash('erreur', "Vous n'êtes pas autorisé");
-                            res.redirect('/')
-                        }
+                            // si admin ou prof principale ou un des prof de la classe
+                            if (req.session.user_info.user_isAdministration == 1 || (req.session.user_info.user_id == uneClasse.cursus_idProfPrincipale || verification == 1)) {
+                                res.render('./classes/fiche', { titre, uneClasse, lesElevesClasse, lesProfsClasse })
+                            } else {
+                                req.flash('erreur', "Vous n'êtes pas autorisé");
+                                res.redirect('/')
+                            }
+                        })
                     })
-                })
+                } else {
+                    req.flash('erreur', "Classe n'existe pas");
+                    res.redirect('/')
+                }
             })
         } else {
             req.flash('erreur', "Vous n'êtes pas autorisé");

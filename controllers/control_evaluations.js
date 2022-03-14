@@ -68,28 +68,34 @@ module.exports = {
             modifier = 1
 
             model_evaluations.ficher(id, function (uneEval) {
-                uneEval = uneEval[0]
-                // si proviseur : peut tout modifier ; sinon peut modifier que si c'est l'eval du prof
-                // utilisé pour view des profs principals
-                if (req.session.user_info.user_isProviseur == 1 || uneEval.eval_idProf == req.session.user_info.user_id) { 
-                    model_evaluations.ficherEleves(uneEval.eval_idCursus, function (lesEleves) {
-                        model_evaluations.ficherNotesEleves(uneEval.eval_id, function (lesNotesEleves) {
-                            // ajouter notes (opssible avec 1 requete ? jsp mais comme ça c'est facile a se retrouver)
-                            // utiliser pour 1ere affiche pck apres ils ont forcement des notes si une modification a été faite donc pas besoin de check mais comme ca
-                            // evite de faire une requete bizar
-                            lesEleves.forEach(element => {
-                                lesNotesEleves.forEach(element2 => {
-                                    if (element.user_id == element2.note_idEleve) {
-                                        element.note_valeur = element2.note_valeur
-                                    }
+                if (uneEval.length > 0) {
+
+                    uneEval = uneEval[0]
+                    // si proviseur : peut tout modifier ; sinon peut modifier que si c'est l'eval du prof
+                    // utilisé pour view des profs principals
+                    if (req.session.user_info.user_isProviseur == 1 || uneEval.eval_idProf == req.session.user_info.user_id) {
+                        model_evaluations.ficherEleves(uneEval.eval_idCursus, function (lesEleves) {
+                            model_evaluations.ficherNotesEleves(uneEval.eval_id, function (lesNotesEleves) {
+                                // ajouter notes (opssible avec 1 requete ? jsp mais comme ça c'est facile a se retrouver)
+                                // utiliser pour 1ere affiche pck apres ils ont forcement des notes si une modification a été faite donc pas besoin de check mais comme ca
+                                // evite de faire une requete bizar
+                                lesEleves.forEach(element => {
+                                    lesNotesEleves.forEach(element2 => {
+                                        if (element.user_id == element2.note_idEleve) {
+                                            element.note_valeur = element2.note_valeur
+                                        }
+                                    });
                                 });
-                            });
-                            res.render('./evaluations/form', { titre, action, modifier, uneEval, lesEleves })
+                                res.render('./evaluations/form', { titre, action, modifier, uneEval, lesEleves })
+                            })
                         })
-                    })
+                    } else {
+                        req.flash('erreur', "Vous n'êtes pas autorisé");
+                        res.redirect('/evaluations/liste')
+                    }
                 } else {
-                    req.flash('erreur', "Vous n'êtes pas autorisé");
-                    res.redirect('/evaluations/liste')
+                    req.flash('erreur', "Évaluation n'existe pas");
+                    res.redirect('/')
                 }
             })
         } else {
@@ -104,40 +110,47 @@ module.exports = {
             titre = "Fiche de evaluation";
 
             model_evaluations.ficher(id, function (uneEval) {
-                uneEval = uneEval[0]
-                // si proviseur : peut voir
-                // si prof : peut voir que si c'est sa note
-                // si prof principal : peut voir que si c'est eval de sa classe ou il est prof principals
-                if (req.session.user_info.user_isProviseur == 1 || uneEval.eval_idProf == req.session.user_info.user_id || uneEval.cursus_idProfPrincipale == req.session.user_info.user_id) {
-                    model_evaluations.ficherEleves(uneEval.eval_idCursus, function (lesEleves) {
-                        model_evaluations.ficherNotesEleves(uneEval.eval_id, function (lesNotesEleves) {
-                            bilanNotes = []
+                if (uneEval.length > 0) {
 
-                            // ajouter notes (opssible avec 1 requete ? jsp mais comme ça c'est facile a se retrouver)
-                            // utiliser pour 1ere affiche pck apres ils ont forcement des notes si une modification a été faite donc pas besoin de check mais comme ca
-                            // evite de faire une requete bizar
-                            lesEleves.forEach(element => {
-                                lesNotesEleves.forEach(element2 => {
-                                    if (element.user_id == element2.note_idEleve) {
-                                        element.note_valeur = element2.note_valeur
+                    uneEval = uneEval[0]
+                    // si proviseur : peut voir
+                    // si prof : peut voir que si c'est sa note
+                    // si prof principal : peut voir que si c'est eval de sa classe ou il est prof principals
+                    if (req.session.user_info.user_isProviseur == 1 || uneEval.eval_idProf == req.session.user_info.user_id || uneEval.cursus_idProfPrincipale == req.session.user_info.user_id) {
+                        model_evaluations.ficherEleves(uneEval.eval_idCursus, function (lesEleves) {
+                            model_evaluations.ficherNotesEleves(uneEval.eval_id, function (lesNotesEleves) {
+                                bilanNotes = []
+
+                                // ajouter notes (opssible avec 1 requete ? jsp mais comme ça c'est facile a se retrouver)
+                                // utiliser pour 1ere affiche pck apres ils ont forcement des notes si une modification a été faite donc pas besoin de check mais comme ca
+                                // evite de faire une requete bizar
+                                lesEleves.forEach(element => {
+                                    lesNotesEleves.forEach(element2 => {
+                                        if (element.user_id == element2.note_idEleve) {
+                                            element.note_valeur = element2.note_valeur
+                                        }
+                                    });
+                                    if (element.note_valeur !== null) {
+                                        bilanNotes.push(element.note_valeur)
                                     }
                                 });
-                                if (element.note_valeur !== null) {
-                                    bilanNotes.push(element.note_valeur)
-                                }
-                            });
 
-                            //  bilan de l'éval
-                            bilan = bilanArray(bilanNotes)
-                            min = bilan[0]
-                            max = bilan[1]
-                            moy = bilan[2]
-                            res.render('./evaluations/fiche', { titre, uneEval, lesEleves, min, max, moy })
+                                //  bilan de l'éval
+                                bilan = bilanArray(bilanNotes)
+                                min = bilan[0]
+                                max = bilan[1]
+                                moy = bilan[2]
+                                res.render('./evaluations/fiche', { titre, uneEval, lesEleves, min, max, moy })
+                            })
                         })
-                    })
+
+                    } else {
+                        req.flash('erreur', "Vous n'êtes pas autorisé");
+                        res.redirect('/evaluations/liste')
+                    }
                 } else {
-                    req.flash('erreur', "Vous n'êtes pas autorisé");
-                    res.redirect('/evaluations/liste')
+                    req.flash('erreur', "Évaluation n'existe pas");
+                    res.redirect('/')
                 }
             })
 

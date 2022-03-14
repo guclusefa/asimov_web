@@ -2,7 +2,7 @@ var model_matieres = require('../models/model_matieres');
 module.exports = {
     // affichage
     afficher_liste: function (req, res) {
-        if (req.session.user_info !== undefined) { // si connecte
+        if (req.session.user_info !== undefined && req.session.user_info.user_isAdministration == 1) { // si connecte
 
             titre = "Liste des matières";
             model_matieres.lister(function (lesMatieres) {
@@ -14,7 +14,7 @@ module.exports = {
         }
     },
     afficher_ajouter: function (req, res) {
-        if (req.session.user_info !== undefined) { // si connecte
+        if (req.session.user_info !== undefined && req.session.user_info.user_isAdministration == 1) { // si connecte
 
             titre = "Ajouter une matière";
             action = "/matieres/ajouter"
@@ -26,7 +26,7 @@ module.exports = {
         }
     },
     afficher_modifier: function (req, res) {
-        if (req.session.user_info !== undefined) { // si connecte
+        if (req.session.user_info !== undefined && req.session.user_info.user_isAdministration == 1) { // si connecte
 
             id = req.params.id
             titre = "Modifier une matière";
@@ -34,8 +34,14 @@ module.exports = {
             modifier = 1
 
             model_matieres.ficher(id, function (uneMatiere) {
-                uneMatiere = uneMatiere[0]
-                res.render('./matieres/form', { titre, action, modifier, uneMatiere })
+                if (uneMatiere.length > 0) {
+
+                    uneMatiere = uneMatiere[0]
+                    res.render('./matieres/form', { titre, action, modifier, uneMatiere })
+                } else {
+                    req.flash('erreur', "Matière n'existe pas");
+                    res.redirect('/')
+                }
             })
         } else {
             req.flash('erreur', "Vous n'êtes pas autorisé");
@@ -43,14 +49,20 @@ module.exports = {
         }
     },
     afficher_fiche: function (req, res) {
-        if (req.session.user_info !== undefined) { // si connecte
+        if (req.session.user_info !== undefined && req.session.user_info.user_isAdministration == 1) { // si connecte
 
             id = req.params.id
             titre = "Fiche de matière";
 
             model_matieres.ficher(id, function (uneMatiere) {
-                uneMatiere = uneMatiere[0]
-                res.render('./matieres/fiche', { titre, uneMatiere })
+                if (uneMatiere.length > 0) {
+
+                    uneMatiere = uneMatiere[0]
+                    res.render('./matieres/fiche', { titre, uneMatiere })
+                } else {
+                    req.flash('erreur', "Matière n'existe pas");
+                    res.redirect('/')
+                }
             })
         } else {
             req.flash('erreur', "Vous n'êtes pas autorisé");
@@ -59,7 +71,7 @@ module.exports = {
     },
 
     ajouter: function (req, res) {
-        if (req.session.user_info !== undefined) { // si connecte
+        if (req.session.user_info !== undefined && req.session.user_info.user_isAdministration == 1) { // si connecte
 
             let params = [
                 libelle = req.body.libelle,
@@ -76,7 +88,7 @@ module.exports = {
     },
 
     modifier: function (req, res) {
-        if (req.session.user_info !== undefined) { // si connecte
+        if (req.session.user_info !== undefined && req.session.user_info.user_isAdministration == 1) { // si connecte
 
             let params = [
                 libelle = req.body.libelle,
@@ -94,7 +106,7 @@ module.exports = {
     },
 
     supprimer: function (req, res) {
-        if (req.session.user_info !== undefined) { // si connecte
+        if (req.session.user_info !== undefined && req.session.user_info.user_isAdministration == 1) { // si connecte
 
             id = req.params.id
 
