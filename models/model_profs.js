@@ -1,6 +1,5 @@
 var db = require("../config/database");
 module.exports = {
-    // page d'accueil
     // on utilise finalement pas user_idMatiere et user_isProfPrincipal mais flemme de faire les changements pour l'instant
     lister: function(callback) {
         var sql = `SELECT *,
