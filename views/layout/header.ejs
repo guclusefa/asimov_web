@@ -53,6 +53,31 @@
                 <li class="nav-title">Les evaluations</li>
                 <li class="nav-group">
                   <a class="nav-link nav-group-toggle" href="#">
+                    <i class="fa-solid fa-award fa-xl iclass"></i>
+                    Les notes
+                  </a>
+                  <ul class="nav-group-items">
+                    <li class="nav-item">
+                      <a class="nav-link" href="/notes/fiche_eleve/<%= user_info.user_id %>">
+                        Notes d'élèves
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="/notes/fiche_prof/<%= user_info.user_id %>">
+                        Note de professeurs
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="/notes/fiche_classe/<%= user_info.user_id %>">
+                        Note de classes
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+
+                <li class="nav-title">Les evaluations</li>
+                <li class="nav-group">
+                  <a class="nav-link nav-group-toggle" href="#">
                     <i class="fa-solid fa-bookmark fa-xl iclass"></i>
                     Les évaluations
                   </a>

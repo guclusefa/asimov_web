@@ -10,6 +10,7 @@ var control_profs = require('../controllers/control_profs')
 var control_matieres = require('../controllers/control_matieres')
 var control_classes = require('../controllers/control_classes')
 var control_evaluations = require('../controllers/control_evaluations')
+var control_notes = require('../controllers/control_notes')
 
 // accueil ----------------------------------------------------------------------------------------------
 routeur.get('/', control_accueil.afficher)
@@ -84,6 +85,10 @@ routeur.get('/evaluations/fiche/:id', control_evaluations.afficher_fiche)
 
 routeur.get('/evaluations/supprimer/:id', control_evaluations.supprimer)
 
-
+// notes ----------------------------------------------------------------------------------------------
+routeur.get('/notes/fiche_eleve/:id', control_notes.afficher_fiche_eleve)
+/* routeur.get('/notes/fiche_prof/:id', control_notes.afficher_fiche_prof)
+routeur.get('/notes/fiche_classe/:id', control_notes.afficher_fiche_classe)
+ */
 // routeur
 module.exports = routeur;
