@@ -22,6 +22,14 @@ a {
     display: none;
 }
 
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.card-header:hover{
+    background-color: #76767644;
+}
+
 /* alert */
 .alert {
     margin-bottom: 0 !important;

@@ -6,14 +6,21 @@
                 <h1 class="display-5 fw-bold text-primary">
                     <%= titre %>
                 </h1>
-                <p class="col-md-12 fs-4 text-justify">Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero
-                    doloribus, facere sint distinctio reprehenderit, similique fuga molestiae adipisci optio deserunt
-                    expedita ab veniam aperiam repellendus quia culpa possimus! Dolores, aperiam.
-                </p>
                 <hr>
 
                 <div class="row">
-                    <div class="col-lg-4 col-md-6  col-sm-12 col-12">
+                    <div class="col-lg-4 col-md-12  col-sm-12 col-12">
+                        <div class="row">
+                            <div class="col-12 mt-3">
+                                <div class="form-floating">
+                                    <select class="form-control select2" id="classe" name="classe" required>
+                                        <option value="" selected>Choisir une classe</option>
+                                    </select>
+                                    <label class="required">Classe</label>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="card mt-3">
                             <div class="card-body">
                                 <h5 class="card-title">Informations</h5>
@@ -43,82 +50,152 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-8 col-md-6  col-sm-12 col-12">
+                    <div class="col-lg-8 col-md-12  col-sm-12 col-12">
                         <div class="row">
                             <div class="col-12 mt-3">
                                 <div class="form-floating">
-                                    <select class="form-control select2" id="classe" name="classe" onchange="showDiv('hidden_div', 1)" required>
+                                    <select class="form-control select2" id="classe" name="classe" required>
                                         <option value="" selected>Choisir une classe</option>
-                                        <option value="red">6eme A</option>
-                                        <option value="green">6edsqdqme A</option>
                                     </select>
                                     <label class="required">Classe</label>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="card mt-3" class="box red">
+                        <div class="card mt-3">
                             <div class="card-body">
-                                <h5 class="card-title">Les notes red</h5>
-                                <hr>
-                                <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                    <li class="nav-item" role="presentation">
-                                      <button class="lien nav-link active" data-bs-toggle="tab" data-bs-target="#T1">Trimestre 1</button>
+                                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                                    <li class="nav-item">
+                                        <button class="nav-link active" data-bs-toggle="pill"
+                                            data-bs-target="#area-notes">Les notes</button>
                                     </li>
-                                    <li class="nav-item" role="presentation">
-                                      <button class="lien nav-link" data-bs-toggle="tab" data-bs-target="#T2">Trimestre 2</button>
+                                    <li class="nav-item">
+                                        <button class="nav-link" data-bs-toggle="pill"
+                                            data-bs-target="#area-graphes">Les graphes</button>
                                     </li>
-                                    <li class="nav-item" role="presentation">
-                                      <button class="lien nav-link" data-bs-toggle="tab" data-bs-target="#T3">Trimestre 3</button>
-                                    </li>
-                                    <li class="nav-item" role="presentation">
-                                        <button class="lien nav-link" data-bs-toggle="tab" data-bs-target="#T4">Annuel</button>
-                                      </li>
                                 </ul>
-                                <div class="tab-content" id="myTabContent">
-                                    <div class="tab-pane fade show active" id="T1"></div>
-                                    <div class="tab-pane fade" id="T2">...</div>
-                                    <div class="tab-pane fade" id="T3">...</div>
-                                    <div class="tab-pane fade" id="T4">...</div>
-                                </div>
-                            </div>
-                        </div>
+                                <hr>
+                                <div class="tab-content">
+                                    <!-- notes -->
+                                    <div class="tab-pane fade show active" id="area-notes">
+                                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                            <li class="nav-item" role="presentation">
+                                                <button class="lien nav-link active" data-bs-toggle="tab"
+                                                    data-bs-target="#T1">Trimestre 1</button>
+                                            </li>
+                                            <li class="nav-item" role="presentation">
+                                                <button class="lien nav-link" data-bs-toggle="tab"
+                                                    data-bs-target="#T2">Trimestre 2</button>
+                                            </li>
+                                            <li class="nav-item" role="presentation">
+                                                <button class="lien nav-link" data-bs-toggle="tab"
+                                                    data-bs-target="#T3">Trimestre 3</button>
+                                            </li>
+                                            <li class="nav-item" role="presentation">
+                                                <button class="lien nav-link" data-bs-toggle="tab"
+                                                    data-bs-target="#T4">Annuel</button>
+                                            </li>
+                                        </ul>
+                                        <div class="tab-content">
+                                            <!-- les trimestres -->
+                                            <div class="tab-pane fade show active" id="T1">
+                                                <div>
+                                                    <!-- les cartes -->
+                                                    <div class="card border-1 border-1 my-4">
+                                                        <div class="card-header text-primary fs-5 cursor-pointer"    onclick="showModalNotes('Détail classe', 'test')">
+                                                            <div>
+                                                                Français
+                                                                <span class="float-end ">
+                                                                    60%
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <ul class="list-group list-group-flush">
+                                                            <li class="list-group-item ">15/11/2021 : Eval 1
+                                                                <span class=" float-end">
+                                                                    60%
+                                                                </span>
+                                                                <div class="row">
+                                                                    <div class="col-12 col-lg-3 figure-caption">Moyenne:
+                                                                        60%
+                                                                    </div>
+                                                                    <div class="col-12 col-lg-3 figure-caption">
+                                                                        Meilleur:
+                                                                        60%</div>
+                                                                    <div class="col-12 col-lg-3  figure-caption">Pire:
+                                                                        60%
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            <li class="list-group-item ">15/11/2021 : Eval 1
+                                                                <span class=" float-end">
+                                                                    60%
+                                                                </span>
+                                                                <div class="row">
+                                                                    <div class="col-12 col-lg-3 figure-caption">Moyenne:
+                                                                        60%
+                                                                    </div>
+                                                                    <div class="col-12 col-lg-3 figure-caption">
+                                                                        Meilleur:
+                                                                        60%</div>
+                                                                    <div class="col-12 col-lg-3  figure-caption">Pire:
+                                                                        60%
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
 
-                        <div class="card mt-3" class="box green">
-                            <div class="card-body">
-                                <h5 class="card-title">Les notes red</h5>
-                                <hr>
-                                <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                    <li class="nav-item" role="presentation">
-                                      <button class="lien nav-link active" data-bs-toggle="tab" data-bs-target="#T1">Trimestre 1</button>
-                                    </li>
-                                    <li class="nav-item" role="presentation">
-                                      <button class="lien nav-link" data-bs-toggle="tab" data-bs-target="#T2">Trimestre 2</button>
-                                    </li>
-                                    <li class="nav-item" role="presentation">
-                                      <button class="lien nav-link" data-bs-toggle="tab" data-bs-target="#T3">Trimestre 3</button>
-                                    </li>
-                                    <li class="nav-item" role="presentation">
-                                        <button class="lien nav-link" data-bs-toggle="tab" data-bs-target="#T4">Annuel</button>
-                                      </li>
-                                </ul>
-                                <div class="tab-content" id="myTabContent">
-                                    <div class="tab-pane fade show active" id="T1"></div>
-                                    <div class="tab-pane fade" id="T2">...</div>
-                                    <div class="tab-pane fade" id="T3">...</div>
-                                    <div class="tab-pane fade" id="T4">...</div>
+                                                    <!-- fin des cartes -->
+                                                    <div class="border border-1 py-1 ps-2">
+                                                        <span class="mt-5">Moyenne élève : 60%</span>
+                                                    </div>
+                                                    <div class="border border-1 py-1 ps-2 mt-3">
+                                                        <span class="mt-5">Moyenne classe : 60%</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade" id="T2">...</div>
+                                            <div class="tab-pane fade" id="T3">...</div>
+                                            <div class="tab-pane fade" id="T4">...</div>
+                                        </div>
+                                    </div>
+
+                                    <!-- graphes -->
+                                    <div class="tab-pane fade" id="area-graphes">
+                                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                            <li class="nav-item" role="presentation">
+                                                <button class="lien nav-link active" data-bs-toggle="tab"
+                                                    data-bs-target="#T1-2">Trimestre 1</button>
+                                            </li>
+                                            <li class="nav-item" role="presentation">
+                                                <button class="lien nav-link" data-bs-toggle="tab"
+                                                    data-bs-target="#T2-2">Trimestre 2</button>
+                                            </li>
+                                            <li class="nav-item" role="presentation">
+                                                <button class="lien nav-link" data-bs-toggle="tab"
+                                                    data-bs-target="#T3-2">Trimestre 3</button>
+                                            </li>
+                                            <li class="nav-item" role="presentation">
+                                                <button class="lien nav-link" data-bs-toggle="tab"
+                                                    data-bs-target="#T4-2">Annuel</button>
+                                            </li>
+                                        </ul>
+                                        <div class="tab-content">
+                                            <!-- les trimestres -->
+                                            <div class="tab-pane fade show active" id="T1-2"></div>
+                                            <div class="tab-pane fade" id="T2-2">...</div>
+                                            <div class="tab-pane fade" id="T3-2">...</div>
+                                            <div class="tab-pane fade" id="T4-2">...</div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
-
-
     </div>
-
-
 
     <%- include('../layout/footer') %>

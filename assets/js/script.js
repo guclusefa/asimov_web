@@ -1,12 +1,12 @@
 /* formulaires */
-(function() {
+(function () {
     'use strict'
     // Fetch all the forms we want to apply custom Bootstrap validation styles to
     var forms = document.querySelectorAll('.needs-validation')
-        // Loop over them and prevent submission
+    // Loop over them and prevent submission
     Array.prototype.slice.call(forms)
-        .forEach(function(form) {
-            form.addEventListener('submit', function(event) {
+        .forEach(function (form) {
+            form.addEventListener('submit', function (event) {
                 if (!form.checkValidity()) {
                     event.preventDefault()
                     event.stopPropagation()
@@ -18,7 +18,7 @@
 })()
 
 /* dateîcker */
-$(function() {
+$(function () {
     //titre label
     const getDatePickerTitle = elem => {
         // From the label or the aria-label
@@ -38,7 +38,7 @@ $(function() {
             language: "fr",
             title: getDatePickerTitle(elem),
             autohide: true,
-            
+
         });
     };
 
@@ -61,7 +61,7 @@ $('.select2').select2({
     theme: 'bootstrap-5'
 });
 
-$(function() {
+$(function () {
     var fr = {
         searchPanes: {
             title: {
@@ -138,7 +138,7 @@ const showModalDetail = (title, description, lien) => {
     }
 
     let desc = ""
-    Object.keys(description).forEach(function(key) {
+    Object.keys(description).forEach(function (key) {
         desc += `<p><b>${key} :</b> ${description[key]}`
     });
 
@@ -199,17 +199,38 @@ const showModalSupprimer = (title, description, lien) => {
     modal.show();
 }
 
-/* choisir classe */
-$(document).ready(function(){
-    $("select").change(function(){
-        $(this).find("option:selected").each(function(){
-            var optionValue = $(this).attr("value");
-            if(optionValue){
-                $(".box").not("." + optionValue).hide();
-                $("." + optionValue).show();
-            } else{
-                $(".box").hide();
-            }
-        });
-    }).change();
-});
+const showModalNotes= (title, description) => {
+    if (modalWrap !== null) {
+        modalWrap.remove();
+    }
+
+    modalWrap = document.createElement('div');
+    modalWrap.innerHTML = `
+    <div class="modal fade" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header bg-light">
+            <h5 class="modal-title">${title}</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p><b>Matière : </b>${description}</p>
+            <p><b>Professeur : </b>${description}</p>
+            <p><b>Moyenne élève : </b>${description}</p>
+            <p><b>Moyenne classe : </b>${description}</p>
+            <p><b>Meilleur note : </b>${description}</p>
+            <p><b>Pire note : </b>${description}</p>
+            <p><b>Nombre de notes : </b>${description}</p>
+          </div>
+          <div class="modal-footer bg-light">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+
+    document.body.append(modalWrap);
+    var modal = new bootstrap.Modal(modalWrap.querySelector('.modal'));
+    modal.show();
+}
