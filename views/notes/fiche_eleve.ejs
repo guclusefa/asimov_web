@@ -13,14 +13,30 @@
                         <div class="row">
                             <div class="col-12 mt-3">
                                 <div class="form-floating">
-                                    <select class="form-control select2" id="classe" name="classe" required>
-                                        <option value="" selected>Choisir une classe</option>
+                                    <select class="form-control select2" id="eleve" name="eleve" 
+                                        onchange="location.href='/notes/fiche_eleve/'+this.value+'/0'"
+                                        required>
+                                        <option value="" disabled selected>Choisir un élève</option>
+                                        <% lesEleves.forEach(function(unEleveListe){ %>
+                                            <%
+                                            if (typeof unEleve !='undefined' && unEleve.user_id == unEleveListe.user_id ) { 
+                                                selected = "selected" 
+                                            } else {
+                                                selected = " "  
+                                            }
+                                            %>
+
+                                            <option value="<%= unEleveListe.user_id %>" <%= selected %>>
+                                                <%= unEleveListe.user_nom + ' ' + unEleveListe.user_prenom %>
+                                            </option>
+                                        <% })%>
                                     </select>
-                                    <label class="required">Classe</label>
+                                    <label class="required">Élève</label>
                                 </div>
                             </div>
                         </div>
 
+                        <% if (typeof unEleve !='undefined') { %>
                         <div class="card mt-3">
                             <div class="card-body">
                                 <h5 class="card-title">Informations</h5>
@@ -48,14 +64,16 @@
                                 </h5>
                             </div>
                         </div>
+                        <% } %>
                     </div>
 
+                    <% if (typeof unEleve !='undefined') { %>
                     <div class="col-lg-8 col-md-12  col-sm-12 col-12">
                         <div class="row">
                             <div class="col-12 mt-3">
                                 <div class="form-floating">
                                     <select class="form-control select2" id="classe" name="classe" required>
-                                        <option value="" selected>Choisir une classe</option>
+                                        <option value="" disabled selected>Choisir une classe</option>
                                     </select>
                                     <label class="required">Classe</label>
                                 </div>
@@ -193,9 +211,9 @@
                             </div>
                         </div>
                     </div>
+                    <% } %>
                 </div>
             </div>
         </div>
     </div>
-
     <%- include('../layout/footer') %>

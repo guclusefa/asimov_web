@@ -86,7 +86,7 @@ routeur.get('/evaluations/fiche/:id', control_evaluations.afficher_fiche)
 routeur.get('/evaluations/supprimer/:id', control_evaluations.supprimer)
 
 // notes ----------------------------------------------------------------------------------------------
-routeur.get('/notes/fiche_eleve/:id', control_notes.afficher_fiche_eleve)
+routeur.get('/notes/fiche_eleve/:id/:classe', control_notes.afficher_fiche_eleve)
 /* routeur.get('/notes/fiche_prof/:id', control_notes.afficher_fiche_prof)
 routeur.get('/notes/fiche_classe/:id', control_notes.afficher_fiche_classe)
  */

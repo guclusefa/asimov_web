@@ -57,7 +57,11 @@ module.exports = {
         TIMESTAMPDIFF(YEAR, user_dateNaissance, CURDATE()) AS user_age,
         DATE_FORMAT(user_dateNaissance, '%d/%m/%Y') as user_dateNaissance
         FROM Users 
-        WHERE user_id = ?`;
+        WHERE user_isProf = 0 
+        AND user_isProfPrincipal = 0 
+        AND user_isProviseur = 0 
+        AND user_isAdministration = 0
+        AND user_id = ?`;
         db.query(sql, params, function(err, data) {
             if (err) throw err;
             return callback(data);

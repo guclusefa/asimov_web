@@ -1,25 +1,8 @@
 var db = require("../config/database");
 module.exports = {
     // select dernier evals
-    ficherNotesEleves: function (params, callback) {
-        var sql = `SELECT * FROM Evaluations ORDER BY eval_id DESC LIMIT 1;`;
-        db.query(sql, params, function (err, data) {
-            if (err) throw err;
-            return callback(data);
-        });
-    },
-
-    ficherNotesProfs: function (params, callback) {
-        var sql = `SELECT * FROM Evaluations ORDER BY eval_id DESC LIMIT 1;`;
-        db.query(sql, params, function (err, data) {
-            if (err) throw err;
-            return callback(data);
-        });
-    },
-
-
-    ficherNotesClasses: function (params, callback) {
-        var sql = `SELECT * FROM Evaluations ORDER BY eval_id DESC LIMIT 1;`;
+    lesClassesEleves: function (params, callback) {
+        var sql = `SELECT * FROM Cursus_Eleves, Cursus, Classes WHERE cursus_eleve_idCursus = cursus_id AND cursus_idClasse = classe_id AND cursus_eleve_idEleve = ?`;
         db.query(sql, params, function (err, data) {
             if (err) throw err;
             return callback(data);
