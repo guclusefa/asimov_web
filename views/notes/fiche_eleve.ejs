@@ -135,49 +135,35 @@
                                             <div class="tab-pane fade show active" id="T1">
                                                 <div>
                                                     <!-- les cartes -->
-                                                    <% lesMatieres.forEach(function(uneMatiere){ %>
+                                                    <% lesMatieres.forEach(function(uneMatiere){ %>                                                    
                                                     <div class="card border-1 border-1 my-4">
                                                         <div class="card-header text-primary fs-5 cursor-pointer"    onclick="showModalNotes('Détail classe', 'test')">
                                                             <div>
-                                                                Français
+                                                                <%= uneMatiere.matiere_libelle %> (Prof. <%= uneMatiere.user_nom %>)
                                                                 <span class="float-end ">
-                                                                    60%
+                                                                    <%= uneMatiere.notesT2.avg %>%
                                                                 </span>
                                                             </div>
                                                         </div>
                                                         <ul class="list-group list-group-flush">
-                                                            <li class="list-group-item ">15/11/2021 : Eval 1
-                                                                <span class=" float-end">
-                                                                    60%
-                                                                </span>
-                                                                <div class="row">
-                                                                    <div class="col-12 col-lg-3 figure-caption">Moyenne:
-                                                                        60%
+                                                            <% uneMatiere.notesT2.forEach(function(uneNote){ %>
+                                                                <li class="list-group-item "><%= uneNote.eval_date %> : <%= uneNote.eval_desc %>
+                                                                    <span class=" float-end">
+                                                                        <%= uneNote.note_valeur %>%
+                                                                    </span>
+                                                                    <div class="row">
+                                                                        <div class="col-12 col-lg-3 figure-caption">Moyenne:
+                                                                            <%= uneNote.eval_avg %>%
+                                                                        </div>
+                                                                        <div class="col-12 col-lg-3 figure-caption">
+                                                                            Meilleur:
+                                                                            <%= uneNote.eval_max %>%</div>
+                                                                        <div class="col-12 col-lg-3  figure-caption">Pire:
+                                                                            <%= uneNote.eval_min %>%
+                                                                        </div>
                                                                     </div>
-                                                                    <div class="col-12 col-lg-3 figure-caption">
-                                                                        Meilleur:
-                                                                        60%</div>
-                                                                    <div class="col-12 col-lg-3  figure-caption">Pire:
-                                                                        60%
-                                                                    </div>
-                                                                </div>
-                                                            </li>
-                                                            <li class="list-group-item ">15/11/2021 : Eval 1
-                                                                <span class=" float-end">
-                                                                    60%
-                                                                </span>
-                                                                <div class="row">
-                                                                    <div class="col-12 col-lg-3 figure-caption">Moyenne:
-                                                                        60%
-                                                                    </div>
-                                                                    <div class="col-12 col-lg-3 figure-caption">
-                                                                        Meilleur:
-                                                                        60%</div>
-                                                                    <div class="col-12 col-lg-3  figure-caption">Pire:
-                                                                        60%
-                                                                    </div>
-                                                                </div>
-                                                            </li>
+                                                                </li>
+                                                            <% })%>
                                                         </ul>
                                                     </div>
                                                     <% })%>

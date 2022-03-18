@@ -11,8 +11,7 @@ module.exports = {
 
     lesNotesEleves: function (params, callback) {
         var sql = `SELECT *,
-        DATE_FORMAT(eval_date, '%d/%m/%Y') as eval_date,
-        DATE_FORMAT(eval_date, '%m') as eval_month
+        DATE_FORMAT(eval_date, '%d/%m/%Y') as eval_date
         FROM Notes, Evaluations, Cursus, Users, Matieres 
         WHERE note_idEval = eval_id 
         AND eval_idCursus = cursus_id 
@@ -40,6 +39,56 @@ module.exports = {
         GROUP BY cursus_id
         ORDER BY matiere_id `;
         db.query(sql, params, function (err, data) {
+            if (err) throw err;
+            return callback(data);
+        });
+    },
+
+    /* IN PROGERESS */
+    getMinMatiere: function (callback) {
+        var sql = `SELECT min(note_valeur) as min, note_idEval FROM Notes GROUP BY note_idEval;`;
+        db.query(sql, function (err, data) {
+            if (err) throw err;
+            return callback(data);
+        });
+    },
+
+    getMaxMatiere: function (callback) {
+        var sql = `SELECT max(note_valeur) as max, note_idEval FROM Notes GROUP BY note_idEval;`;
+        db.query(sql, function (err, data) {
+            if (err) throw err;
+            return callback(data);
+        });
+    },
+
+    getAvgMatiere: function (callback) {
+        var sql = `SELECT avg(note_valeur) as avg, note_idEval FROM Notes GROUP BY note_idEval;`;
+        db.query(sql, function (err, data) {
+            if (err) throw err;
+            return callback(data);
+        });
+    },
+    /* IN PROGERESS */
+
+    getMinEval: function (callback) {
+        var sql = `SELECT min(note_valeur) as min, note_idEval FROM Notes GROUP BY note_idEval;`;
+        db.query(sql, function (err, data) {
+            if (err) throw err;
+            return callback(data);
+        });
+    },
+
+    getMaxEval: function (callback) {
+        var sql = `SELECT max(note_valeur) as max, note_idEval FROM Notes GROUP BY note_idEval;`;
+        db.query(sql, function (err, data) {
+            if (err) throw err;
+            return callback(data);
+        });
+    },
+
+    getAvgEval: function (callback) {
+        var sql = `SELECT avg(note_valeur) as avg, note_idEval FROM Notes GROUP BY note_idEval;`;
+        db.query(sql, function (err, data) {
             if (err) throw err;
             return callback(data);
         });

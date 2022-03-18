@@ -39,7 +39,7 @@ module.exports = {
     // lister les evals
     lister: function(callback) {
         var sql = `SELECT *,
-        DATE_FORMAT(user_dateNaissance, '%d/%m/%Y') as eval_date
+        DATE_FORMAT(eval_date, '%d/%m/%Y') as eval_date
         FROM Evaluations, Cursus, Users, Matieres, Classes
         WHERE eval_idCursus = cursus_id
         AND eval_idProf = user_id
@@ -54,7 +54,7 @@ module.exports = {
     // lister les evals par classe -> si prof est un prof du cursus ou prof principal
     listerParClasse: function(params, callback) {
         var sql = `SELECT *,
-        DATE_FORMAT(user_dateNaissance, '%d/%m/%Y') as eval_date
+        DATE_FORMAT(eval_date, '%d/%m/%Y') as eval_date
         FROM Evaluations, Cursus, Users, Matieres, Classes
         WHERE eval_idCursus = cursus_id
         AND eval_idProf = user_id
@@ -70,7 +70,7 @@ module.exports = {
     // lister les evals d'un prof
     listerParProf: function(params, callback) {
         var sql = `SELECT *,
-        DATE_FORMAT(user_dateNaissance, '%d/%m/%Y') as eval_date
+        DATE_FORMAT(eval_date, '%d/%m/%Y') as eval_date
         FROM Evaluations, Cursus, Users, Matieres, Classes
         WHERE eval_idCursus = cursus_id
         AND eval_idProf = user_id
@@ -135,7 +135,7 @@ module.exports = {
     // ficher une éval
     ficher: function(params, callback) {
         var sql = `SELECT *,
-        DATE_FORMAT(user_dateNaissance, '%d/%m/%Y') as eval_date
+        DATE_FORMAT(eval_date, '%d/%m/%Y') as eval_date
         FROM Evaluations, Cursus, Users, Matieres, Classes
         WHERE eval_idCursus = cursus_id
         AND eval_idProf = user_id

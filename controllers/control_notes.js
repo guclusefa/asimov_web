@@ -3,27 +3,15 @@ var model_eleves = require('../models/model_eleves');
 var model_profs = require('../models/model_profs');
 var model_classes = require('../models/model_classes');
 
-function removeDuplicates(arr) {
-    var uniques = [];
-    var itemsFound = {};
-    for (var i = 0, l = arr.length; i < l; i++) {
-        var stringified = JSON.stringify(arr[i]);
-        if (itemsFound[stringified]) { continue; }
-        uniques.push(arr[i]);
-        itemsFound[stringified] = true;
-    }
-    return uniques;
-}
+const average = arr => arr.reduce((a, b) => a + b, 0) / arr.length;
 
 module.exports = {
     afficher_fiche_eleve: function (req, res) {
         // si l'eleve
-        if (req.session.user_info !== undefined /* && req.params.id == req.session.user_info.user_id *//*  && req.session.user_info.isProf == 0 && req.session.user_info.isAdministration == 0 */) {
+        if (req.session.user_info !== undefined) {
             id = req.params.id
             idClasse = req.params.classe
             titre = "Fiche de notes d'élève";
-
-
             // dabord afficher eleves -> check si eleve existe
             // affiche classe eleves
             // aifccher notes de la classe de l'eleve -> check si classe est dans eleves
@@ -67,37 +55,63 @@ module.exports = {
                                         lesCursus.forEach(element => {
                                             if (element.cursus_id == unCursus.cursus_id) { verif = true }
                                         });
-
                                         if (verif) {
                                             model_notes.lesNotesEleves([unEleve.user_id, unCursus.cursus_id], function (lesNotes) {
                                                 model_notes.lesMatieresEleves([unEleve.user_id, unCursus.cursus_id], function (lesMatieres) {
-                                                    
-                                                    // attribuer notes par matieres, par trimestre
-                                                    lesMatieres.forEach(element => {
-                                                        element.notesT1 = {}
-                                                        element.notesT2 = {}
-                                                        element.notesT3 = {}
-                                                        iT1 = 1
-                                                        iT2 = 1
-                                                        iT3 = 1
-                                                        lesNotes.forEach(element2 => {
-                                                            if (element.matiere_id == element2.matiere_id) {
-                                                                if (element2.eval_trimestre == 1) {
-                                                                    element.notesT1["note" + iT1] = element2
-                                                                    iT1++
-                                                                } else if (element2.eval_trimestre == 2) {
-                                                                    element.notesT2["note" + iT2] = element2
-                                                                    iT2++
-                                                                } else {
-                                                                    element.notesT3["note" + iT3] = element2
-                                                                    iT3++
-                                                                }
-                                                            }
-                                                        });
-                                                    });
-                                                    console.log(lesMatieres[0])
-                                                    console.log(lesMatieres[0].notesT2.note1)
-                                                    res.render('./notes/fiche_eleve', { titre, unEleve, unCursus, lesEleves, lesCursus, lesMatieres })
+                                                    // test pour les min max avg
+                                                    model_notes.getMinEval(function (lesMinEval) {
+                                                        model_notes.getMaxEval(function (lesMaxEval) {
+                                                            model_notes.getAvgEval(function (lesAvgEval) {
+                                                                // attribuer notes par matieres, par trimestre
+                                                                lesMatieres.forEach(element => {
+                                                                    // notes par trimestres
+                                                                    element.notesT1 = []
+                                                                    element.notesT2 = []
+                                                                    element.notesT3 = []
+
+                                                                    lesNotesParEvalT1 = []
+                                                                    lesNotesParEvalT2 = []
+                                                                    lesNotesParEvalT3 = []
+
+                                                                    lesNotes.forEach(element2 => {
+                                                                        // ajoute min max avg
+                                                                        for (i in lesMinEval) {
+                                                                            if (element2.eval_id == lesMinEval[i].note_idEval) {
+                                                                                element2.eval_min = lesMinEval[i].min
+                                                                                element2.eval_max = lesMaxEval[i].max
+                                                                                element2.eval_avg = lesAvgEval[i].avg
+                                                                            }
+                                                                        }
+
+                                                                        if (element.matiere_id == element2.matiere_id) {
+                                                                            // t1
+                                                                            if (element2.eval_trimestre == 1) {
+                                                                                element.notesT1.push(element2)
+                                                                                if (element2.note_valeur !== null) lesNotesParEvalT1.push(element2.note_valeur)
+                                                                                // t2
+                                                                            } else if (element2.eval_trimestre == 2) {
+                                                                                element.notesT2.push(element2)
+                                                                                if (element2.note_valeur !== null) lesNotesParEvalT2.push(element2.note_valeur)
+                                                                                // t3
+                                                                            } else {
+                                                                                element.notesT3.push(element2)
+                                                                                if (element2.note_valeur !== null) lesNotesParEvalT3.push(element2.note_valeur)
+                                                                            }
+                                                                        }
+                                                                    });
+
+                                                                    /////// a revoir
+                                                                    element.notesT1.avg = average(lesNotesParEvalT1)
+                                                                    element.notesT2.avg = average(lesNotesParEvalT2)
+                                                                    element.notesT3.avg = average(lesNotesParEvalT3)
+
+                                                                });
+                                                                console.log(lesMatieres)
+                                                                res.render('./notes/fiche_eleve', { titre, unEleve, unCursus, lesEleves, lesCursus, lesMatieres })
+
+                                                            })
+                                                        })
+                                                    })
                                                 })
                                             })
                                         } else {
