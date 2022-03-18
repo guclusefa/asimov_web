@@ -104,7 +104,6 @@ module.exports = {
                                                                     element.notesT1.avg = average(lesNotesParEvalT1)
                                                                     element.notesT2.avg = average(lesNotesParEvalT2)
                                                                     element.notesT3.avg = average(lesNotesParEvalT3)
-
                                                                 });
                                                                 console.log(lesMatieres)
                                                                 res.render('./notes/fiche_eleve', { titre, unEleve, unCursus, lesEleves, lesCursus, lesMatieres })

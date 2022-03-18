@@ -135,13 +135,14 @@
                                             <div class="tab-pane fade show active" id="T1">
                                                 <div>
                                                     <!-- les cartes -->
-                                                    <% lesMatieres.forEach(function(uneMatiere){ %>                                                    
+                                                    <% lesMatieres.forEach(function(uneMatiere){ %>
+                                                    <% if(uneMatiere.notesT2.length > 0) {%>                                                    
                                                     <div class="card border-1 border-1 my-4">
                                                         <div class="card-header text-primary fs-5 cursor-pointer"    onclick="showModalNotes('Détail classe', 'test')">
                                                             <div>
                                                                 <%= uneMatiere.matiere_libelle %> (Prof. <%= uneMatiere.user_nom %>)
                                                                 <span class="float-end ">
-                                                                    <%= uneMatiere.notesT2.avg %>%
+                                                                    <% if(Object.is(uneMatiere.notesT2.avg, NaN)) { %>A definir <% } else {%><%= uneMatiere.notesT2.avg %>%<% } %>
                                                                 </span>
                                                             </div>
                                                         </div>
@@ -149,7 +150,7 @@
                                                             <% uneMatiere.notesT2.forEach(function(uneNote){ %>
                                                                 <li class="list-group-item "><%= uneNote.eval_date %> : <%= uneNote.eval_desc %>
                                                                     <span class=" float-end">
-                                                                        <%= uneNote.note_valeur %>%
+                                                                        <% if(uneNote.note_valeur == null) { %> Absent <% } else { %><%= uneNote.note_valeur %>%<% } %>
                                                                     </span>
                                                                     <div class="row">
                                                                         <div class="col-12 col-lg-3 figure-caption">Moyenne:
@@ -166,6 +167,7 @@
                                                             <% })%>
                                                         </ul>
                                                     </div>
+                                                    <% } %>
                                                     <% })%>
 
                                                     <!-- fin des cartes -->

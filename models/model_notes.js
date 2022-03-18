@@ -36,39 +36,13 @@ module.exports = {
         AND eval_idMatiere = matiere_id
         AND note_idEleve = ?
         AND cursus_id = ?
-        GROUP BY cursus_id
+        GROUP BY matiere_id
         ORDER BY matiere_id `;
         db.query(sql, params, function (err, data) {
             if (err) throw err;
             return callback(data);
         });
     },
-
-    /* IN PROGERESS */
-    getMinMatiere: function (callback) {
-        var sql = `SELECT min(note_valeur) as min, note_idEval FROM Notes GROUP BY note_idEval;`;
-        db.query(sql, function (err, data) {
-            if (err) throw err;
-            return callback(data);
-        });
-    },
-
-    getMaxMatiere: function (callback) {
-        var sql = `SELECT max(note_valeur) as max, note_idEval FROM Notes GROUP BY note_idEval;`;
-        db.query(sql, function (err, data) {
-            if (err) throw err;
-            return callback(data);
-        });
-    },
-
-    getAvgMatiere: function (callback) {
-        var sql = `SELECT avg(note_valeur) as avg, note_idEval FROM Notes GROUP BY note_idEval;`;
-        db.query(sql, function (err, data) {
-            if (err) throw err;
-            return callback(data);
-        });
-    },
-    /* IN PROGERESS */
 
     getMinEval: function (callback) {
         var sql = `SELECT min(note_valeur) as min, note_idEval FROM Notes GROUP BY note_idEval;`;
