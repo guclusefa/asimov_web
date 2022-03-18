@@ -69,10 +69,17 @@ module.exports = {
                                                                     element.notesT2 = []
                                                                     element.notesT3 = []
 
+                                                                    // pour moyenne par evals
                                                                     lesNotesParEvalT1 = []
                                                                     lesNotesParEvalT2 = []
                                                                     lesNotesParEvalT3 = []
 
+                                                                    // pour moyenne par matieres (in profress)
+                                                                    lesNotesParMatT1 = []
+                                                                    lesNotesParMatT2 = []
+                                                                    lesNotesParMatT3 = []
+
+                                                                    // les notes par matieres
                                                                     lesNotes.forEach(element2 => {
                                                                         // ajoute min max avg
                                                                         for (i in lesMinEval) {
@@ -83,6 +90,7 @@ module.exports = {
                                                                             }
                                                                         }
 
+                                                                        // ajout des valeurs
                                                                         if (element.matiere_id == element2.matiere_id) {
                                                                             // t1
                                                                             if (element2.eval_trimestre == 1) {
@@ -100,10 +108,15 @@ module.exports = {
                                                                         }
                                                                     });
 
+                                                                    // bilans des matieres
+                                                                    element.bilanT1 = []
+                                                                    element.bilanT2 = []
+                                                                    element.bilanT3 = []
+
                                                                     /////// a revoir
-                                                                    element.notesT1.avg = average(lesNotesParEvalT1)
-                                                                    element.notesT2.avg = average(lesNotesParEvalT2)
-                                                                    element.notesT3.avg = average(lesNotesParEvalT3)
+                                                                    element.bilanT1.eleve_avg = average(lesNotesParEvalT1)
+                                                                    element.bilanT2.eleve_avg = average(lesNotesParEvalT2)
+                                                                    element.bilanT3.eleve_avg = average(lesNotesParEvalT3)
                                                                 });
                                                                 console.log(lesMatieres)
                                                                 res.render('./notes/fiche_eleve', { titre, unEleve, unCursus, lesEleves, lesCursus, lesMatieres })
