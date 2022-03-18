@@ -95,8 +95,8 @@ module.exports = {
                                                             }
                                                         });
                                                     });
-                                                    console.log(lesMatieres)
-                                                    console.log(lesMatieres.notesT2)
+                                                    console.log(lesMatieres[0])
+                                                    console.log(lesMatieres[0].notesT2.note1)
                                                     res.render('./notes/fiche_eleve', { titre, unEleve, unCursus, lesEleves, lesCursus, lesMatieres })
                                                 })
                                             })
