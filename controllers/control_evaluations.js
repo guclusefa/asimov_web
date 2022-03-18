@@ -175,6 +175,7 @@ module.exports = {
                 let params = [
                     desc = req.body.desc,
                     date = req.body.date.split("/").reverse().join("/"),
+                    trimestre = req.body.trimestre,
                     cursus = req.body.cursus,
                     prof = leProf[0].cursus_prof_idProf,
                     matiere = req.body.matiere
@@ -199,6 +200,7 @@ module.exports = {
             let params = [
                 desc = req.body.desc,
                 date = req.body.date.split("/").reverse().join("/"),
+                trimestre = req.body.trimestre,
                 id = req.params.id
             ]
 

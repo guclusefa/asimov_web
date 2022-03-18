@@ -21,6 +21,7 @@
                             <th>Matière</th>
                             <th>Description</th>
                             <th>Date</th>
+                            <th>Trimestre</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -46,8 +47,11 @@
                                     <%= uneEvaluation.eval_date %>
                                 </td>
                                 <td>
+                                    Trimestre <%= uneEvaluation.eval_trimestre %>
+                                </td>
+                                <td>
                                     <button type="button" class="btn btn-primary action_table"
-                                        onclick="showModalDetail('Détail évaluation <%= uneEvaluation.eval_id %>', {'Année Scolaire':'<%= uneEvaluation.cursus_anneeScolaire %>','Cursus': '<%= uneEvaluation.classe_libelle %> <%= uneEvaluation.cursus_libelle %>', 'Professeur': '<%= uneEvaluation.user_nom  %> <%= uneEvaluation.user_prenom  %>','Matière': '<%= uneEvaluation.matiere_libelle %>','Description': '<%= uneEvaluation.eval_desc %>', 'Date': '<%= uneEvaluation.eval_date %>'}, 'fiche/<%= uneEvaluation.eval_id %>')"><i
+                                        onclick="showModalDetail('Détail évaluation <%= uneEvaluation.eval_id %>', {'Année Scolaire':'<%= uneEvaluation.cursus_anneeScolaire %>','Cursus': '<%= uneEvaluation.classe_libelle %> <%= uneEvaluation.cursus_libelle %>', 'Professeur': '<%= uneEvaluation.user_nom  %> <%= uneEvaluation.user_prenom  %>','Matière': '<%= uneEvaluation.matiere_libelle %>','Description': '<%= uneEvaluation.eval_desc %>', 'Date': '<%= uneEvaluation.eval_date %>', 'Trimestre': `Trimestre <%= uneEvaluation.eval_trimestre %>` }, 'fiche/<%= uneEvaluation.eval_id %>')"><i
                                             class="fas fa-eye"></i></button>
                                     <button type="button" class="btn btn-success action_table"
                                         onclick="location.href = 'modifier/<%= uneEvaluation.eval_id %>';"><i

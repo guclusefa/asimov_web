@@ -85,7 +85,7 @@ module.exports = {
 
     // aouter un éval
     ajouter: function(params, callback) {
-        var sql = `INSERT INTO Evaluations (eval_desc, eval_date, eval_idCursus, eval_idProf, eval_idMatiere) VALUES (?,?,?,?,?)`;
+        var sql = `INSERT INTO Evaluations (eval_desc, eval_date, eval_trimestre, eval_idCursus, eval_idProf, eval_idMatiere) VALUES (?,?,?,?,?,?)`;
         db.query(sql, params, function(err, data) {
             if (err) throw err;
             return callback(data);
@@ -114,7 +114,8 @@ module.exports = {
     modifier: function(params, callback) {
         var sql = `UPDATE Evaluations 
         SET eval_desc = ?,
-        eval_date = ?
+        eval_date = ?,
+        eval_trimestre = ?
         WHERE eval_id = ? `;
         db.query(sql, params, function(err, data) {
             if (err) throw err;
