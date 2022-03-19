@@ -44,6 +44,32 @@ module.exports = {
         });
     },
 
+    getMoyenneEleve: function (params, callback) {
+        var sql = `SELECT avg(note_valeur) as avg_eleve, eval_trimestre 
+        FROM Notes, Evaluations 
+        WHERE note_idEval = eval_id 
+        AND note_idEleve = ? 
+        AND eval_idCursus = ? 
+        GROUP BY note_idEleve, eval_trimestre`;
+        db.query(sql, params, function (err, data) {
+            if (err) throw err;
+            return callback(data);
+        });
+    },
+
+    getMoyenneClasse: function (params, callback) {
+        var sql = `SELECT avg(note_valeur) as avg_classe, eval_trimestre 
+        FROM Notes, Evaluations 
+        WHERE note_idEval = eval_id 
+        AND eval_idCursus = ? 
+        GROUP BY eval_idCursus, eval_trimestre;`;
+        db.query(sql, params, function (err, data) {
+            if (err) throw err;
+            return callback(data);
+        });
+    },
+
+
     getLesAvgMatiere: function (params, callback) {
         var sql = `SELECT avg(note_valeur) as leAvg, note_idEleve, eval_trimestre, eval_idMatiere 
         FROM Evaluations, Notes WHERE  note_idEval = eval_id 
