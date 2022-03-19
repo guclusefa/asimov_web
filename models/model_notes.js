@@ -105,5 +105,17 @@ module.exports = {
             return callback(data);
         });
     },
+
+    /* in progress */
+    getLesMoyennesAnnuel: function (params, callback) {
+        var sql = `SELECT avg(note_valeur) as avg, note_idEleve, eval_idMatiere, eval_trimestre 
+        FROM Evaluations, Notes WHERE note_idEval = eval_id 
+        AND eval_idCursus = ? 
+        GROUP BY eval_idMatiere, eval_trimestre, note_idEleve`;
+        db.query(sql, params, function (err, data) {
+            if (err) throw err;
+            return callback(data);
+        });
+    },
 };
 

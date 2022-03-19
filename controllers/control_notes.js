@@ -61,139 +61,150 @@ module.exports = {
                                                     model_notes.getLesAvgMatiere(unCursus.cursus_id, function (lesAvgsMatiere) {
                                                         model_notes.getMoyenneEleve([unEleve.user_id, unCursus.cursus_id], function (lesMoyennesEleves) {
                                                             model_notes.getMoyenneClasse(unCursus.cursus_id, function (lesMoyennesClasses) {
-                                                                // test pour les min max avg
-                                                                model_notes.getMinEval(function (lesMinEval) {
-                                                                    model_notes.getMaxEval(function (lesMaxEval) {
-                                                                        model_notes.getAvgEval(function (lesAvgEval) {
-                                                                            // attribuer notes par matieres, par trimestre
-                                                                            lesMatieres.forEach(element => {
-                                                                                // notes par trimestres
-                                                                                element.notesT1 = []
-                                                                                element.notesT2 = []
-                                                                                element.notesT3 = []
+                                                                model_notes.getLesMoyennesAnnuel(unCursus.cursus_id, function (lesMoyennesClassesAnnuel) {
+                                                                    // test pour les min max avg
+                                                                    model_notes.getMinEval(function (lesMinEval) {
+                                                                        model_notes.getMaxEval(function (lesMaxEval) {
+                                                                            model_notes.getAvgEval(function (lesAvgEval) {
+                                                                                // attribuer notes par matieres, par trimestre
+                                                                                lesMatieres.forEach(element => {
+                                                                                    // notes par trimestres
+                                                                                    element.notesT1 = []
+                                                                                    element.notesT2 = []
+                                                                                    element.notesT3 = []
 
-                                                                                // pour moyenne par evals
-                                                                                lesNotesParEvalT1 = []
-                                                                                lesNotesParEvalT2 = []
-                                                                                lesNotesParEvalT3 = []
+                                                                                    // pour moyenne par evals
+                                                                                    lesNotesParEvalT1 = []
+                                                                                    lesNotesParEvalT2 = []
+                                                                                    lesNotesParEvalT3 = []
 
-                                                                                // pour moyenne par matieres
-                                                                                lesNotesParMatT1 = []
-                                                                                lesNotesParMatT2 = []
-                                                                                lesNotesParMatT3 = []
+                                                                                    // pour moyenne par matieres
+                                                                                    lesNotesParMatT1 = []
+                                                                                    lesNotesParMatT2 = []
+                                                                                    lesNotesParMatT3 = []
 
-                                                                                // les moyennes par matierers
-                                                                                for (i in lesAvgsMatiere) {
-                                                                                    if (lesAvgsMatiere[i].eval_idMatiere == element.matiere_id && lesAvgsMatiere[i].leAvg !== null) {
-                                                                                        if (lesAvgsMatiere[i].eval_trimestre == 1) {
-                                                                                            lesNotesParMatT1.push(lesAvgsMatiere[i].leAvg)
-                                                                                        } else if (lesAvgsMatiere[i].eval_trimestre == 2) {
-                                                                                            lesNotesParMatT2.push(lesAvgsMatiere[i].leAvg)
-                                                                                        } else {
-                                                                                            lesNotesParMatT3.push(lesAvgsMatiere[i].leAvg)
-                                                                                        }
-                                                                                    }
-                                                                                }
-
-                                                                                // les notes par matieres
-                                                                                lesNotes.forEach(element2 => {
-                                                                                    // ajoute min max avg
-                                                                                    for (i in lesMinEval) {
-                                                                                        if (element2.eval_id == lesMinEval[i].note_idEval) {
-                                                                                            element2.eval_min = lesMinEval[i].min
-                                                                                            element2.eval_max = lesMaxEval[i].max
-                                                                                            element2.eval_avg = lesAvgEval[i].avg
+                                                                                    // les moyennes par matierers
+                                                                                    for (i in lesAvgsMatiere) {
+                                                                                        if (lesAvgsMatiere[i].eval_idMatiere == element.matiere_id && lesAvgsMatiere[i].leAvg !== null) {
+                                                                                            if (lesAvgsMatiere[i].eval_trimestre == 1) {
+                                                                                                lesNotesParMatT1.push(lesAvgsMatiere[i].leAvg)
+                                                                                            } else if (lesAvgsMatiere[i].eval_trimestre == 2) {
+                                                                                                lesNotesParMatT2.push(lesAvgsMatiere[i].leAvg)
+                                                                                            } else {
+                                                                                                lesNotesParMatT3.push(lesAvgsMatiere[i].leAvg)
+                                                                                            }
                                                                                         }
                                                                                     }
 
-                                                                                    // ajout des valeurs
-                                                                                    if (element.matiere_id == element2.matiere_id) {
-                                                                                        // t1
-                                                                                        if (element2.eval_trimestre == 1) {
-                                                                                            element.notesT1.push(element2)
-                                                                                            if (element2.note_valeur !== null) lesNotesParEvalT1.push(element2.note_valeur)
-                                                                                            // t2
-                                                                                        } else if (element2.eval_trimestre == 2) {
-                                                                                            element.notesT2.push(element2)
-                                                                                            if (element2.note_valeur !== null) lesNotesParEvalT2.push(element2.note_valeur)
-                                                                                            // t3
-                                                                                        } else {
-                                                                                            element.notesT3.push(element2)
-                                                                                            if (element2.note_valeur !== null) lesNotesParEvalT3.push(element2.note_valeur)
+                                                                                    // les notes par matieres
+                                                                                    lesNotes.forEach(element2 => {
+                                                                                        // ajoute min max avg
+                                                                                        for (i in lesMinEval) {
+                                                                                            if (element2.eval_id == lesMinEval[i].note_idEval) {
+                                                                                                element2.eval_min = lesMinEval[i].min
+                                                                                                element2.eval_max = lesMaxEval[i].max
+                                                                                                element2.eval_avg = lesAvgEval[i].avg
+                                                                                            }
                                                                                         }
+
+                                                                                        // ajout des valeurs
+                                                                                        if (element.matiere_id == element2.matiere_id) {
+                                                                                            // t1
+                                                                                            if (element2.eval_trimestre == 1) {
+                                                                                                element.notesT1.push(element2)
+                                                                                                if (element2.note_valeur !== null) lesNotesParEvalT1.push(element2.note_valeur)
+                                                                                                // t2
+                                                                                            } else if (element2.eval_trimestre == 2) {
+                                                                                                element.notesT2.push(element2)
+                                                                                                if (element2.note_valeur !== null) lesNotesParEvalT2.push(element2.note_valeur)
+                                                                                                // t3
+                                                                                            } else {
+                                                                                                element.notesT3.push(element2)
+                                                                                                if (element2.note_valeur !== null) lesNotesParEvalT3.push(element2.note_valeur)
+                                                                                            }
+                                                                                        }
+                                                                                    });
+
+                                                                                    // bilans des matieres
+                                                                                    /////// a revoir ? peut etre jsp jvois pas dautre sol
+                                                                                    element.bilanT1 = []
+                                                                                    element.bilanT2 = []
+                                                                                    element.bilanT3 = []
+                                                                                    element.bilanT4 = []
+
+                                                                                    // bilans par eleve
+                                                                                    if (lesNotesParEvalT1.length > 0) {
+                                                                                        element.bilanT1.eleve_avg = average(lesNotesParEvalT1).toFixed(2)
+                                                                                    }
+                                                                                    if (lesNotesParEvalT2.length > 0) {
+                                                                                        element.bilanT2.eleve_avg = average(lesNotesParEvalT2).toFixed(2)
+                                                                                    }
+                                                                                    if (lesNotesParEvalT3.length > 0) {
+                                                                                        element.bilanT3.eleve_avg = average(lesNotesParEvalT3).toFixed(2)
+                                                                                    }
+
+                                                                                    /* test */
+                                                                                    /* pour moyenne annuel de matiere */
+                                                                                    test = [element.bilanT1.eleve_avg, element.bilanT2.eleve_avg, element.bilanT3.eleve_avg].filter(n => n)
+                                                                                    if (test.length > 0) {
+                                                                                        element.bilanT4.eleve_avg = average(test)
+                                                                                    }
+
+                                                                                    // bilans par classe
+                                                                                    if (lesNotesParMatT1.length > 0) {
+                                                                                        element.bilanT1.classe_avg = average(lesNotesParMatT1).toFixed(2)
+                                                                                        element.bilanT1.classe_max = Math.max(...lesNotesParMatT1).toFixed(2)
+                                                                                        element.bilanT1.classe_min = Math.min(...lesNotesParMatT1).toFixed(2)
+                                                                                    }
+
+                                                                                    if (lesNotesParMatT2.length > 0) {
+                                                                                        element.bilanT2.classe_avg = average(lesNotesParMatT2).toFixed(2)
+                                                                                        element.bilanT2.classe_max = Math.max(...lesNotesParMatT2).toFixed(2)
+                                                                                        element.bilanT2.classe_min = Math.min(...lesNotesParMatT2).toFixed(2)
+                                                                                    }
+
+                                                                                    if (lesNotesParMatT3.length > 0) {
+                                                                                        element.bilanT3.classe_avg = average(lesNotesParMatT3).toFixed(2)
+                                                                                        element.bilanT3.classe_max = Math.max(...lesNotesParMatT3).toFixed(2)
+                                                                                        element.bilanT3.classe_min = Math.min(...lesNotesParMatT3).toFixed(2)
+                                                                                    }
+
+                                                                                });
+                                                                                // bilan par trimestre
+                                                                                bilanClasseT1 = []
+                                                                                bilanClasseT2 = []
+                                                                                bilanClasseT3 = []
+                                                                                lesMoyennesEleves.forEach(element => {
+                                                                                    if (element.eval_trimestre == 1) {
+                                                                                        bilanClasseT1.push(element.avg_eleve)
+                                                                                    } else if (element.eval_trimestre == 2) {
+                                                                                        bilanClasseT2.push(element.avg_eleve)
+                                                                                    } else {
+                                                                                        bilanClasseT3.push(element.avg_eleve)
+                                                                                    }
+                                                                                });
+                                                                                lesMoyennesClasses.forEach(element => {
+                                                                                    if (element.eval_trimestre == 1) {
+                                                                                        bilanClasseT1.push(element.avg_classe)
+                                                                                    } else if (element.eval_trimestre == 2) {
+                                                                                        bilanClasseT2.push(element.avg_classe)
+                                                                                    } else {
+                                                                                        bilanClasseT3.push(element.avg_classe)
                                                                                     }
                                                                                 });
 
-                                                                                // bilans des matieres
-                                                                                /////// a revoir ? peut etre jsp jvois pas dautre sol
-                                                                                element.bilanT1 = []
-                                                                                element.bilanT2 = []
-                                                                                element.bilanT3 = []
+                                                                                /* moyenne eleve + classe annuel */
+                                                                                bilanClasseT4 = []
+                                                                                bilanClasseT4.push([bilanClasseT1[0], bilanClasseT2[0], bilanClasseT3[0]])
+                                                                                bilanClasseT4.push([bilanClasseT1[1], bilanClasseT2[1], bilanClasseT3[1]])
+                                                                                /* average +  filtraate */
+                                                                                bilanClasseT4[0] = average(bilanClasseT4[0].filter(n => n))
+                                                                                bilanClasseT4[1] = average(bilanClasseT4[1].filter(n => n))
 
-                                                                                // bilans par eleve
-                                                                                if (lesNotesParEvalT1.length > 0) {
-                                                                                    element.bilanT1.eleve_avg = average(lesNotesParEvalT1).toFixed(2)
-                                                                                }
-                                                                                if (lesNotesParEvalT2.length > 0) {
-                                                                                    element.bilanT2.eleve_avg = average(lesNotesParEvalT2).toFixed(2)
-                                                                                }
-                                                                                if (lesNotesParEvalT3.length > 0) {
-                                                                                    element.bilanT3.eleve_avg = average(lesNotesParEvalT3).toFixed(2)
-                                                                                }
-
-                                                                                // bilans par classe
-                                                                                if (lesNotesParMatT1.length > 0) {
-                                                                                    element.bilanT1.classe_avg = average(lesNotesParMatT1).toFixed(2)
-                                                                                    element.bilanT1.classe_max = Math.max(...lesNotesParMatT1).toFixed(2)
-                                                                                    element.bilanT1.classe_min = Math.min(...lesNotesParMatT1).toFixed(2)
-                                                                                }
-
-                                                                                if (lesNotesParMatT2.length > 0) {
-                                                                                    element.bilanT2.classe_avg = average(lesNotesParMatT2).toFixed(2)
-                                                                                    element.bilanT2.classe_max = Math.max(...lesNotesParMatT2).toFixed(2)
-                                                                                    element.bilanT2.classe_min = Math.min(...lesNotesParMatT2).toFixed(2)
-                                                                                }
-
-                                                                                if (lesNotesParMatT3.length > 0) {
-                                                                                    element.bilanT3.classe_avg = average(lesNotesParMatT3).toFixed(2)
-                                                                                    element.bilanT3.classe_max = Math.max(...lesNotesParMatT3).toFixed(2)
-                                                                                    element.bilanT3.classe_min = Math.min(...lesNotesParMatT3).toFixed(2)
-                                                                                }
-
-                                                                            });
-                                                                            // bilan par trimestre
-                                                                            bilanClasseT1 = []
-                                                                            bilanClasseT2 = []
-                                                                            bilanClasseT3 = []
-                                                                            lesMoyennesEleves.forEach(element => {
-                                                                                if (element.eval_trimestre == 1) {
-                                                                                    bilanClasseT1.push(element.avg_eleve)
-                                                                                } else if (element.eval_trimestre == 2) {
-                                                                                    bilanClasseT2.push(element.avg_eleve)
-                                                                                } else {
-                                                                                    bilanClasseT3.push(element.avg_eleve)
-                                                                                }
-                                                                            });
-                                                                            lesMoyennesClasses.forEach(element => {
-                                                                                if (element.eval_trimestre == 1) {
-                                                                                    bilanClasseT1.push(element.avg_classe)
-                                                                                } else if (element.eval_trimestre == 2) {
-                                                                                    bilanClasseT2.push(element.avg_classe)
-                                                                                } else {
-                                                                                    bilanClasseT3.push(element.avg_classe)
-                                                                                }
-                                                                            });
-
-                                                                            /* moyenne eleve + classe annuel */
-                                                                            bilanClasseT4 = []
-                                                                            bilanClasseT4.push([bilanClasseT1[0],bilanClasseT2[0],bilanClasseT3[0]])
-                                                                            bilanClasseT4.push([bilanClasseT1[1],bilanClasseT2[1],bilanClasseT3[1]])
-                                                                            /* average +  filtraate */ 
-                                                                            bilanClasseT4[0] =  average(bilanClasseT4[0].filter(n =>n))
-                                                                            bilanClasseT4[1] =  average(bilanClasseT4[1].filter(n =>n))
-
-                                                                            console.log(lesMatieres)
-                                                                            res.render('./notes/fiche_eleve', { titre, unEleve, unCursus, lesEleves, lesCursus, lesMatieres, bilanClasseT1, bilanClasseT2, bilanClasseT3, bilanClasseT4 })
+                                                                                console.log(lesMatieres)
+                                                                                console.log(lesMoyennesClassesAnnuel)
+                                                                                res.render('./notes/fiche_eleve', { titre, unEleve, unCursus, lesEleves, lesCursus, lesMatieres, bilanClasseT1, bilanClasseT2, bilanClasseT3, bilanClasseT4 })
+                                                                            })
                                                                         })
                                                                     })
                                                                 })
