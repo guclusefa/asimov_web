@@ -184,13 +184,16 @@ module.exports = {
                                                                                 }
                                                                             });
 
-                                                                            /* annuel en proges */
+                                                                            /* moyenne eleve + classe annuel */
                                                                             bilanClasseT4 = []
                                                                             bilanClasseT4.push([bilanClasseT1[0],bilanClasseT2[0],bilanClasseT3[0]])
                                                                             bilanClasseT4.push([bilanClasseT1[1],bilanClasseT2[1],bilanClasseT3[1]])
-                                                                            console.log(bilanClasseT4)
-                                                                            /* en progesss */
-                                                                            res.render('./notes/fiche_eleve', { titre, unEleve, unCursus, lesEleves, lesCursus, lesMatieres, bilanClasseT1, bilanClasseT2, bilanClasseT3 })
+                                                                            /* average +  filtraate */ 
+                                                                            bilanClasseT4[0] =  average(bilanClasseT4[0].filter(n =>n))
+                                                                            bilanClasseT4[1] =  average(bilanClasseT4[1].filter(n =>n))
+
+                                                                            console.log(lesMatieres)
+                                                                            res.render('./notes/fiche_eleve', { titre, unEleve, unCursus, lesEleves, lesCursus, lesMatieres, bilanClasseT1, bilanClasseT2, bilanClasseT3, bilanClasseT4 })
                                                                         })
                                                                     })
                                                                 })

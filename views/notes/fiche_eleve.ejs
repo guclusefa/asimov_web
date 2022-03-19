@@ -411,7 +411,125 @@
                                                         <h1 class="mt-3 text-center">Aucune note pour ce trimestre</h1>
                                                     <% } %>
                                             </div>
-                                            <div class="tab-pane fade" id="T4">...</div>
+                                            <div class="tab-pane fade" id="T4">
+                                                <% if(bilanClasseT1.length > 0 || bilanClasseT2.length > 0 || bilanClasseT3.length > 0 ) {%>     
+                                                    <div>
+                                                        <!-- les cartes -->
+                                                        <% lesMatieres.forEach(function(uneMatiere){ %>
+                                                        <% if(uneMatiere.notesT1.length > 0 || uneMatiere.notesT2.length > 0 || uneMatiere.notesT3.length > 0) {%>                                                    
+                                                        <div class="card border-1 border-1 my-4">
+                                                            <div class="card-header text-primary fs-5">
+                                                                <div>
+                                                                    <%= uneMatiere.matiere_libelle %> (<%= uneMatiere.user_prenom[0] %>.<%= uneMatiere.user_nom %>)
+                                                                    <span class="float-end ">
+                                                                        LOL
+                                                                    </span>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-12 col-lg-4 figure-caption">
+                                                                        Moyenne classe: 
+                                                                    </div>
+                                                                    <div class="col-12 col-lg-4 figure-caption">
+                                                                        Meilleur: 
+                                                                    </div>
+                                                                    <div class="col-12 col-lg-4  figure-caption">
+                                                                        Pire: 
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <ul class="list-group list-group-flush">
+                                                                <% uneMatiere.notesT1.forEach(function(uneNote){ %>
+                                                                    <li class="list-group-item "><%= uneNote.eval_date %> : <%= uneNote.eval_desc %>
+                                                                        <span class=" float-end">
+                                                                            <% if(uneNote.note_valeur == null) { %> Absent <% } else { %><%= uneNote.note_valeur %>%<% } %>
+                                                                        </span>
+                                                                        <div class="row">
+                                                                            <div class="col-12 col-lg-3 figure-caption">
+                                                                                Moyenne:
+                                                                                <% if(uneNote.eval_avg == null) { %> A definir <% } else { %> <%= uneNote.eval_avg %>% <%} %>
+                                                                            </div>
+                                                                            <div class="col-12 col-lg-3 figure-caption">
+                                                                                Meilleur:
+                                                                                <% if(uneNote.eval_max == null) { %> A definir <% } else { %> <%= uneNote.eval_max %>% <%} %>
+                                                                            </div>
+                                                                            <div class="col-12 col-lg-3  figure-caption">
+                                                                                Pire:
+                                                                                <% if(uneNote.eval_min == null) { %> A definir <% } else { %> <%= uneNote.eval_min %>% <%} %>
+                                                                            </div>
+                                                                        </div>
+                                                                    </li>
+                                                                <% })%>
+                                                                <% uneMatiere.notesT2.forEach(function(uneNote){ %>
+                                                                    <li class="list-group-item "><%= uneNote.eval_date %> : <%= uneNote.eval_desc %>
+                                                                        <span class=" float-end">
+                                                                            <% if(uneNote.note_valeur == null) { %> Absent <% } else { %><%= uneNote.note_valeur %>%<% } %>
+                                                                        </span>
+                                                                        <div class="row">
+                                                                            <div class="col-12 col-lg-3 figure-caption">
+                                                                                Moyenne:
+                                                                                <% if(uneNote.eval_avg == null) { %> A definir <% } else { %> <%= uneNote.eval_avg %>% <%} %>
+                                                                            </div>
+                                                                            <div class="col-12 col-lg-3 figure-caption">
+                                                                                Meilleur:
+                                                                                <% if(uneNote.eval_max == null) { %> A definir <% } else { %> <%= uneNote.eval_max %>% <%} %>
+                                                                            </div>
+                                                                            <div class="col-12 col-lg-3  figure-caption">
+                                                                                Pire:
+                                                                                <% if(uneNote.eval_min == null) { %> A definir <% } else { %> <%= uneNote.eval_min %>% <%} %>
+                                                                            </div>
+                                                                        </div>
+                                                                    </li>
+                                                                <% })%>
+                                                                <% uneMatiere.notesT3.forEach(function(uneNote){ %>
+                                                                    <li class="list-group-item "><%= uneNote.eval_date %> : <%= uneNote.eval_desc %>
+                                                                        <span class=" float-end">
+                                                                            <% if(uneNote.note_valeur == null) { %> Absent <% } else { %><%= uneNote.note_valeur %>%<% } %>
+                                                                        </span>
+                                                                        <div class="row">
+                                                                            <div class="col-12 col-lg-3 figure-caption">
+                                                                                Moyenne:
+                                                                                <% if(uneNote.eval_avg == null) { %> A definir <% } else { %> <%= uneNote.eval_avg %>% <%} %>
+                                                                            </div>
+                                                                            <div class="col-12 col-lg-3 figure-caption">
+                                                                                Meilleur:
+                                                                                <% if(uneNote.eval_max == null) { %> A definir <% } else { %> <%= uneNote.eval_max %>% <%} %>
+                                                                            </div>
+                                                                            <div class="col-12 col-lg-3  figure-caption">
+                                                                                Pire:
+                                                                                <% if(uneNote.eval_min == null) { %> A definir <% } else { %> <%= uneNote.eval_min %>% <%} %>
+                                                                            </div>
+                                                                        </div>
+                                                                    </li>
+                                                                <% })%>
+                                                            </ul>
+                                                        </div>
+                                                        <% } %>
+                                                        <% })%>
+    
+                                                        <!-- fin des cartes -->
+                                                        <div class="border border-1 py-1 ps-2">
+                                                            <span class="mt-5">Moyenne élève : 
+                                                                <% if (bilanClasseT4[0] == null){ %>
+                                                                    A definir
+                                                                <%}  else { %>
+                                                                    <%= bilanClasseT4[0].toFixed(2) %>%
+                                                                <% } %>
+                                                            </span>
+                                                        </div>
+                                                        <div class="border border-1 py-1 ps-2 mt-3">
+                                                            <span class="mt-5">Moyenne classe :
+                                                                <% if (bilanClasseT4[1] == null){ %>
+                                                                    A definir
+                                                                <%}  else { %>
+                                                                    <%= bilanClasseT4[1].toFixed(2) %>%
+                                                                <% } %>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <% } else { %>
+                                                        <h1 class="mt-3 text-center">Aucune note pour cette année</h1>
+                                                    <% } %>
+                                            </div>
                                         </div>
                                     </div>
 
