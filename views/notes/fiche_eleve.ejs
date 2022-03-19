@@ -142,8 +142,35 @@
                                                             <div>
                                                                 <%= uneMatiere.matiere_libelle %> (Prof. <%= uneMatiere.user_nom %>)
                                                                 <span class="float-end ">
-                                                                    <% if(Object.is(uneMatiere.bilanT2.eleve_avg, NaN)) { %>A definir <% } else {%><%= uneMatiere.bilanT2.eleve_avg %>%<% } %>
+                                                                    <% if(typeof uneMatiere.bilanT2.eleve_avg == 'undefined') { %>
+                                                                        A definir
+                                                                    <% } else { %>
+                                                                        <%= uneMatiere.bilanT2.eleve_avg %>%
+                                                                    <% } %>
                                                                 </span>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-12 col-lg-3 figure-caption">
+                                                                    Moyenne: <% if(typeof uneMatiere.bilanT2.classe_avg == 'undefined') { %>
+                                                                        A definir
+                                                                    <% } else { %>
+                                                                        <%= uneMatiere.bilanT2.classe_avg %>%
+                                                                    <% } %>
+                                                                </div>
+                                                                <div class="col-12 col-lg-3 figure-caption">
+                                                                    Meilleur: <% if(typeof uneMatiere.bilanT2.classe_max == 'undefined') { %>
+                                                                        A definir
+                                                                    <% } else { %>
+                                                                        <%= uneMatiere.bilanT2.classe_max %>%
+                                                                    <% } %>
+                                                                </div>
+                                                                <div class="col-12 col-lg-3  figure-caption">
+                                                                    Pire: <% if(typeof uneMatiere.bilanT2.classe_min == 'undefined') { %>
+                                                                        A definir
+                                                                    <% } else { %>
+                                                                        <%= uneMatiere.bilanT2.classe_min %>%
+                                                                    <% } %>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                         <ul class="list-group list-group-flush">
@@ -153,14 +180,17 @@
                                                                         <% if(uneNote.note_valeur == null) { %> Absent <% } else { %><%= uneNote.note_valeur %>%<% } %>
                                                                     </span>
                                                                     <div class="row">
-                                                                        <div class="col-12 col-lg-3 figure-caption">Moyenne:
-                                                                            <%= uneNote.eval_avg %>%
+                                                                        <div class="col-12 col-lg-3 figure-caption">
+                                                                            Moyenne:
+                                                                            <% if(uneNote.eval_avg == null) { %> A definir <% } else { %> <%= uneNote.eval_avg %>% <%} %>
                                                                         </div>
                                                                         <div class="col-12 col-lg-3 figure-caption">
                                                                             Meilleur:
-                                                                            <%= uneNote.eval_max %>%</div>
-                                                                        <div class="col-12 col-lg-3  figure-caption">Pire:
-                                                                            <%= uneNote.eval_min %>%
+                                                                            <% if(uneNote.eval_max == null) { %> A definir <% } else { %> <%= uneNote.eval_max %>% <%} %>
+                                                                        </div>
+                                                                        <div class="col-12 col-lg-3  figure-caption">
+                                                                            Pire:
+                                                                            <% if(uneNote.eval_min == null) { %> A definir <% } else { %> <%= uneNote.eval_min %>% <%} %>
                                                                         </div>
                                                                     </div>
                                                                 </li>
