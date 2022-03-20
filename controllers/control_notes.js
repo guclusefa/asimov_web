@@ -82,6 +82,7 @@ module.exports = {
                                                                                     lesNotesParMatT1 = []
                                                                                     lesNotesParMatT2 = []
                                                                                     lesNotesParMatT3 = []
+                                                                                    lesNotesParMatT4 = []
 
                                                                                     // les moyennes par matierers
                                                                                     for (i in lesAvgsMatiere) {
@@ -93,6 +94,13 @@ module.exports = {
                                                                                             } else {
                                                                                                 lesNotesParMatT3.push(lesAvgsMatiere[i].leAvg)
                                                                                             }
+                                                                                        }
+                                                                                    }
+
+                                                                                    //les bilans annuel
+                                                                                    for (i in lesMoyennesClassesAnnuel){
+                                                                                        if(lesMoyennesClassesAnnuel[i].eval_idMatiere == element.matiere_id) {
+                                                                                            lesNotesParMatT4.push(lesMoyennesClassesAnnuel[i].avg)
                                                                                         }
                                                                                     }
 
@@ -143,6 +151,7 @@ module.exports = {
                                                                                         element.bilanT3.eleve_avg = average(lesNotesParEvalT3).toFixed(2)
                                                                                     }
 
+                                                                                    
                                                                                     /* test */
                                                                                     /* pour moyenne annuel de matiere */
                                                                                     test = [element.bilanT1.eleve_avg, element.bilanT2.eleve_avg, element.bilanT3.eleve_avg].filter(n => n)
@@ -167,6 +176,11 @@ module.exports = {
                                                                                         element.bilanT3.classe_avg = average(lesNotesParMatT3).toFixed(2)
                                                                                         element.bilanT3.classe_max = Math.max(...lesNotesParMatT3).toFixed(2)
                                                                                         element.bilanT3.classe_min = Math.min(...lesNotesParMatT3).toFixed(2)
+                                                                                    }
+                                                                                    if (lesNotesParMatT4.length > 0) {
+                                                                                        element.bilanT4.classe_avg = average(lesNotesParMatT4).toFixed(2)
+                                                                                        element.bilanT4.classe_max = Math.max(...lesNotesParMatT4).toFixed(2)
+                                                                                        element.bilanT4.classe_min = Math.min(...lesNotesParMatT4).toFixed(2)
                                                                                     }
 
                                                                                 });
@@ -202,7 +216,6 @@ module.exports = {
                                                                                 bilanClasseT4[1] = average(bilanClasseT4[1].filter(n => n))
 
                                                                                 console.log(lesMatieres)
-                                                                                console.log(lesMoyennesClassesAnnuel)
                                                                                 res.render('./notes/fiche_eleve', { titre, unEleve, unCursus, lesEleves, lesCursus, lesMatieres, bilanClasseT1, bilanClasseT2, bilanClasseT3, bilanClasseT4 })
                                                                             })
                                                                         })

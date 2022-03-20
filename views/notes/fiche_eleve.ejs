@@ -432,12 +432,27 @@
                                                                 <div class="row">
                                                                     <div class="col-12 col-lg-3 figure-caption">
                                                                         Moy: 
+                                                                        <% if(typeof uneMatiere.bilanT4.classe_avg == 'undefined') { %>
+                                                                            A definir
+                                                                        <% } else { %>
+                                                                            <%= uneMatiere.bilanT4.classe_avg %>%
+                                                                        <% } %>
                                                                     </div>
                                                                     <div class="col-12 col-lg-3 figure-caption">
                                                                         Moy+: 
+                                                                        <% if(typeof uneMatiere.bilanT4.classe_max == 'undefined') { %>
+                                                                            A definir
+                                                                        <% } else { %>
+                                                                            <%= uneMatiere.bilanT4.classe_max %>%
+                                                                        <% } %>
                                                                     </div>
                                                                     <div class="col-12 col-lg-3  figure-caption">
-                                                                        Moy-: 
+                                                                        Moy-:
+                                                                        <% if(typeof uneMatiere.bilanT4.classe_min == 'undefined') { %>
+                                                                            A definir
+                                                                        <% } else { %>
+                                                                            <%= uneMatiere.bilanT4.classe_min %>%
+                                                                        <% } %> 
                                                                     </div>
                                                                 </div>
                                                             </div>
