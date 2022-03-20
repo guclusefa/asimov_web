@@ -212,8 +212,6 @@ module.exports = {
                                                                                 bilanClasseT4 = []
                                                                                 bilanClasseT4.push([bilanClasseT1[0], bilanClasseT2[0], bilanClasseT3[0]])
                                                                                 bilanClasseT4.push([bilanClasseT1[1], bilanClasseT2[1], bilanClasseT3[1]])
-                                                                                console.log(bilanClasseT4[0].filter(n => n))
-                                                                                console.log(bilanClasseT4[0].filter(n => n).length)
                                                                                 /* average +  filtraate */
                                                                                 if (bilanClasseT4[0].filter(n => n).length > 0) {
                                                                                     bilanClasseT4[0] = average(bilanClasseT4[0].filter(n => n))
