@@ -98,8 +98,8 @@ module.exports = {
                                                                                     }
 
                                                                                     //les bilans annuel
-                                                                                    for (i in lesMoyennesClassesAnnuel){
-                                                                                        if(lesMoyennesClassesAnnuel[i].eval_idMatiere == element.matiere_id) {
+                                                                                    for (i in lesMoyennesClassesAnnuel) {
+                                                                                        if (lesMoyennesClassesAnnuel[i].eval_idMatiere == element.matiere_id) {
                                                                                             lesNotesParMatT4.push(lesMoyennesClassesAnnuel[i].avg)
                                                                                         }
                                                                                     }
@@ -151,7 +151,7 @@ module.exports = {
                                                                                         element.bilanT3.eleve_avg = average(lesNotesParEvalT3).toFixed(2)
                                                                                     }
 
-                                                                                    
+
                                                                                     /* test */
                                                                                     /* pour moyenne annuel de matiere */
                                                                                     test = [element.bilanT1.eleve_avg, element.bilanT2.eleve_avg, element.bilanT3.eleve_avg].filter(n => n)
@@ -208,12 +208,19 @@ module.exports = {
                                                                                 });
 
                                                                                 /* moyenne eleve + classe annuel */
+                                                                                /* on peu ameliorer mais flemme pck ca marche  */
                                                                                 bilanClasseT4 = []
                                                                                 bilanClasseT4.push([bilanClasseT1[0], bilanClasseT2[0], bilanClasseT3[0]])
                                                                                 bilanClasseT4.push([bilanClasseT1[1], bilanClasseT2[1], bilanClasseT3[1]])
+                                                                                console.log(bilanClasseT4[0].filter(n => n))
+                                                                                console.log(bilanClasseT4[0].filter(n => n).length)
                                                                                 /* average +  filtraate */
-                                                                                bilanClasseT4[0] = average(bilanClasseT4[0].filter(n => n))
-                                                                                bilanClasseT4[1] = average(bilanClasseT4[1].filter(n => n))
+                                                                                if (bilanClasseT4[0].filter(n => n).length > 0) {
+                                                                                    bilanClasseT4[0] = average(bilanClasseT4[0].filter(n => n))
+                                                                                    bilanClasseT4[1] = average(bilanClasseT4[1].filter(n => n))
+                                                                                } else {
+                                                                                    bilanClasseT4 = []
+                                                                                }
 
                                                                                 console.log(lesMatieres)
                                                                                 res.render('./notes/fiche_eleve', { titre, unEleve, unCursus, lesEleves, lesCursus, lesMatieres, bilanClasseT1, bilanClasseT2, bilanClasseT3, bilanClasseT4 })
