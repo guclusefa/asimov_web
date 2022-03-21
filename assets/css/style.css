@@ -302,3 +302,14 @@ tbody tr:hover {
     content: " *";
     color: red;
 }
+
+.lien-t:hover {
+    color: white !important;
+    background-color: #3c4b64;
+}
+
+/* chartjw */
+.monchart {
+    width: auto;
+    height: auto;
+}
