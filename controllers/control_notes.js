@@ -2,7 +2,7 @@ var model_notes = require('../models/model_notes');
 var model_eleves = require('../models/model_eleves');
 var model_profs = require('../models/model_profs');
 var model_classes = require('../models/model_classes');
-
+ 
 const average = arr => arr.reduce((a, b) => a + b, 0) / arr.length;
 
 module.exports = {
@@ -156,6 +156,7 @@ module.exports = {
                                                                                     /* pour moyenne annuel de matiere */
                                                                                     test = [element.bilanT1.eleve_avg, element.bilanT2.eleve_avg, element.bilanT3.eleve_avg].filter(n => n)
                                                                                     if (test.length > 0) {
+                                                                                        test = test.map((i) => parseFloat(i));
                                                                                         element.bilanT4.eleve_avg = average(test)
                                                                                     }
 
@@ -220,7 +221,6 @@ module.exports = {
                                                                                     bilanClasseT4 = []
                                                                                 }
 
-                                                                                console.log(lesMatieres)
                                                                                 res.render('./notes/fiche_eleve', { titre, unEleve, unCursus, lesEleves, lesCursus, lesMatieres, bilanClasseT1, bilanClasseT2, bilanClasseT3, bilanClasseT4 })
                                                                             })
                                                                         })
