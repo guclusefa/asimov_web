@@ -4,7 +4,7 @@ var model_matieres = require('../models/model_matieres');
 var model_eleves = require('../models/model_eleves');
 
 module.exports = {
-    // affichage
+    // affichage liste
     afficher_liste: function (req, res) {
         if (req.session.user_info !== undefined && (req.session.user_info.user_isAdministration == 1 || req.session.user_info.user_isProf == 1)) { // si pas connecte
             // si administration = affiche toutes les classes
@@ -24,6 +24,8 @@ module.exports = {
             res.redirect('/')
         }
     },
+
+    // affichage form ajouter
     afficher_ajouter: function (req, res) {
         if (req.session.user_info !== undefined && req.session.user_info.user_isAdministration == 1) { // si pas connecte
 
@@ -45,6 +47,7 @@ module.exports = {
         }
     },
 
+    // affichage form modifier
     afficher_modifier: function (req, res) {
         if (req.session.user_info !== undefined && req.session.user_info.user_isAdministration == 1) { // si pas connecte
 
@@ -80,6 +83,7 @@ module.exports = {
         }
     },
 
+    // affichage fiche
     afficher_fiche: function (req, res) {
         if (req.session.user_info !== undefined && (req.session.user_info.user_isAdministration == 1 || req.session.user_info.user_isProf == 1)) { // si pas connecte
             id = req.params.id
