@@ -39,9 +39,37 @@ function validateDate(date) {
     return false;
 }
 
+function isNum(val) {
+    return !isNaN(val)
+}
+
+function onlyNumbers(array) {
+    return array.every(element => {
+        return !isNaN(element);
+    });
+}
+
+function onlyNumbersProfs(array) {
+    return array.every(element => {
+        return !isNaN(element.trim().replace(',', ''));
+    });
+}
+
+function hasDuplicates(array) {
+    var valuesSoFar = Object.create(null);
+    for (var i = 0; i < array.length; ++i) {
+        var value = array[i];
+        if (value in valuesSoFar) {
+            return true;
+        }
+        valuesSoFar[value] = true;
+    }
+    return false;
+}
+
 // verification user ----------------------------------------------------------------------------------------------
 function verifUser([nom, prenom, date, sexe, email]) {
-    if (validateTrim(nom) && validateTrim(prenom) && validateTrim(sexe) && validateTrim(date) && validateTrim(email)){
+    if (validateTrim(nom) && validateTrim(prenom) && validateTrim(sexe) && validateTrim(date) && validateTrim(email)) {
         if (validateDate(date)) {
             if (validateSexe(sexe)) {
                 if (validateEmail(email)) {
@@ -63,7 +91,7 @@ function verifUser([nom, prenom, date, sexe, email]) {
 
 // verification matiere ----------------------------------------------------------------------------------------------
 function verifMatiere(libelle) {
-    if (validateTrim(libelle)){
+    if (validateTrim(libelle)) {
         msg = "Valid"
     } else {
         msg = "Remplir toutes les données"
@@ -71,9 +99,76 @@ function verifMatiere(libelle) {
     return msg
 }
 
+// verification classes ----------------------------------------------------------------------------------------------
+function verifClasse([classe, annee, libelle, principal], profs, eleves) {
+    if (validateTrim(classe) && validateTrim(annee) && validateTrim(libelle) && validateTrim(principal) && profs && eleves) {
+        if (classe >= 1 && classe <= 7 && isNum(classe)) {
+            if (annee >= 2000 && annee <= 2050 && isNum(annee)) {
+                if (isNum(principal)) {
+                    if (!hasDuplicates(eleves) && onlyNumbers(eleves)) {
+                        if (onlyNumbersProfs(profs)) {
+                            msg = "Valid"
+                        } else {
+                            msg = "Professeurs invalides"
+                        }
+                    } else {
+                        msg = "Eleves invalide"
+                    }
+                } else {
+                    msg = "Professeur principal invalide"
+                }
+            } else {
+                msg = "Annee invalide"
+            }
+        } else {
+            msg = "Classe invalide"
+        }
+    } else {
+        msg = "Remplir toutes les données"
+    }
+    return msg
+}
+
+// verification eval ----------------------------------------------------------------------------------------------
+// in progess
+function verifEval(step, [classe, matiere, desc, trimestre, date], eleves, notes) {
+    if (validateTrim(classe) && validateTrim(matiere) && validateTrim(desc) && validateTrim(trimestre) && validateTrim(date)) {
+        if (onlyNumbers(classe)) {
+            if (onlyNumbers(matiere)) {
+                if (onlyNumbers(trimestre) && trimestre >= 1 && trimestre <= 3) {
+                    if (validateDate(date)) {
+                        msg = "Valide"
+                    } else {
+                        msg = "Date invalide"
+                    }
+                } else {
+                    msg = "Trimestre invalide"
+                }
+            } else {
+                msg = "Classe invalide"
+            }
+        } else {
+            msg = "Classe invalide"
+        }
+    } else {
+        msg = "Remplir toutes les données"
+    }
+    if (step == 2) {
+        if (eleves && notes) {
+
+        } else {
+            msg = "Remplir toutes les données"
+        }
+    } else {
+        return msg
+    }
+}
+
+
 module.exports = {
     average,
     bilanArray,
     verifUser,
-    verifMatiere
+    verifMatiere,
+    verifClasse
 };

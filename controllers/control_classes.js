@@ -137,36 +137,51 @@ module.exports = {
                 principal = req.body.principal
             ]
 
-            model_classes.ajouter(params, function (data) {
-                model_classes.dernierCursus(function (cursus) {
-                    cursusId = cursus[0].cursus_id
+            let paramsAverif = [
+                req.body.classe,
+                req.body.annee,
+                req.body.libelle,
+                req.body.principal
+            ]
 
-                    // ajouter eleves
-                    // pour chaque eleve ajouter
-                    req.body.eleves.forEach(element => {
-                        let params = [cursusId, element]
-                        model_classes.ajouterEleves(params, function (data) { })
-                    });
+            console.log(req.body.profs)
+            console.log(req.body.eleves)
+            if (methods.verifClasse(paramsAverif, req.body.profs, req.body.eleves) == "Valid") {
+                model_classes.ajouter(params, function (data) {
+                    model_classes.dernierCursus(function (cursus) {
+                        cursusId = cursus[0].cursus_id
 
-                    // ajouter profs
-                    // les idprofs et idmatiere des profs 
-                    // tout ca car faut traduire la string en array car 2 valeurs dans le value
-                    // j'ai pas trouvé de meilleur solution sinon faire requete sql mais flemme #ripbozo
+                        // ajouter eleves
+                        // pour chaque eleve ajouter
+                        req.body.eleves.forEach(element => {
+                            let params = [cursusId, element]
+                            model_classes.ajouterEleves(params, function (data) { })
+                        });
 
-                    for (i in req.body.profs) {
-                        infoProfs = req.body.profs[i]
-                        infoProfs = infoProfs.split(",")
-                        idProf = infoProfs[0]
-                        idMatiere = infoProfs[1]
+                        // ajouter profs
+                        // les idprofs et idmatiere des profs 
+                        // tout ca car faut traduire la string en array car 2 valeurs dans le value
+                        // j'ai pas trouvé de meilleur solution sinon faire requete sql mais flemme #ripbozo
 
-                        let params = [cursusId, idProf, idMatiere]
-                        model_classes.ajouterProfs(params, function (data) { })
-                    }
+                        // on recupere idProf, idMatiere donc - > [idProf, idMatiere]
+                        for (i in req.body.profs) {
+                            infoProfs = req.body.profs[i]
+                            infoProfs = infoProfs.split(",")
+                            idProf = infoProfs[0]
+                            idMatiere = infoProfs[1]
 
+                            let params = [cursusId, idProf, idMatiere]
+                            model_classes.ajouterProfs(params, function (data) { })
+                        }
+
+                    })
+                    req.flash('valid', 'Classe ajouté avec succès');
+                    res.redirect('./liste')
                 })
-                req.flash('valid', 'Classe ajouté avec succès');
-                res.redirect('./liste')
-            })
+            } else {
+                req.flash('erreur', methods.verifClasse(paramsAverif, req.body.profs, req.body.eleves));
+                res.redirect('/')
+            }
         } else {
             req.flash('erreur', "Vous n'êtes pas autorisé");
             res.redirect('/')
@@ -185,38 +200,52 @@ module.exports = {
                 principal = req.body.principal,
                 id = req.params.id
             ]
-            model_classes.ficher(req.params.id, function (uneClasse) {
-                if (uneClasse.length > 0) {
 
-                    model_classes.modifier(params, function (data) {
-                        model_classes.supprimerClasseEleves(id, function (data) {
-                            //on supprime eleves pour les rajouter
-                            req.body.eleves.forEach(element => {
-                                let params = [id, element]
-                                model_classes.ajouterEleves(params, function (data) { })
-                            });
-                            model_classes.supprimerClasseProfs(id, function (data) {
-                                // on supprimer profs pour rajouter
-                                for (i in req.body.profs) {
-                                    infoProfs = req.body.profs[i]
-                                    infoProfs = infoProfs.split(",")
-                                    idProf = infoProfs[0]
-                                    idMatiere = infoProfs[1]
+            let paramsAverif = [
+                req.body.classe,
+                req.body.annee,
+                req.body.libelle,
+                req.body.principal
+            ]
 
-                                    let params = [id, idProf, idMatiere]
-                                    model_classes.ajouterProfs(params, function (data) { })
-                                }
 
-                                req.flash('valid', 'Classe modifié avec succès');
-                                res.redirect('../liste')
+            if (methods.verifClasse(paramsAverif, req.body.profs, req.body.eleves) == "Valid") {
+                model_classes.ficher(req.params.id, function (uneClasse) {
+                    if (uneClasse.length > 0) {
+
+                        model_classes.modifier(params, function (data) {
+                            model_classes.supprimerClasseEleves(id, function (data) {
+                                //on supprime eleves pour les rajouter
+                                req.body.eleves.forEach(element => {
+                                    let params = [id, element]
+                                    model_classes.ajouterEleves(params, function (data) { })
+                                });
+                                model_classes.supprimerClasseProfs(id, function (data) {
+                                    // on supprimer profs pour rajouter
+                                    for (i in req.body.profs) {
+                                        infoProfs = req.body.profs[i]
+                                        infoProfs = infoProfs.split(",")
+                                        idProf = infoProfs[0]
+                                        idMatiere = infoProfs[1]
+
+                                        let params = [id, idProf, idMatiere]
+                                        model_classes.ajouterProfs(params, function (data) { })
+                                    }
+
+                                    req.flash('valid', 'Classe modifié avec succès');
+                                    res.redirect('../liste')
+                                })
                             })
                         })
-                    })
-                } else {
-                    req.flash('erreur', "Classe n'existe pas");
-                    res.redirect('/')
-                }
-            })
+                    } else {
+                        req.flash('erreur', "Classe n'existe pas");
+                        res.redirect('/')
+                    }
+                })
+            } else {
+                req.flash('erreur', methods.verifClasse(paramsAverif, req.body.profs, req.body.eleves));
+                res.redirect('/')
+            }
         } else {
             req.flash('erreur', "Vous n'êtes pas autorisé");
             res.redirect('/')
