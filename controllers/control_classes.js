@@ -2,6 +2,7 @@ var model_classes = require('../models/model_classes');
 var model_profs = require('../models/model_profs');
 var model_matieres = require('../models/model_matieres');
 var model_eleves = require('../models/model_eleves');
+var methods = require('./methods');
 
 module.exports = {
     // affichage liste

@@ -1,4 +1,6 @@
 var model_matieres = require('../models/model_matieres');
+var methods = require('./methods');
+
 module.exports = {
     // affichage
     afficher_liste: function (req, res) {

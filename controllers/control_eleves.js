@@ -1,4 +1,6 @@
 var model_eleves = require('../models/model_eleves');
+var methods = require('./methods');
+
 module.exports = {
     // affichage
     afficher_liste: function (req, res) {
