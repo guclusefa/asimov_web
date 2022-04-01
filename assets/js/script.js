@@ -1,4 +1,4 @@
-/* formulaires */
+// form validation ----------------------------------------------------------------------------------------------
 (function () {
   'use strict'
   // Fetch all the forms we want to apply custom Bootstrap validation styles to
@@ -17,7 +17,7 @@
     })
 })()
 
-/* dateîcker */
+// datepikcer ----------------------------------------------------------------------------------------------
 $(function () {
   //titre label
   const getDatePickerTitle = elem => {
@@ -56,11 +56,12 @@ $(function () {
   };
 });
 
-/* select2 */
+// select2 ----------------------------------------------------------------------------------------------
 $('.select2').select2({
   theme: 'bootstrap-5'
 });
 
+// datatable ----------------------------------------------------------------------------------------------
 $(function () {
   var fr = {
     searchPanes: {
@@ -129,8 +130,7 @@ $(function () {
   table.searchPanes.resizePanes();
 });
 
-/* dynamic modal */
-
+// modal detail ----------------------------------------------------------------------------------------------
 var modalWrap = null;
 const showModalDetail = (title, description, lien) => {
   if (modalWrap !== null) {
@@ -168,6 +168,7 @@ const showModalDetail = (title, description, lien) => {
   modal.show();
 }
 
+// modal delete ----------------------------------------------------------------------------------------------
 const showModalSupprimer = (title, description, lien) => {
   if (modalWrap !== null) {
     modalWrap.remove();
@@ -199,6 +200,7 @@ const showModalSupprimer = (title, description, lien) => {
   modal.show();
 }
 
+// modal notes ----------------------------------------------------------------------------------------------
 const showModalNotes = (title, description) => {
   if (modalWrap !== null) {
     modalWrap.remove();

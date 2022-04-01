@@ -1,3 +1,4 @@
+// connexion bdd ----------------------------------------------------------------------------------------------
 var mysql = require('mysql');
 var conn = mysql.createConnection({
     host: 'mysql-asimov.alwaysdata.net',
