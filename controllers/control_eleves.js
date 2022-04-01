@@ -84,7 +84,7 @@ module.exports = {
                 tel = req.body.tel,
                 email = req.body.email
             ]
-
+            
             model_eleves.ajouter(params, function (data) {
                 req.flash('valid', 'Élève ajouté avec succès');
                 res.redirect('./liste')
@@ -97,7 +97,7 @@ module.exports = {
 
     modifier: function (req, res) {
         if (req.session.user_info !== undefined && req.session.user_info.user_isAdministration == 1) { // si connecte
-
+           
             let params = [
                 nom = req.body.nom,
                 prenom = req.body.prenom,
@@ -107,6 +107,7 @@ module.exports = {
                 email = req.body.email,
                 id = req.params.id
             ]
+            
             model_eleves.ficher(req.params.id, function (unEleve) {
                 if (unEleve.length > 0) {
 
