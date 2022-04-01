@@ -1,6 +1,6 @@
 var db = require("../config/database");
 module.exports = {
-    // on utilise finalement pas user_idMatiere et user_isProfPrincipal mais flemme de faire les changements pour l'instant
+    // lister profs ----------------------------------------------------------------------------------------------
     lister: function(callback) {
         var sql = `SELECT *,
         TIMESTAMPDIFF(YEAR, user_dateNaissance, CURDATE()) AS user_age,
@@ -16,6 +16,7 @@ module.exports = {
         });
     },
 
+    // ajouter un prof ----------------------------------------------------------------------------------------------
     ajouter: function(params, callback) {
         var sql = `INSERT INTO Users 
         (user_nom, user_prenom, user_mdp, user_dateNaissance, user_sexe, user_tel, user_mail, user_isProf)
@@ -26,6 +27,7 @@ module.exports = {
         });
     },
 
+    // modifier un prof ----------------------------------------------------------------------------------------------
     modifier: function(params, callback) {
         var sql = `UPDATE Users 
         SET user_nom = ?,
@@ -41,6 +43,7 @@ module.exports = {
         });
     },
 
+    // zsupprimer un prof ----------------------------------------------------------------------------------------------
     supprimer: function(params, callback) {
         var sql = `DELETE FROM Users WHERE user_id = ?`;
         db.query(sql, params, function(err, data) {
@@ -49,6 +52,7 @@ module.exports = {
         });
     },
 
+    // ficher un prof ----------------------------------------------------------------------------------------------
     ficher: function(params, callback) {
         var sql = `SELECT *,
         TIMESTAMPDIFF(YEAR, user_dateNaissance, CURDATE()) AS user_age,

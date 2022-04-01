@@ -1,6 +1,6 @@
 var db = require("../config/database");
 module.exports = {
-    // select dernier evals
+    // slister les classes d'un eleve ----------------------------------------------------------------------------------------------
     lesClassesEleves: function (params, callback) {
         var sql = `SELECT * FROM Cursus_Eleves, Cursus, Classes WHERE cursus_eleve_idCursus = cursus_id AND cursus_idClasse = classe_id AND cursus_eleve_idEleve = ?`;
         db.query(sql, params, function (err, data) {
@@ -9,6 +9,7 @@ module.exports = {
         });
     },
 
+    // lister les notes d'un eleves ----------------------------------------------------------------------------------------------
     lesNotesEleves: function (params, callback) {
         var sql = `SELECT *,
         DATE_FORMAT(eval_date, '%d/%m/%Y') as eval_date
@@ -26,6 +27,7 @@ module.exports = {
         });
     },
 
+    // lister les matieres d'un eleve ----------------------------------------------------------------------------------------------
     lesMatieresEleves: function (params, callback) {
         var sql = `SELECT *,
         DATE_FORMAT(eval_date, '%d/%m/%Y') as eval_date
@@ -44,6 +46,7 @@ module.exports = {
         });
     },
 
+    // lister les moyennes d'un eleve ----------------------------------------------------------------------------------------------
     getMoyenneEleve: function (params, callback) {
         var sql = `SELECT avg(note_valeur) as avg_eleve, eval_trimestre 
         FROM Notes, Evaluations 
@@ -57,6 +60,7 @@ module.exports = {
         });
     },
 
+    // lister les moyenne d'une classe ----------------------------------------------------------------------------------------------
     getMoyenneClasse: function (params, callback) {
         var sql = `SELECT avg(note_valeur) as avg_classe, eval_trimestre 
         FROM Notes, Evaluations 
@@ -69,7 +73,7 @@ module.exports = {
         });
     },
 
-
+    // lister les omyenne d'une matiere ----------------------------------------------------------------------------------------------
     getLesAvgMatiere: function (params, callback) {
         var sql = `SELECT avg(note_valeur) as leAvg, note_idEleve, eval_trimestre, eval_idMatiere 
         FROM Evaluations, Notes WHERE  note_idEval = eval_id 
@@ -82,6 +86,7 @@ module.exports = {
         });
     },
 
+    // lister min des evzal ----------------------------------------------------------------------------------------------
     getMinEval: function (callback) {
         var sql = `SELECT min(note_valeur) as min, note_idEval FROM Notes GROUP BY note_idEval;`;
         db.query(sql, function (err, data) {
@@ -90,6 +95,7 @@ module.exports = {
         });
     },
 
+    // mister max des evazl ----------------------------------------------------------------------------------------------
     getMaxEval: function (callback) {
         var sql = `SELECT max(note_valeur) as max, note_idEval FROM Notes GROUP BY note_idEval;`;
         db.query(sql, function (err, data) {
@@ -98,6 +104,7 @@ module.exports = {
         });
     },
 
+    // lister les moy eval ----------------------------------------------------------------------------------------------
     getAvgEval: function (callback) {
         var sql = `SELECT avg(note_valeur) as avg, note_idEval FROM Notes GROUP BY note_idEval;`;
         db.query(sql, function (err, data) {
@@ -107,6 +114,7 @@ module.exports = {
     },
 
     /* in progress */
+    // lister les moyennes annuel ----------------------------------------------------------------------------------------------
     getLesMoyennesAnnuel: function (params, callback) {
         var sql = `SELECT avg(note_valeur) as avg, note_idEleve, eval_idMatiere
         FROM Evaluations, Notes WHERE note_idEval = eval_id 
