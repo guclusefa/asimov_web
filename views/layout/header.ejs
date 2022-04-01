@@ -59,20 +59,16 @@
                   </a>
                   <ul class="nav-group-items">
                     <li class="nav-item">
+                      <% if(user_info.user_isProviseur == 1) { %>
                       <a class="nav-link" href="/notes/fiche_eleve/0/0">
                         Notes d'élèves
                       </a>
+                      <% } else { %>
+                        <a class="nav-link" href="/notes/fiche_eleve/<%= user_info.user_id %>/0">
+                          Notes d'élèves
+                        </a>
+                      <% } %>
                     </li>
-<!--                     <li class="nav-item">
-                      <a class="nav-link" href="/notes/fiche_prof/<%= user_info.user_id %>">
-                        Note de professeurs
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="/notes/fiche_classe/<%= user_info.user_id %>">
-                        Note de classes
-                      </a>
-                    </li> -->
                   </ul>
                 </li>
                 <% } %>
