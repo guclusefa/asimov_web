@@ -20,9 +20,7 @@ module.exports = {
             titre = "Ajouter un professeur";
             action = "/profs/ajouter"
             modifier = 0
-            model_matieres.lister(function (lesMatieres) {
-                res.render('./profs/form', { titre, action, modifier, lesMatieres })
-            })
+            res.render('./profs/form', { titre, action, modifier })
         } else {
             req.flash('erreur', "Vous n'êtes pas autorisé");
             res.redirect('/')
@@ -38,11 +36,8 @@ module.exports = {
 
             model_profs.ficher(id, function (unProf) {
                 if (unProf.length > 0) {
-
-                    model_matieres.lister(function (lesMatieres) {
-                        unProf = unProf[0]
-                        res.render('./profs/form', { titre, action, modifier, lesMatieres, unProf })
-                    })
+                    unProf = unProf[0]
+                    res.render('./profs/form', { titre, action, modifier, unProf })
                 } else {
                     req.flash('erreur', "Prof n'existe pas");
                     res.redirect('/')
@@ -86,8 +81,6 @@ module.exports = {
                 sexe = req.body.sexe,
                 tel = req.body.tel,
                 email = req.body.email,
-                principal = req.body.principal,
-                matiere = req.body.matiere
             ]
 
             model_profs.ajouter(params, function (data) {
@@ -110,8 +103,6 @@ module.exports = {
                 sexe = req.body.sexe,
                 tel = req.body.tel,
                 email = req.body.email,
-                principal = req.body.principal,
-                matiere = req.body.matiere,
                 id = req.params.id
             ]
 

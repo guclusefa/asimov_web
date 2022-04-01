@@ -7,7 +7,6 @@ module.exports = {
         DATE_FORMAT(user_dateNaissance, '%d/%m/%Y') as user_dateNaissance
         FROM Users 
         WHERE user_isProf = 0 
-        AND user_isProfPrincipal = 0 
         AND user_isProviseur = 0 
         AND user_isAdministration = 0
         ORDER BY user_nom, user_prenom`;
@@ -58,7 +57,6 @@ module.exports = {
         DATE_FORMAT(user_dateNaissance, '%d/%m/%Y') as user_dateNaissance
         FROM Users 
         WHERE user_isProf = 0 
-        AND user_isProfPrincipal = 0 
         AND user_isProviseur = 0 
         AND user_isAdministration = 0
         AND user_id = ?`;

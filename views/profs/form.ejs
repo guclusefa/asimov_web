@@ -105,44 +105,6 @@
                         </div>
                     </div>
 
-
-                    <div class="row">
-                        <div class="col-md-6 col-sm-12 col-12 mt-3">
-                            <div class="form-floating mb-3">
-                                <select class="form-control select2" id="matiere" name="matiere" required>
-                                    <option value="" disabled selected>Choisir une matière</option>
-                                    <% lesMatieres.forEach(function(uneMatiere){ %>
-                                        <option value="<%= uneMatiere.matiere_id %>"><%= uneMatiere.matiere_libelle %></option>
-                                    <% })%>
-                                </select>
-                                <label class="required">Matière</label>
-                                <div class="invalid-feedback">
-                                    Choisir une matière valide !
-                                </div>
-                                <div class="valid-feedback">
-                                    Matière valide
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-sm-12 col-12 mt-3">
-                            <div class="form-floating mb-3">
-                                <select class="form-control" id="principal" name="principal" required>
-                                    <option value="" disabled selected>Choisir une option</option>
-                                        <option value="0">Non</option>
-                                        <option value="1">Oui</option>
-                                </select>
-                                <label class="required">Professeur principal</label>
-                                <div class="invalid-feedback">
-                                    Choisir une option valide !
-                                </div>
-                                <div class="valid-feedback">
-                                    Option valide
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                     <div class="row">
                         <div class="col-12 mt-3">
                             <button class="btn btn-primary w-100" type="submit">
@@ -166,8 +128,6 @@
                 $("#sexe").val('<%= unProf.user_sexe %>').change();
                 $("#email").val('<%= unProf.user_mail %>');
                 $("#tel").val('<%= unProf.user_tel %>');
-                $("#matiere").val('<%= unProf.user_idMatiere%>').change();
-                $("#principal").val('<%= unProf.user_isProfPrincipal %>').change();
             });
         </script>
         <% } %>
