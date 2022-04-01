@@ -50,6 +50,7 @@
               <div class="simplebar-content" style="padding: 0px;">
                 <!-- header left  -->
 
+                <% if (typeof user_info !='undefined' && (user_info.user_isProf == 0 && user_info.user_isAdministration == 0) || user_info.user_isProviseur == 1) { %>
                 <li class="nav-title">Les evaluations</li>
                 <li class="nav-group">
                   <a class="nav-link nav-group-toggle" href="#">
@@ -74,7 +75,9 @@
                     </li> -->
                   </ul>
                 </li>
+                <% } %>
 
+                <% if (typeof user_info !='undefined' && user_info.user_isProf ==1) { %>
                 <li class="nav-title">Les evaluations</li>
                 <li class="nav-group">
                   <a class="nav-link nav-group-toggle" href="#">
@@ -94,7 +97,9 @@
                     </li>
                   </ul>
                 </li>
+                <% } %>
 
+                <% if (typeof user_info !='undefined' && user_info.user_isAdministration == 1) { %>
                 <li class="nav-title">Les classes</li>
                 <li class="nav-group">
                   <a class="nav-link nav-group-toggle" href="#">
@@ -174,6 +179,7 @@
                     </li>
                   </ul>
                 </li>
+                <% } %>
               </div>
             </div>
           </div>
