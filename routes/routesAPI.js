@@ -2,15 +2,15 @@
 const express = require('express');
 const routeur = express.Router();
 
-// exporter controllers
-var control_accueil = require('../controllers/control_accueil')
-var control_connexion = require('../controllers/control_connexion')
-var control_eleves = require('../controllers/control_eleves')
-var control_profs = require('../controllers/control_profs')
-var control_matieres = require('../controllers/control_matieres')
-var control_classes = require('../controllers/control_classes')
-var control_evaluations = require('../controllers/control_evaluations')
-var control_notes = require('../controllers/control_notes')
+// exporter api
+var control_accueil = require('../api/control_accueil')
+var control_connexion = require('../api/control_connexion')
+var control_eleves = require('../api/control_eleves')
+var control_profs = require('../api/control_profs')
+var control_matieres = require('../api/control_matieres')
+var control_classes = require('../api/control_classes')
+var control_evaluations = require('../api/control_evaluations')
+var control_notes = require('../api/control_notes')
 
 // accueil ----------------------------------------------------------------------------------------------
 routeur.get('/', control_accueil.afficher)
