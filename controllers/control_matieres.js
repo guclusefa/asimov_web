@@ -79,10 +79,15 @@ module.exports = {
                 libelle = req.body.libelle,
             ]
 
-            model_matieres.ajouter(params, function (data) {
-                req.flash('valid', 'Matière ajouté avec succès');
-                res.redirect('./liste')
-            })
+            if (methods.verifMatiere(req.body.libelle) == "Valid") {
+                model_matieres.ajouter(params, function (data) {
+                    req.flash('valid', 'Matière ajouté avec succès');
+                    res.redirect('./liste')
+                })
+            } else {
+                req.flash('erreur', methods.verifMatiere(req.body.libelle));
+                res.redirect('/')
+            }
         } else {
             req.flash('erreur', "Vous n'êtes pas autorisé");
             res.redirect('/')
@@ -97,18 +102,23 @@ module.exports = {
                 id = req.params.id
             ]
 
-            model_matieres.ficher(req.params.id, function (uneMatiere) {
-                if (uneMatiere.length > 0) {
+            if (methods.verifMatiere(req.body.libelle) == "Valid") {
+                model_matieres.ficher(req.params.id, function (uneMatiere) {
+                    if (uneMatiere.length > 0) {
 
-                    model_matieres.modifier(params, function (data) {
-                        req.flash('valid', 'Matière modifié avec succès');
-                        res.redirect('../liste')
-                    })
-                } else {
-                    req.flash('erreur', "Matière n'existe pas");
-                    res.redirect('/')
-                }
-            })
+                        model_matieres.modifier(params, function (data) {
+                            req.flash('valid', 'Matière modifié avec succès');
+                            res.redirect('../liste')
+                        })
+                    } else {
+                        req.flash('erreur', "Matière n'existe pas");
+                        res.redirect('/')
+                    }
+                })
+            } else {
+                req.flash('erreur', methods.verifMatiere(req.body.libelle));
+                res.redirect('/')
+            }
         } else {
             req.flash('erreur', "Vous n'êtes pas autorisé");
             res.redirect('/')

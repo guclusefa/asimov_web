@@ -1,5 +1,4 @@
-// pour faire le bilan d'une eval : moyenne, min et max
-// pour notes et eval
+/* ------------------------------------ METHODES NOTE ET EVAL -------------------------------------------- */
 const average = arr => arr.reduce((a, b) => a + b, 0) / arr.length;
 
 function bilanArray(array) {
@@ -17,47 +16,63 @@ function bilanArray(array) {
     return [min, max, moy]
 }
 
-// pour verif user
-const validateEmail = (email) => {
-    return email.match(
-        /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-    );
-};
-
-function Verifier_Numero_Telephone(num_tel) {
-    // Definition du motif a matcher
-    var regex = new RegExp(/^(01|02|03|04|05|06|08)[0-9]{8}/gi);
-
-    // Definition de la variable booleene match
-    var match = false;
-
-    // Test sur le motif
-    if (regex.test(num_tel)) {
-        match = true;
-    }
-    else {
-        match = false;
-    }
-
-    // On renvoie match
-    return match;
+/* ------------------------------------ METHODES DE VALIDATION -------------------------------------------- */
+function validateTrim(str) {
+    if (str.trim().length === 0) return false
+    return true
 }
 
+function validateEmail(email) {
+    var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    if (email.match(validRegex)) return true;
+    return false;
+}
 
-function verifUser(nom, prenom, sexe, date, email, tel) {
-    if (nom && prenom && sexe && date && email && tel &&
-        (sexe == "F" || sexe == "M") &&
-        !isNaN(Date.parse(date)) &&
-        validateEmail(email) &&
-        Verifier_Numero_Telephone(tel)
-    ) {
-        return true
+function validateSexe(sexe) {
+    if (sexe == "M" || sexe == "F") return true;
+    return false;
+}
+
+function validateDate(date) {
+    var validRegex = /(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d/;
+    if (date.match(validRegex)) return true;
+    return false;
+}
+
+/* ------------------------------------ VERIF USER -------------------------------------------- */
+function verifUser([nom, prenom, date, sexe, email]) {
+    if (validateTrim(nom) && validateTrim(prenom) && validateTrim(sexe) && validateTrim(date) && validateTrim(email)){
+        if (validateDate(date)) {
+            if (validateSexe(sexe)) {
+                if (validateEmail(email)) {
+                    msg = "Valid"
+                } else {
+                    msg = "Email invalide"
+                }
+            } else {
+                msg = "Sexe invalide"
+            }
+        } else {
+            msg = "Date invalide"
+        }
     } else {
-        return false
+        msg = "Remplir toutes les données"
     }
+    return msg
+}
+/* ------------------------------------ VERIF MATIERE -------------------------------------------- */
+function verifMatiere(libelle) {
+    if (validateTrim(libelle)){
+        msg = "Valid"
+    } else {
+        msg = "Remplir toutes les données"
+    }
+    return msg
 }
 
 module.exports = {
     average,
-    bilanArray
+    bilanArray,
+    verifUser,
+    verifMatiere
 };
