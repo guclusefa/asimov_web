@@ -1,8 +1,7 @@
 var model_notes = require('../models/model_notes');
 var model_eleves = require('../models/model_eleves');
 var model_classes = require('../models/model_classes');
-
-const average = arr => arr.reduce((a, b) => a + b, 0) / arr.length;
+var methods = require('./methods');
 
 module.exports = {
     afficher_fiche_eleve: function (req, res) {
@@ -165,13 +164,13 @@ module.exports = {
 
                                                                                         // bilans par eleve
                                                                                         if (lesNotesParEvalT1.length > 0) {
-                                                                                            element.bilanT1.eleve_avg = average(lesNotesParEvalT1).toFixed(2)
+                                                                                            element.bilanT1.eleve_avg = methods.average(lesNotesParEvalT1).toFixed(2)
                                                                                         }
                                                                                         if (lesNotesParEvalT2.length > 0) {
-                                                                                            element.bilanT2.eleve_avg = average(lesNotesParEvalT2).toFixed(2)
+                                                                                            element.bilanT2.eleve_avg = methods.average(lesNotesParEvalT2).toFixed(2)
                                                                                         }
                                                                                         if (lesNotesParEvalT3.length > 0) {
-                                                                                            element.bilanT3.eleve_avg = average(lesNotesParEvalT3).toFixed(2)
+                                                                                            element.bilanT3.eleve_avg = methods.average(lesNotesParEvalT3).toFixed(2)
                                                                                         }
 
 
@@ -180,29 +179,29 @@ module.exports = {
                                                                                         test = [element.bilanT1.eleve_avg, element.bilanT2.eleve_avg, element.bilanT3.eleve_avg].filter(n => n)
                                                                                         if (test.length > 0) {
                                                                                             test = test.map((i) => parseFloat(i));
-                                                                                            element.bilanT4.eleve_avg = average(test)
+                                                                                            element.bilanT4.eleve_avg = methods.average(test)
                                                                                         }
 
                                                                                         // bilans par classe
                                                                                         if (lesNotesParMatT1.length > 0) {
-                                                                                            element.bilanT1.classe_avg = average(lesNotesParMatT1).toFixed(2)
+                                                                                            element.bilanT1.classe_avg = methods.average(lesNotesParMatT1).toFixed(2)
                                                                                             element.bilanT1.classe_max = Math.max(...lesNotesParMatT1).toFixed(2)
                                                                                             element.bilanT1.classe_min = Math.min(...lesNotesParMatT1).toFixed(2)
                                                                                         }
 
                                                                                         if (lesNotesParMatT2.length > 0) {
-                                                                                            element.bilanT2.classe_avg = average(lesNotesParMatT2).toFixed(2)
+                                                                                            element.bilanT2.classe_avg = methods.average(lesNotesParMatT2).toFixed(2)
                                                                                             element.bilanT2.classe_max = Math.max(...lesNotesParMatT2).toFixed(2)
                                                                                             element.bilanT2.classe_min = Math.min(...lesNotesParMatT2).toFixed(2)
                                                                                         }
 
                                                                                         if (lesNotesParMatT3.length > 0) {
-                                                                                            element.bilanT3.classe_avg = average(lesNotesParMatT3).toFixed(2)
+                                                                                            element.bilanT3.classe_avg = methods.average(lesNotesParMatT3).toFixed(2)
                                                                                             element.bilanT3.classe_max = Math.max(...lesNotesParMatT3).toFixed(2)
                                                                                             element.bilanT3.classe_min = Math.min(...lesNotesParMatT3).toFixed(2)
                                                                                         }
                                                                                         if (lesNotesParMatT4.length > 0) {
-                                                                                            element.bilanT4.classe_avg = average(lesNotesParMatT4).toFixed(2)
+                                                                                            element.bilanT4.classe_avg = methods.average(lesNotesParMatT4).toFixed(2)
                                                                                             element.bilanT4.classe_max = Math.max(...lesNotesParMatT4).toFixed(2)
                                                                                             element.bilanT4.classe_min = Math.min(...lesNotesParMatT4).toFixed(2)
                                                                                         }
@@ -236,10 +235,10 @@ module.exports = {
                                                                                     bilanClasseT4 = []
                                                                                     bilanClasseT4.push([bilanClasseT1[0], bilanClasseT2[0], bilanClasseT3[0]])
                                                                                     bilanClasseT4.push([bilanClasseT1[1], bilanClasseT2[1], bilanClasseT3[1]])
-                                                                                    /* average +  filtraate */
+                                                                                    /* methods.average +  filtraate */
                                                                                     if (bilanClasseT4[0].filter(n => n).length > 0) {
-                                                                                        bilanClasseT4[0] = average(bilanClasseT4[0].filter(n => n))
-                                                                                        bilanClasseT4[1] = average(bilanClasseT4[1].filter(n => n))
+                                                                                        bilanClasseT4[0] = methods.average(bilanClasseT4[0].filter(n => n))
+                                                                                        bilanClasseT4[1] = methods.average(bilanClasseT4[1].filter(n => n))
                                                                                     } else {
                                                                                         bilanClasseT4 = []
                                                                                     }
