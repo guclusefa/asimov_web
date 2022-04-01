@@ -1,6 +1,5 @@
 // inclure les dépendances et middlewares
 const Routeur = require("./routes/routes");
-const RouteurAPI = require("./routes/routesAPI");
 const express = require("express");
 const session = require('express-session');
 const flash = require('connect-flash');
@@ -40,4 +39,3 @@ app.use("/css", express.static(__dirname + "/node_modules/bootstrap/dist/css"));
 
 app.listen(3000, () => console.log("Le serveur est actif !"));
 app.use("/", (Routeur));
-app.use("/api", (RouteurAPI));
