@@ -2,7 +2,7 @@ var model_profs = require('../models/model_profs');
 var methods = require('./methods');
 
 module.exports = {
-    // affichage
+    // affichage liste ----------------------------------------------------------------------------------------------
     afficher_liste: function (req, res) {
         if (req.session.user_info !== undefined && req.session.user_info.user_isAdministration == 1) { // si connecte
 
@@ -15,6 +15,8 @@ module.exports = {
             res.redirect('/')
         }
     },
+
+    // affichae ajouter ----------------------------------------------------------------------------------------------
     afficher_ajouter: function (req, res) {
         if (req.session.user_info !== undefined && req.session.user_info.user_isAdministration == 1) { // si connecte
 
@@ -27,6 +29,8 @@ module.exports = {
             res.redirect('/')
         }
     },
+
+    // affichage modifier ----------------------------------------------------------------------------------------------
     afficher_modifier: function (req, res) {
         if (req.session.user_info !== undefined && req.session.user_info.user_isAdministration == 1) { // si connecte
 
@@ -49,6 +53,8 @@ module.exports = {
             res.redirect('/')
         }
     },
+
+    // affichage fiche ----------------------------------------------------------------------------------------------
     afficher_fiche: function (req, res) {
         if (req.session.user_info !== undefined && req.session.user_info.user_isAdministration == 1) { // si connecte
 
@@ -71,6 +77,7 @@ module.exports = {
         }
     },
 
+    // ajouter un prof ----------------------------------------------------------------------------------------------
     ajouter: function (req, res) {
         if (req.session.user_info !== undefined && req.session.user_info.user_isAdministration == 1) { // si connecte
 
@@ -107,6 +114,7 @@ module.exports = {
         }
     },
 
+    // modifier un eleve ----------------------------------------------------------------------------------------------
     modifier: function (req, res) {
         if (req.session.user_info !== undefined && req.session.user_info.user_isAdministration == 1) { // si connecte
 
@@ -150,6 +158,7 @@ module.exports = {
         }
     },
 
+    // supprimer un eleve ----------------------------------------------------------------------------------------------
     supprimer: function (req, res) {
         if (req.session.user_info !== undefined && req.session.user_info.user_isAdministration == 1) { // si connecte
 

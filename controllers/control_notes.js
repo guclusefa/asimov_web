@@ -4,6 +4,7 @@ var model_classes = require('../models/model_classes');
 var methods = require('./methods');
 
 module.exports = {
+    // afficher notes d'un eleves ----------------------------------------------------------------------------------------------
     afficher_fiche_eleve: function (req, res) {
         // si l'eleve
         if (req.session.user_info !== undefined) {

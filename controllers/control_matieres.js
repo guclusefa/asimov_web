@@ -2,7 +2,7 @@ var model_matieres = require('../models/model_matieres');
 var methods = require('./methods');
 
 module.exports = {
-    // affichage
+    // affichage liste ----------------------------------------------------------------------------------------------
     afficher_liste: function (req, res) {
         if (req.session.user_info !== undefined && req.session.user_info.user_isAdministration == 1) { // si connecte
 
@@ -15,6 +15,8 @@ module.exports = {
             res.redirect('/')
         }
     },
+
+    // afichager ajouter ----------------------------------------------------------------------------------------------
     afficher_ajouter: function (req, res) {
         if (req.session.user_info !== undefined && req.session.user_info.user_isAdministration == 1) { // si connecte
 
@@ -27,6 +29,8 @@ module.exports = {
             res.redirect('/')
         }
     },
+
+    // afficher modifier ----------------------------------------------------------------------------------------------
     afficher_modifier: function (req, res) {
         if (req.session.user_info !== undefined && req.session.user_info.user_isAdministration == 1) { // si connecte
 
@@ -50,6 +54,8 @@ module.exports = {
             res.redirect('/')
         }
     },
+
+    // aficher fiche ----------------------------------------------------------------------------------------------
     afficher_fiche: function (req, res) {
         if (req.session.user_info !== undefined && req.session.user_info.user_isAdministration == 1) { // si connecte
 
@@ -72,6 +78,7 @@ module.exports = {
         }
     },
 
+    // ajouter matiere ----------------------------------------------------------------------------------------------
     ajouter: function (req, res) {
         if (req.session.user_info !== undefined && req.session.user_info.user_isAdministration == 1) { // si connecte
 
@@ -94,6 +101,7 @@ module.exports = {
         }
     },
 
+    // modifier matiere ----------------------------------------------------------------------------------------------
     modifier: function (req, res) {
         if (req.session.user_info !== undefined && req.session.user_info.user_isAdministration == 1) { // si connecte
 
@@ -125,6 +133,7 @@ module.exports = {
         }
     },
 
+    // supprimer une matiere ----------------------------------------------------------------------------------------------
     supprimer: function (req, res) {
         if (req.session.user_info !== undefined && req.session.user_info.user_isAdministration == 1) { // si connecte
 

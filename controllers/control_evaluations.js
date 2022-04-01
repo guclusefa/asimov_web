@@ -3,7 +3,7 @@ var model_classes = require('../models/model_classes');
 var methods = require('./methods');
 
 module.exports = {
-    // affichage
+    // affichage liste ----------------------------------------------------------------------------------------------
     afficher_liste: function (req, res) {
         if (req.session.user_info !== undefined && req.session.user_info.user_isProf == 1) { // si connecte et que c'est un
             titre = "Liste des evaluations";
@@ -23,6 +23,8 @@ module.exports = {
             res.redirect('/')
         }
     },
+
+    // affichage ajouter ----------------------------------------------------------------------------------------------
     afficher_ajouter: function (req, res) {
         if (req.session.user_info !== undefined && req.session.user_info.user_isProf == 1) { // si connecte
             titre = "Ajouter une evaluation";
@@ -47,6 +49,8 @@ module.exports = {
             res.redirect('/')
         }
     },
+
+    // affichage modifier ----------------------------------------------------------------------------------------------
     afficher_modifier: function (req, res) {
         if (req.session.user_info !== undefined && req.session.user_info.user_isProf == 1) { // si connecte
 
@@ -91,6 +95,8 @@ module.exports = {
             res.redirect('/')
         }
     },
+
+    // afficher fiche ----------------------------------------------------------------------------------------------
     afficher_fiche: function (req, res) {
         if (req.session.user_info !== undefined && req.session.user_info.user_isProf == 1) { // si connecte
 
@@ -149,6 +155,7 @@ module.exports = {
     },
 
 
+    // ajouter une eval ----------------------------------------------------------------------------------------------
     // reste a faire les confitions de verif
     // il faut verif si la matiere existe dans le cursus etc
     ajouter: function (req, res) {
@@ -178,6 +185,7 @@ module.exports = {
         }
     },
 
+    // modifier une eval ----------------------------------------------------------------------------------------------
     modifier: function (req, res) {
         if (req.session.user_info !== undefined && req.session.user_info.user_isProf == 1) { // si connecte
             id = req.params.id
@@ -222,6 +230,7 @@ module.exports = {
         }
     },
 
+    // supprimer une eval ----------------------------------------------------------------------------------------------
     supprimer: function (req, res) {
         if (req.session.user_info !== undefined && req.session.user_info.user_isProf == 1) { // si connecte
 

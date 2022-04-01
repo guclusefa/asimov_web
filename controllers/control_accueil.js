@@ -1,5 +1,5 @@
 module.exports = {
-    // affichage accueil
+    // affichage accueil ----------------------------------------------------------------------------------------------
     afficher: function (req, res) {
         titre = "Accueil";
         res.render('./accueil', { titre })

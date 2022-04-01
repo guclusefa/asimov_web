@@ -1,6 +1,6 @@
 var model_connexion = require('../models/model_connexion');
 module.exports = {
-    // affichage accueil
+    // affichage accueil ----------------------------------------------------------------------------------------------
     afficher: function (req, res) {
         if (req.session.user_info == undefined) { // si pas connecte
             titre = "Connexion";
@@ -12,7 +12,7 @@ module.exports = {
         }
     },
 
-    // connexion
+    // connexion ----------------------------------------------------------------------------------------------
     connexion: function (req, res) {
         if (req.session.user_info == undefined) {
             let username = req.body.identification
@@ -35,6 +35,7 @@ module.exports = {
         }
     },
 
+    // deconnexion ----------------------------------------------------------------------------------------------
     deconnexion: function (req, res) {
         if (req.session.user_info !== undefined) { // si connecte
             delete req.session.user_info

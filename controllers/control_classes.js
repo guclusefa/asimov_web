@@ -5,7 +5,7 @@ var model_eleves = require('../models/model_eleves');
 var methods = require('./methods');
 
 module.exports = {
-    // affichage liste
+    // affichage liste ----------------------------------------------------------------------------------------------
     afficher_liste: function (req, res) {
         if (req.session.user_info !== undefined && (req.session.user_info.user_isAdministration == 1 || req.session.user_info.user_isProf == 1)) { // si pas connecte
             // si administration = affiche toutes les classes
@@ -26,7 +26,7 @@ module.exports = {
         }
     },
 
-    // affichage form ajouter
+    // affichage form ajouter ----------------------------------------------------------------------------------------------
     afficher_ajouter: function (req, res) {
         if (req.session.user_info !== undefined && req.session.user_info.user_isAdministration == 1) { // si pas connecte
 
@@ -48,7 +48,7 @@ module.exports = {
         }
     },
 
-    // affichage form modifier
+    // affichage form modifier ----------------------------------------------------------------------------------------------
     afficher_modifier: function (req, res) {
         if (req.session.user_info !== undefined && req.session.user_info.user_isAdministration == 1) { // si pas connecte
 
@@ -84,7 +84,7 @@ module.exports = {
         }
     },
 
-    // affichage fiche
+    // affichage fiche ----------------------------------------------------------------------------------------------
     afficher_fiche: function (req, res) {
         if (req.session.user_info !== undefined && (req.session.user_info.user_isAdministration == 1 || req.session.user_info.user_isProf == 1)) { // si pas connecte
             id = req.params.id
@@ -126,7 +126,7 @@ module.exports = {
 
     //reste a faire les modif
     // pas d'eleve dupliquer
-    // prof principal forfement un prof d'une matiere
+    // prof principal forfement un prof d'une matiere ----------------------------------------------------------------------------------------------
     ajouter: function (req, res) {
         if (req.session.user_info !== undefined && req.session.user_info.user_isAdministration == 1) { // si pas connecte
 
@@ -173,6 +173,7 @@ module.exports = {
         }
     },
 
+    // modifier une classe ----------------------------------------------------------------------------------------------
     modifier: function (req, res) {
         if (req.session.user_info !== undefined && req.session.user_info.user_isAdministration == 1) { // si pas connecte
 
@@ -222,6 +223,7 @@ module.exports = {
         }
     },
 
+    // supprimer une classe ----------------------------------------------------------------------------------------------
     supprimer: function (req, res) {
         if (req.session.user_info !== undefined && req.session.user_info.user_isAdministration == 1) { // si pas connecte
 

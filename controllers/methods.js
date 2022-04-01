@@ -1,4 +1,4 @@
-/* ------------------------------------ METHODES NOTE ET EVAL -------------------------------------------- */
+// methodes eval et notes ----------------------------------------------------------------------------------------------
 const average = arr => arr.reduce((a, b) => a + b, 0) / arr.length;
 
 function bilanArray(array) {
@@ -16,7 +16,7 @@ function bilanArray(array) {
     return [min, max, moy]
 }
 
-/* ------------------------------------ METHODES DE VALIDATION -------------------------------------------- */
+// méthodes validations ----------------------------------------------------------------------------------------------
 function validateTrim(str) {
     if (str.trim().length === 0) return false
     return true
@@ -39,7 +39,7 @@ function validateDate(date) {
     return false;
 }
 
-/* ------------------------------------ VERIF USER -------------------------------------------- */
+// verification user ----------------------------------------------------------------------------------------------
 function verifUser([nom, prenom, date, sexe, email]) {
     if (validateTrim(nom) && validateTrim(prenom) && validateTrim(sexe) && validateTrim(date) && validateTrim(email)){
         if (validateDate(date)) {
@@ -60,7 +60,8 @@ function verifUser([nom, prenom, date, sexe, email]) {
     }
     return msg
 }
-/* ------------------------------------ VERIF MATIERE -------------------------------------------- */
+
+// verification matiere ----------------------------------------------------------------------------------------------
 function verifMatiere(libelle) {
     if (validateTrim(libelle)){
         msg = "Valid"
