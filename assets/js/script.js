@@ -123,11 +123,12 @@ $(function () {
         show: true,
         initCollapsed: true
       },
-      /* targets: [0, 1, 2, 3] */
     }]
   });
-  table.searchPanes.container().prependTo(table.table().container());
-  table.searchPanes.resizePanes();
+  if ( $("#dataTable").length ) {
+    table.searchPanes.container().prependTo(table.table().container());
+    table.searchPanes.resizePanes();
+  }
 });
 
 // modal detail ----------------------------------------------------------------------------------------------
