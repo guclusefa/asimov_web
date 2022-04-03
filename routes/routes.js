@@ -74,5 +74,10 @@ routeur.post('/evaluations/modifier/:id', control_evaluations.modifier)
 // notes ----------------------------------------------------------------------------------------------
 routeur.get('/notes/fiche_eleve/:id/:classe', control_notes.afficher_fiche_eleve)
 
+// 404 ----------------------------------------------------------------------------------------------
+routeur.get('*', function (req, res) {
+    res.status(404).render('404', {titre: "Erreur 404"});
+});
+
 // routeur  ----------------------------------------------------------------------------------------------
 module.exports = routeur;

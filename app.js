@@ -1,6 +1,5 @@
 // inclure les dépendances et middlewares ----------------------------------------------------------------------------------------------
 const Routeur = require("./routes/routes");
-const RouteurAPI = require("./routes/routesAPI");
 const express = require("express");
 const session = require('express-session');
 const flash = require('connect-flash');
@@ -44,12 +43,6 @@ app.use("/css", express.static(__dirname + "/node_modules/bootstrap/dist/css"));
 
 // routage ----------------------------------------------------------------------------------------------
 app.use("/", (Routeur));
-app.use("/api", (RouteurAPI));
-
-// 404 ----------------------------------------------------------------------------------------------
-app.get('*', function (req, res) {
-    res.status(404).render('404', {titre: "Erreur 404"});
-});
 
 // lancement serveur ----------------------------------------------------------------------------------------------
 app.listen(3000, () => console.log("Le serveur est actif !"));
