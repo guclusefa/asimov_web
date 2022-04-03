@@ -22,8 +22,8 @@ app.use(session({
 // msg flash + les variables qu'on utilse de partout ----------------------------------------------------------------------------------------------
 app.use(flash())
 app.use(function(req, res, next){
-	valid= req.flash('valid'),
-	erreur= req.flash('erreur'),
+	valid = req.flash('valid'),
+	erreur = req.flash('erreur'),
 	user_info = req.session.user_info
     next();
 });
