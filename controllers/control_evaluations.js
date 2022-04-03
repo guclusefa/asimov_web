@@ -172,12 +172,26 @@ module.exports = {
                     matiere = req.body.matiere
                 ]
 
-                model_evaluations.ajouter(params, function (data) {
-                    model_evaluations.selectDernierEval(function (idEval) {
-                        req.flash('valid', 'evaluation ajouté avec succès');
-                        res.redirect('./modifier/' + idEval[0].eval_id)
+                let paramsAVerif = [
+                    req.body.cursus,
+                    req.body.matiere,
+                    req.body.desc,
+                    req.body.trimestre,
+                    req.body.date
+                ]
+                if (methods.verifEval(paramsAVerif) == "Valid") {
+
+                    model_evaluations.ajouter(params, function (data) {
+                        model_evaluations.selectDernierEval(function (idEval) {
+                            req.flash('valid', 'evaluation ajouté avec succès');
+                            res.redirect('./modifier/' + idEval[0].eval_id)
+                        })
                     })
-                })
+
+                } else {
+                    req.flash('erreur', methods.verifEval(paramsAVerif));
+                    res.redirect('/')
+                }
             })
         } else {
             req.flash('erreur', "Vous n'êtes pas autorisé");
@@ -196,34 +210,52 @@ module.exports = {
                 id = req.params.id
             ]
 
-            model_evaluations.ficher(id, function (uneEval) {
-                if (uneEval.length > 0) {
+            // vu qu'on modifie pas cursus et matiere on prend 1 pur valider fonction
+            let paramsAVerif = [
+                '1',
+                '1',
+                req.body.desc,
+                req.body.trimestre,
+                req.body.date
+            ]
+            if (methods.verifEval(paramsAVerif) == "Valid") {
+                if (methods.verifEval2(req.body.eleves, req.body.notes) == "Valid") {
+                    model_evaluations.ficher(id, function (uneEval) {
+                        if (uneEval.length > 0) {
 
-                    uneEval = uneEval[0]
-                    // si proviseur : peut tout modifier ; sinon peut modifier que si c'est l'eval du prof
-                    // utilisé pour view des profs principals
-                    if (req.session.user_info.user_isProviseur == 1 || uneEval.eval_idProf == req.session.user_info.user_id) {
-                        // supprime notes et on ajoute pour eviter de check pour chaque update si existe ou pas
-                        model_evaluations.supprimerNotes(id, function (data) {
-                            for (i in req.body.eleves) {
-                                if (!req.body.notes[i]) req.body.notes[i] = null
-                                model_evaluations.ajouterNotes([req.body.notes[i], id, req.body.eleves[i]], function (data) { })
+                            uneEval = uneEval[0]
+                            // si proviseur : peut tout modifier ; sinon peut modifier que si c'est l'eval du prof
+                            // utilisé pour view des profs principals
+                            if (req.session.user_info.user_isProviseur == 1 || uneEval.eval_idProf == req.session.user_info.user_id) {
+                                // supprime notes et on ajoute pour eviter de check pour chaque update si existe ou pas
+                                model_evaluations.supprimerNotes(id, function (data) {
+                                    for (i in req.body.eleves) {
+                                        if (!req.body.notes[i]) req.body.notes[i] = null
+                                        model_evaluations.ajouterNotes([req.body.notes[i], id, req.body.eleves[i]], function (data) { })
+                                    }
+                                })
+
+                                model_evaluations.modifier(params, function (data) {
+                                    req.flash('valid', 'evaluation modifié avec succès');
+                                    res.redirect('../liste')
+                                })
+                            } else {
+                                req.flash('erreur', "Vous n'êtes pas autorisé");
+                                res.redirect('/evaluations/liste')
                             }
-                        })
-
-                        model_evaluations.modifier(params, function (data) {
-                            req.flash('valid', 'evaluation modifié avec succès');
-                            res.redirect('../liste')
-                        })
-                    } else {
-                        req.flash('erreur', "Vous n'êtes pas autorisé");
-                        res.redirect('/evaluations/liste')
-                    }
+                        } else {
+                            req.flash('erreur', "Évaluation n'existe pas");
+                            res.redirect('/')
+                        }
+                    })
                 } else {
-                    req.flash('erreur', "Évaluation n'existe pas");
+                    req.flash('erreur', methods.verifEval2(req.body.eleves, req.body.notes));
                     res.redirect('/')
                 }
-            })
+            } else {
+                req.flash('erreur', methods.verifEval(paramsAVerif));
+                res.redirect('/')
+            }
         } else {
             req.flash('erreur', "Vous n'êtes pas autorisé");
             res.redirect('/')

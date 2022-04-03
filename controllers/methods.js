@@ -67,6 +67,18 @@ function hasDuplicates(array) {
     return false;
 }
 
+function validerNotes(notes){
+    for (i in notes){
+        if (notes[i] == null || notes[i] >= 0 && notes[i] <= 100){
+            verif = true
+        } else {
+            verif = false
+            break
+        }
+    }
+    return verif
+}
+
 // verification user ----------------------------------------------------------------------------------------------
 function verifUser([nom, prenom, date, sexe, email]) {
     if (validateTrim(nom) && validateTrim(prenom) && validateTrim(sexe) && validateTrim(date) && validateTrim(email)) {
@@ -129,15 +141,14 @@ function verifClasse([classe, annee, libelle, principal], profs, eleves) {
     return msg
 }
 
-// verification eval ----------------------------------------------------------------------------------------------
-// in progess
-function verifEval(step, [classe, matiere, desc, trimestre, date], eleves, notes) {
+// verification eval pour ajouter ----------------------------------------------------------------------------------------------
+function verifEval([classe, matiere, desc, trimestre, date]) {
     if (validateTrim(classe) && validateTrim(matiere) && validateTrim(desc) && validateTrim(trimestre) && validateTrim(date)) {
-        if (onlyNumbers(classe)) {
-            if (onlyNumbers(matiere)) {
-                if (onlyNumbers(trimestre) && trimestre >= 1 && trimestre <= 3) {
+        if (isNum(classe)) {
+            if (isNum(matiere)) {
+                if (isNum(trimestre) && trimestre >= 1 && trimestre <= 3) {
                     if (validateDate(date)) {
-                        msg = "Valide"
+                        msg = "Valid"
                     } else {
                         msg = "Date invalide"
                     }
@@ -153,22 +164,33 @@ function verifEval(step, [classe, matiere, desc, trimestre, date], eleves, notes
     } else {
         msg = "Remplir toutes les données"
     }
-    if (step == 2) {
-        if (eleves && notes) {
-
-        } else {
-            msg = "Remplir toutes les données"
-        }
-    } else {
-        return msg
-    }
+    return msg
 }
 
+// verification eval modifier ----------------------------------------------------------------------------------------------
+function verifEval2(eleves, notes) {
+    if (eleves && notes) {
+        if (onlyNumbers(eleves)) {
+            if (validerNotes(notes)) {
+                msg = "Valid"
+            } else {
+                msg = "Notes invalide"
+            }
+        } else {
+            msg = "Eleves invalide"
+        }
+    } else {
+        msg = "Remplir toutes les données"
+    }
+    return msg
+}
 
 module.exports = {
     average,
     bilanArray,
     verifUser,
     verifMatiere,
-    verifClasse
+    verifClasse,
+    verifEval,
+    verifEval2
 };
