@@ -1,0 +1,51 @@
+<%- include('../layout/header') %>
+
+    <div class="container-fluid bg-secondary py-5">
+        <div class="container">
+            <div>
+                <h1 class="display-5 fw-bold text-primary">
+                    <%= titre %>
+                </h1>
+ 
+                <hr>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card mt-3">
+                            <div class="card-body">
+                                <h5 class="card-title">Informations</h5>
+                                <hr>
+                                <h5 class="card-text my-4"><b>Nom : </b>
+                                    <%= unProf.user_nom %>
+                                </h5>
+                                <h5 class="card-text my-4"><b>Prénom : </b>
+                                    <%= unProf.user_prenom %>
+                                </h5>
+                                <h5 class="card-text my-4"><b>Date de naissance : </b>
+                                    <%= unProf.user_dateNaissance %>
+                                        (<%= unProf.user_age %>ans)
+                                </h5>
+                                <h5 class="card-text my-4"><b>Sexe : </b>
+                                    <% if(unProf.user_sexe=='F' ) { %>
+                                        Féminin
+                                        <% } else { %>Masculin<% } %>
+                                </h5>
+                                <h5 class="card-text my-4"><b>Tél : </b>
+                                    <%= unProf.user_tel%>
+                                </h5>
+                                <h5 class="card-text my-4"><b>Email : </b>
+                                    <%= unProf.user_mail %>
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+
+    <%- include('../layout/footer') %>

@@ -1,0 +1,77 @@
+<%- include('../layout/header') %>
+
+    <div class="container-fluid bg-secondary py-5">
+        <div class="container">
+            <div>
+                <h1 class="display-5 fw-bold text-primary">
+                    <%= titre %>
+                </h1>
+ 
+                <hr>
+
+                <div class="row">
+                    <div class="col-lg-4 col-md-6  col-sm-12 col-12">
+                        <div class="card mt-3">
+                            <div class="card-body">
+                                <h5 class="card-title">Informations</h5>
+                                <hr>
+                                <h5 class="card-text my-4"><b>Année Scolaire : </b>
+                                    <%= uneClasse.cursus_anneeScolaire %>
+                                </h5>
+                                <h5 class="card-text my-4"><b>Classe : </b>
+                                    <%= uneClasse.classe_libelle %>
+                                </h5>
+                                <h5 class="card-text my-4"><b>Libellé : </b>
+                                    <%= uneClasse.cursus_libelle %>
+                                </h5>
+                                <h5 class="card-text my-4"><b>Prof principal : </b>
+                                    <%= uneClasse.user_nom + ' ' + uneClasse.user_prenom %>
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6  col-sm-12 col-12">
+                        <div class="card mt-3">
+                            <div class="card-body">
+                                <h5 class="card-title">Les éleves <span class="badge bg-primary float-end">
+                                        <%= Object.keys(lesElevesClasse).length %>
+                                    </span></h5>
+                                <hr>
+                                <% lesElevesClasse.forEach(function(unEleve, i){ %>
+                                    <h5 class="card-text my-4"><b>Élève <%= i+1 %> : </b>
+                                        <%= unEleve.user_nom + ' ' + unEleve.user_prenom %>
+                                    </h5>
+                                    <% })%>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-12  col-sm-12 col-12">
+                        <div class="card mt-3">
+                            <div class="card-body">
+                                <h5 class="card-title">Les professeurs <span class="badge bg-primary float-end">
+                                    <%= Object.keys(lesProfsClasse).length %>
+                                </span></h5>
+                                <hr>
+                                <% lesProfsClasse.forEach(function(unProf){ %>
+                                    <h5 class="card-text my-4"><b>
+                                            <%= unProf.matiere_libelle %> :
+                                        </b>
+                                        <%= unProf.user_nom + ' ' + unProf.user_prenom %>
+                                    </h5>
+                                    <% })%>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+
+    <%- include('../layout/footer') %>

@@ -1,0 +1,129 @@
+<%- include('../layout/header') %>
+
+
+<div class="container-fluid bg-secondary py-5">
+    <div class="container">
+            <div>
+                <h1 class="display-5 fw-bold text-primary">
+                    <%= titre %>
+                </h1>
+ 
+                <hr>
+
+                <form action="<%= action %>" method="POST" class="needs-validation" novalidate>
+                    <div class="row">
+                        <div class="col-md-6 col-sm-12 col-12 mt-3">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" placeholder="NOM" id="nom" name="nom" required>
+                                <label class="required">NOM</label>
+                                <div class="invalid-feedback">
+                                    Choisir un nom valide !
+                                </div>
+                                <div class="valid-feedback">
+                                    Nom valide
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-sm-12 col-12 mt-3">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" placeholder="Prénom" id="prenom" name="prenom"
+                                    required>
+                                <label class="required">Prénom</label>
+                                <div class="invalid-feedback">
+                                    Choisir un prénom valide !
+                                </div>
+                                <div class="valid-feedback">
+                                    Prénom valide
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 col-sm-12 col-12 mt-3">
+                            <div class="form-floating mb-3">
+                                <select class="form-control" id="sexe" name="sexe" required>
+                                    <option value="" disabled selected>Choisir un sexe</option>
+                                    <option value="M">Masculin</option>
+                                    <option value="F">Féminin</option>
+                                </select>
+                                <label class="required">Sexe</label>
+                                <div class="invalid-feedback">
+                                    Choisir un sexe valide !
+                                </div>
+                                <div class="valid-feedback">
+                                    Sexe valide
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-sm-12 col-12 mt-3">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="datepicker_input form-control" autocomplete="off"
+                                    placeholder="Date de naissance" id="date" name="date"
+                                    value="<% if (modifier) {%><%=unEleve.user_dateNaissance%><%} %>" required>
+                                <label class="required">Date de naissance</label>
+                                <div class="invalid-feedback">
+                                    Choisir une date de naissance valide !
+                                </div>
+                                <div class="valid-feedback">
+                                    Date de naissance valide
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-6 col-sm-12 col-12 mt-3">
+                            <div class="form-floating mb-3">
+                                <input type="email" class="form-control" placeholder="Email" id="email" name="email"
+                                    required>
+                                <label class="required">Email</label>
+                                <div class="invalid-feedback">
+                                    Choisir un email valide !
+                                </div>
+                                <div class="valid-feedback">
+                                    Email valide
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-sm-12 col-12 mt-3">
+                            <div class="form-floating mb-3">
+                                <input type="tel" class="form-control" placeholder="Numéro de téléphone" id="tel"
+                                    name="tel">
+                                <label class="">Numéro de téléphone</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12 mt-3">
+                            <button class="btn btn-primary w-100" type="submit">
+                                <%= titre %>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    </script>
+
+    <% if (modifier) { %>
+        <script>
+            window.addEventListener("load", function () {
+                $("#nom").val('<%= unEleve.user_nom %>');
+                $("#prenom").val('<%= unEleve.user_prenom %>');
+                $("#sexe").val('<%= unEleve.user_sexe %>').change();
+                $("#email").val('<%= unEleve.user_mail %>');
+                $("#tel").val('<%= unEleve.user_tel %>');
+            });
+        </script>
+        <% } %>
+
+            <%- include('../layout/footer') %>

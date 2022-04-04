@@ -1,0 +1,56 @@
+<%- include('../layout/header') %>
+
+    <div class="container-fluid bg-secondary py-5">
+        <div class="container">
+            <div>
+                <h1 class="display-5 fw-bold text-primary">
+                    <%= titre %>
+                </h1>
+ 
+                <hr>
+
+                <table id="dataTable" class="table" style="width:100%">
+                    <thead class="bg-primary" >
+                        <tr>
+                            <th>Élève</th>
+                            <th>Sexe</th>
+                            <th>Tél</th>
+                            <th>Email</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% lesEleves.forEach(function(unEleve){ %>
+                            <tr>
+                                <td>
+                                    <%= unEleve.user_nom + ' ' + unEleve.user_prenom + ' (' +unEleve.user_age+' ans)' %>
+                                </td>
+                                <td>
+                                    <%= unEleve.user_sexe %>
+                                </td>
+                                <td>
+                                    <%= unEleve.user_tel %>
+                                </td>
+                                <td>
+                                    <%= unEleve.user_mail %>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-primary action_table"
+                                        onclick="showModalDetail('Détail élève <%= unEleve.user_id %>', {'NOM': '<%= unEleve.user_nom %>', 'Prénom': '<%= unEleve.user_prenom %>','Date de naissance': '<%= unEleve.user_dateNaissance + ` (` + unEleve.user_age + `ans)` %>','Sexe': '<%= unEleve.user_sexe %>','Tél': '<%= unEleve.user_tel %>','Email': '<%= unEleve.user_mail %>' }, 'fiche/<%= unEleve.user_id %>')"><i
+                                            class="fas fa-eye"></i></button>
+                                    <button type="button" class="btn btn-success action_table"
+                                        onclick="location.href = 'modifier/<%= unEleve.user_id %>';"><i
+                                            class="fas fa-edit"></i></button>
+                                    <button type="button" class="btn btn-danger action_table"
+                                        onclick="showModalSupprimer('Détail élève <%= unEleve.user_id %>', 'Élève <%= unEleve.user_id %>', 'supprimer/<%= unEleve.user_id %>')"><i
+                                            class="fas fa-trash-alt"></i></button>
+                                </td>
+                            </tr>
+                            <% })%>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <%- include('../layout/footer') %>

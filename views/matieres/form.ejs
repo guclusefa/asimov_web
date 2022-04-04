@@ -1,0 +1,50 @@
+<%- include('../layout/header') %>
+
+
+    <div class="container-fluid bg-secondary py-5">
+        <div class="container">
+            <div>
+                <h1 class="display-5 fw-bold text-primary">
+                    <%= titre %>
+                </h1>
+ 
+                <hr>
+
+                <form action="<%= action %>" method="POST" class="needs-validation" novalidate>
+                    <div class="row">
+                        <div class="col-12 mt-3">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" placeholder="NOM" id="libelle" name="libelle"
+                                    required>
+                                <label class="required">Libellé</label>
+                                <div class="invalid-feedback">
+                                    Choisir un libellé valide !
+                                </div>
+                                <div class="valid-feedback">
+                                    Libellé valide
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12 mt-3">
+                                <button class="btn btn-primary w-100" type="submit">
+                                    <%= titre %>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <% if (modifier) { %>
+        <script>
+            window.addEventListener("load", function () {
+                $("#libelle").val('<%= uneMatiere.matiere_libelle %>');
+            });
+        </script>
+        <% } %>
+
+            <%- include('../layout/footer') %>

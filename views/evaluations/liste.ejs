@@ -1,0 +1,68 @@
+<%- include('../layout/header') %>
+
+    <div class="container-fluid bg-secondary py-5">
+        <div class="container">
+            <div>
+                <h1 class="display-5 fw-bold text-primary">
+                    <%= titre %>
+                </h1>
+ 
+                <hr>
+
+                <table id="dataTable" class="table" style="width:100%">
+                    <thead class="bg-primary" >
+                        <tr>
+                            <th>Année Scolaire</th>
+                            <th>Cursus</th>
+                            <th>Professeur</th>
+                            <th>Matière</th>
+                            <th>Description</th>
+                            <th>Date</th>
+                            <th>Trimestre</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% lesEvaluations.forEach(function(uneEvaluation){ %>
+                            <tr>
+                                <td>
+                                    <%= uneEvaluation.cursus_anneeScolaire %>
+                                </td>
+                                <td>
+                                    <%= uneEvaluation.classe_libelle %> <%= uneEvaluation.cursus_libelle %>
+                                </td>
+                                <td>
+                                    <%= uneEvaluation.user_nom  %> <%= uneEvaluation.user_prenom  %>
+                                </td>
+                                <td>
+                                    <%= uneEvaluation.matiere_libelle %>
+                                </td>
+                                <td>
+                                    <%= uneEvaluation.eval_desc %>
+                                </td>
+                                <td>
+                                    <%= uneEvaluation.eval_date %>
+                                </td>
+                                <td>
+                                    Trimestre <%= uneEvaluation.eval_trimestre %>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-primary action_table"
+                                        onclick="showModalDetail('Détail évaluation <%= uneEvaluation.eval_id %>', {'Année Scolaire':'<%= uneEvaluation.cursus_anneeScolaire %>','Cursus': '<%= uneEvaluation.classe_libelle %> <%= uneEvaluation.cursus_libelle %>', 'Professeur': '<%= uneEvaluation.user_nom  %> <%= uneEvaluation.user_prenom  %>','Matière': '<%= uneEvaluation.matiere_libelle %>','Description': '<%= uneEvaluation.eval_desc %>', 'Date': '<%= uneEvaluation.eval_date %>', 'Trimestre': `Trimestre <%= uneEvaluation.eval_trimestre %>` }, 'fiche/<%= uneEvaluation.eval_id %>')"><i
+                                            class="fas fa-eye"></i></button>
+                                    <button type="button" class="btn btn-success action_table"
+                                        onclick="location.href = 'modifier/<%= uneEvaluation.eval_id %>';"><i
+                                            class="fas fa-edit"></i></button>
+                                    <button type="button" class="btn btn-danger action_table"
+                                        onclick="showModalSupprimer('Supprimer évaluation <%= uneEvaluation.eval_id %>', 'Évaluation <%= uneEvaluation.eval_id %>', 'supprimer/<%= uneEvaluation.eval_id %>')"><i
+                                            class="fas fa-trash-alt"></i></button>
+                                </td>
+                            </tr>
+                            <% })%>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <%- include('../layout/footer') %>
