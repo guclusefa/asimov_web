@@ -1,5 +1,5 @@
 # isaac asimov web
-## Présentarion
+## Présentation
 - Le collège Asimov est un établissement scolaire regroupant les classes de la 6e à la terminale.
 - Créé par la fondation Asimov, ses objectifs sont de proposer des cours utilisant des pédagogies
 innovantes. Bien qu'il soit français, le choix de son nom a été fait en référence aux engagements du
