@@ -118,7 +118,7 @@ function verifClasse([classe, annee, libelle, principal], profs, eleves) {
             if (annee >= 2000 && annee <= 2050 && isNum(annee)) {
                 if (isNum(principal)) {
                     if (!hasDuplicates(eleves) && onlyNumbers(eleves)) {
-                        if (onlyNumbersProfs(profs)) {
+                        if (profs) {
                             msg = "Valid"
                         } else {
                             msg = "Professeurs invalides"
