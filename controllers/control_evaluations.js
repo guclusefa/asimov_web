@@ -163,33 +163,38 @@ module.exports = {
 
             model_evaluations.selectProfMatiereCursus([req.body.cursus, req.body.matiere], function (leProf) {
                 console.log(leProf)
-                let params = [
-                    desc = req.body.desc,
-                    date = req.body.date.split("/").reverse().join("/"),
-                    trimestre = req.body.trimestre,
-                    cursus = req.body.cursus,
-                    prof = leProf[0].cursus_prof_idProf,
-                    matiere = req.body.matiere
-                ]
+                if (leProf.length > 0) {
+                    let params = [
+                        desc = req.body.desc,
+                        date = req.body.date.split("/").reverse().join("/"),
+                        trimestre = req.body.trimestre,
+                        cursus = req.body.cursus,
+                        prof = leProf[0].cursus_prof_idProf,
+                        matiere = req.body.matiere
+                    ]
 
-                let paramsAVerif = [
-                    req.body.cursus,
-                    req.body.matiere,
-                    req.body.desc,
-                    req.body.trimestre,
-                    req.body.date
-                ]
-                if (methods.verifEval(paramsAVerif) == "Valid") {
+                    let paramsAVerif = [
+                        req.body.cursus,
+                        req.body.matiere,
+                        req.body.desc,
+                        req.body.trimestre,
+                        req.body.date
+                    ]
+                    if (methods.verifEval(paramsAVerif) == "Valid") {
 
-                    model_evaluations.ajouter(params, function (data) {
-                        model_evaluations.selectDernierEval(function (idEval) {
-                            req.flash('valid', 'evaluation ajouté avec succès');
-                            res.redirect('./modifier/' + idEval[0].eval_id)
+                        model_evaluations.ajouter(params, function (data) {
+                            model_evaluations.selectDernierEval(function (idEval) {
+                                req.flash('valid', 'evaluation ajouté avec succès');
+                                res.redirect('./modifier/' + idEval[0].eval_id)
+                            })
                         })
-                    })
 
+                    } else {
+                        req.flash('erreur', methods.verifEval(paramsAVerif));
+                        res.redirect("/")
+                    }
                 } else {
-                    req.flash('erreur', methods.verifEval(paramsAVerif));
+                    req.flash('erreur', "Choisir un prof et une matiere");
                     res.redirect("/")
                 }
             })
