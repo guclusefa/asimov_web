@@ -158,10 +158,10 @@ module.exports = {
 
                                                                                         // bilans des matieres
                                                                                         /////// a revoir ? peut etre jsp jvois pas dautre sol
-                                                                                        element.bilanT1 = []
-                                                                                        element.bilanT2 = []
-                                                                                        element.bilanT3 = []
-                                                                                        element.bilanT4 = []
+                                                                                        element.bilanT1 = {}
+                                                                                        element.bilanT2 = {}
+                                                                                        element.bilanT3 = {}
+                                                                                        element.bilanT4 = {}
 
                                                                                         // bilans par eleve
                                                                                         if (lesNotesParEvalT1.length > 0) {
@@ -244,6 +244,7 @@ module.exports = {
                                                                                         bilanClasseT4 = []
                                                                                     }
 
+                                                                                    console.log(lesMatieres)
                                                                                     // si admin
                                                                                     if (req.session.user_info.user_isAdministration == 1) {
                                                                                         res.json({ titre, valid, erreur, user_info, unEleve, unCursus, lesEleves, lesCursus, lesMatieres, bilanClasseT1, bilanClasseT2, bilanClasseT3, bilanClasseT4 })
