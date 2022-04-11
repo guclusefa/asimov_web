@@ -244,7 +244,7 @@ module.exports = {
                                                                                         bilanClasseT4 = []
                                                                                     }
 
-                                                                                    console.log(lesMatieres)
+                                                                                    console.log(bilanClasseT1)
                                                                                     // si admin
                                                                                     if (req.session.user_info.user_isAdministration == 1) {
                                                                                         res.json({ titre, valid, erreur, user_info, unEleve, unCursus, lesEleves, lesCursus, lesMatieres, bilanClasseT1, bilanClasseT2, bilanClasseT3, bilanClasseT4 })
