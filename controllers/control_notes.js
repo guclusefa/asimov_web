@@ -244,12 +244,14 @@ module.exports = {
                                                                                         bilanClasseT4 = []
                                                                                     }
 
+                                                                                    console.log(lesMatieres)
                                                                                     // si admin
                                                                                     if (req.session.user_info.user_isAdministration == 1) {
                                                                                         res.render('./notes/fiche_eleve', { titre, unEleve, unCursus, lesEleves, lesCursus, lesMatieres, bilanClasseT1, bilanClasseT2, bilanClasseT3, bilanClasseT4 })
                                                                                         // sinon afficher que moi
                                                                                     } else {
                                                                                         model_eleves.ficher(id, function (lesEleves) {
+
                                                                                             res.render('./notes/fiche_eleve', { titre, unEleve, unCursus, lesEleves, lesCursus, lesMatieres, bilanClasseT1, bilanClasseT2, bilanClasseT3, bilanClasseT4 })
                                                                                         })
                                                                                     }
