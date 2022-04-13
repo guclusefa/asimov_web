@@ -35,6 +35,7 @@ app.use(express.static("views"));
 app.use("/js", express.static(__dirname + "/assets/js"));
 app.use("/css", express.static(__dirname + "/assets/css"));
 app.use("/images", express.static(__dirname + "/assets/images"));
+app.use("/assets", express.static(__dirname + "/assets"));
 
 // modules ----------------------------------------------------------------------------------------------
 app.use("/js", express.static(__dirname + "/node_modules/jquery/dist"));
