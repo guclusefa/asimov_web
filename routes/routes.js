@@ -6,6 +6,7 @@ const routeur = express.Router();
 var control_accueil = require('../controllers/control_accueil')
 var control_connexion = require('../controllers/control_connexion')
 var control_eleves = require('../controllers/control_eleves')
+var control_responsables = require('../controllers/control_responsables')
 var control_profs = require('../controllers/control_profs')
 var control_matieres = require('../controllers/control_matieres')
 var control_classes = require('../controllers/control_classes')
@@ -30,6 +31,16 @@ routeur.get('/eleves/supprimer/:id', control_eleves.supprimer)
 
 routeur.post('/eleves/ajouter', control_eleves.ajouter)
 routeur.post('/eleves/modifier/:id', control_eleves.modifier)
+
+// responsables ----------------------------------------------------------------------------------------------
+routeur.get('/responsables/liste', control_responsables.afficher_liste)
+routeur.get('/responsables/ajouter', control_responsables.afficher_ajouter)
+routeur.get('/responsables/modifier/:id', control_responsables.afficher_modifier)
+routeur.get('/responsables/fiche/:id', control_responsables.afficher_fiche)
+routeur.get('/responsables/supprimer/:id', control_responsables.supprimer)
+
+routeur.post('/responsables/ajouter', control_responsables.ajouter)
+routeur.post('/responsables/modifier/:id', control_responsables.modifier)
 
 // profs ----------------------------------------------------------------------------------------------
 routeur.get('/profs/liste', control_profs.afficher_liste)
